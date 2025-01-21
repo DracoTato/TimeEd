@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+    --primary: #1e3a8a;
+    --secondary: #3b82f6;
+    --light-sec: #d7e6fd;
+    --warning: #ef4444;
+    --success: #10b981;
+    --white: #ffffff;
+    --subwhite: #f3f4f6;
+    --light-gray: #d1d5db;
+    --gray: #6b7280;
+    --black: #111827;
+    --xxs: 4px;
+    --xs: 8px;
+    --s: 12px;
+    --m: 16px;
+    --l: 24px;
+    --xl: 32px;
+    --xxl: 48px;
+    --font-h1: 2em;
+    --font-h2: 1.8em;
+    --font-h3: 1.4em;
+    --font-h4: 1.2em;
+    --font-p: 1em;
+    --font-s: 0.9em;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--white);
+}
+
+/* Typographies */
+/* --------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Roboto Slab", serif;
+    text-transform: capitalize;
+}
+
+p, span, div, small, button {
+    font-family: "Roboto", sans-serif;
+}
+
+h1 {
+    font-size: var(--font-h1);
+    font-weight: 800;
+    line-height: 1.1em;
+}
+
+h2 {
+    font-size: var(--font-h2);
+    font-weight: 700;
+    line-height: 1.2em;
+}
+
+h3 {
+    font-size: var(--font-h3);
+    font-weight: 600;
+    line-height: 1.3em;
+}
+
+h4 {
+    font-size: var(--font-h4);
+    font-weight: 500;
+    line-height: 1.4em;
+}
+
+p, span, div, button, a {
+    font-size: var(--font-p);
+    font-weight: 400;
+    line-height: 1.4em;
+}
+
+button, button a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+small {
+    font-size: var(--font-s);
+    font-weight: 300;
+    line-height: 1.6em;
+}
+
+/* nav */
+/* --------------------- */
+.nav {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.nav .nav-head {
+    display: flex;
+    align-items: center;
+    column-gap: var(--l);
+    padding: var(--m);
+}
+
+.nav .hamburger-menu {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+}
+
+.nav .hamburger-menu span {
+    background-color: var(--subwhite);
+    width: 100%;
+    height: 3px;
+    transition: all 0.3s;
+}
+
+.nav .hamburger-menu.active span:first-child {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.nav .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav .hamburger-menu.active span:last-child {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.nav .nav-title {
+    font-size: var(--font-h1);
+    font-weight: 600;
+}
+
+.nav .nav-links {
+    display: none;
+    background-color: var(--gray);
+    padding: var(--m);
+}
+
+.nav .nav-links ul {
+    list-style: none;
+}
+
+.nav .nav-links a {
+    color: var(--light-gray);
+    text-decoration: none;
+    transition: color 0.3s ease-in;
+}
+
+.nav .nav-links li:hover a {
+    color: var(--white);
+}
+
+/* button */
+/* --------------------- */
+button {
+    border: none;
+    outline: none;
+    background-color: var(--black);
+    color: var(--white);
+    padding: var(--xs);
+    border-radius: var(--xxs);
+}
+
+button a {
+    color: inherit;
+}
+
+button:focus-visible {
+    outline: 2px solid var(--black);
+    background-color: var(--gray);
+}
+
+button:active {
+    background-color: var(--gray);
+}
+
+/* Sections */
+/* --------------------- */
+.section-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--xxl);
+    margin: var(--xxl) 0px;
+}
+
+.section {
+    padding: var(--l);
+}
+
+/* footer */
+/* --------------------- */
+footer {
+    display: flex;
+    background-color: var(--black);
+    color: var(--white);
+    flex-direction: column;
+    row-gap: var(--xs);
+    margin-top: var(--xxl);
+    padding: var(--m) var(--m) 72px;
+    text-align: center;
+}
+
+footer a {
+    color: inherit;
+}
+
+footer small {
+    color: var(--light-gray);
+}

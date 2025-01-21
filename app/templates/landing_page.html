@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/base.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/landing_page.css') }}"
+        />
+        <title>TimeEd</title>
+    </head>
+    <body>
+        <div class="hero">
+            <h1>Time management simplified for teachers and students</h1>
+            <p>
+                Organize schedules, track progress, and boost productivity—all
+                in one place.
+            </p>
+        </div>
+        <button class="cta"><a href="#">Get Started Now!</a></button>
+        <div class="section-container">
+            <div class="section intro">
+                <h2>Why Time Management</h2>
+                <p>
+                    Time management is essential for both teachers and students,
+                    as it fosters productivity, reduces stress, and enhances
+                    overall performance. For teachers, managing time effectively
+                    allows them to plan lessons, assess student work, and
+                    balance administrative tasks without feeling overwhelmed. It
+                    also enables them to dedicate more energy to personalized
+                    support for their students. For students, learning time
+                    management cultivates discipline, helps them meet deadlines,
+                    and provides a sense of control over their studies, leading
+                    to better academic outcomes and personal growth. With the
+                    right tools, both teachers and students can maximize their
+                    potential and achieve their goals efficiently.
+                </p>
+            </div>
+            <div class="section features">
+                <h2>Features</h2>
+                <div class="sub-section-container">
+                    <div class="sub-section">
+                        <h3>For Teachers</h3>
+                        <div class="cards-container">
+                            <div class="card">
+                                <h4>Organize Your Classes</h4>
+                                <p>
+                                    Easily create and manage groups for your
+                                    students.
+                                </p>
+                            </div>
+                            <div class="card">
+                                <h4>Track Sessions</h4>
+                                <p>
+                                    Keep all your sessions structured and easily
+                                    editable.
+                                </p>
+                            </div>
+                            <div class="card">
+                                <h4>Centralized Resources</h4>
+                                <p>
+                                    Share study materials and assignments with
+                                    your students in one place.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <h3>For Students</h3>
+                        <div class="cards-container">
+                            <div class="card">
+                                <h4>Collaborate with Your Teacher</h4>
+                                <p>Submit work and ask questions directly.</p>
+                            </div>
+                            <div class="card">
+                                <h4>Join Your Group</h4>
+                                <p>
+                                    Easily access sessions and class materials.
+                                </p>
+                            </div>
+                            <div class="card">
+                                <h4>Clear Progress</h4>
+                                <p>
+                                    Stay updated on what you've completed and
+                                    what's next.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <h3>For Both</h3>
+                        <div class="cards-container">
+                            <div class="card">
+                                <h4>Accessible Anywhere</h4>
+                                <p>
+                                    A seamless experience whether you're on a
+                                    computer or phone.
+                                </p>
+                            </div>
+                            <div class="card">
+                                <h4>Simple and Intuitive</h4>
+                                <p>
+                                    Built to be easy to use for everyone, no
+                                    tech expertise required.
+                                </p>
+                            </div>
+                            <div class="card">
+                                <h4>Designed for Learning</h4>
+                                <p>
+                                    A focused environment free of distractions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section about">
+                <h2>About TimeEd</h2>
+                <p>
+                    I just sat there one day and wondered how teachers manage
+                    their time? How can they do all of that stuff without
+                    getting overwhelmed? It's not unusual for some teachers to
+                    work more than 12 hours a day! I would definitely get burnt
+                    out after a couple of days (that's if I lasted a day). So I
+                    thought of TimeEd, a time management tool primarily for
+                    teachers, but students can use it too! You can easily
+                    set/cancel/delete sessions, and we'll keep both you and your
+                    students updated ^_^ and that was the main idea. I hope you
+                    enjoy TimeEd.
+                </p>
+            </div>
+        </div>
+        {% include "components/footer.html" %}
+    </body>
+</html>
