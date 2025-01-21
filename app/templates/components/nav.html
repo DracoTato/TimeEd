@@ -1,0 +1,21 @@
+<nav class="nav">
+    <div class="nav-head">
+        <span
+            class="hamburger-menu"
+            tabindex="0"
+            role="button"
+            aria-label="Toggle navigation"
+            onclick="toggleMenu();"
+            onkeydown="handleKey(event);"
+            ><span></span><span></span><span></span>
+        </span>
+        <span class="nav-title">{% block nav_title %}{% endblock %}</span>
+    </div>
+    <div class="nav-links">
+        <ul>
+            <li><a href="#">Some Link</a></li>
+            <li><a href="#">Some Link</a></li>
+            <li><a href="#">Some Link</a></li>
+        </ul>
+    </div>
+</nav>
