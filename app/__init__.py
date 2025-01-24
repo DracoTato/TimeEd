@@ -14,7 +14,8 @@ def create_app(config: Dict[Any, Any] = {}):
     if config:
         app.config.from_mapping(config)  # Highest priority
     else:
-        app.config.from_object(Config)  # Load from file
+        conf = Config()  # Init the object first
+        app.config.from_object(conf)  # Load from file
     setup_logging(app)
 
     try:

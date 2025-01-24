@@ -13,6 +13,8 @@ def setup_logging(app):
     ### List of config variables (app.config):
     `LOG_FOLDER`: Specify the folder in which to write the logs (default='logs').
     `LOG_LEVEL`: Set the RotatingFile handler log level (default=INFO), Stream handler is filtered to only DEBUG log levels.
+    **Allowed values for `LOG_LEVEL`**: 10 (DEBUG), 20 (INFO), 30 (WARNING), 40 (ERROR), 50 (CRITICAL)
+    `LOG_FILE` Set the name of the log file, e.g. timeed.log (default='timeed.log').
     `LOG_MAX_BYTES` Set the logs max size in bytes (default=1_000_000, i.e. 1MB).
     `LOG_BACKUP` Set the logs max file numbers, e.g. starts at 1 and ends at `LOG_BACKUP`, and then
     removes the oldest log and starts over (default=10, i.e. total log size = 1MB*10 = 10MB).
@@ -25,14 +27,14 @@ def setup_logging(app):
 
     log_folder = conf.get("LOG_FOLDER", "logs")
     os.makedirs(log_folder, exist_ok=True)
-    log_file = os.path.join(log_folder, "timeed.log")
+    log_file = os.path.join(log_folder, conf.get("LOG_FILE", "timeed.log"))
 
-    log_level = conf.get("LOG_LEVEL", logging.INFO)
+    log_level = int(conf.get("LOG_LEVEL", logging.INFO))
 
     file_handler = RotatingFileHandler(
         log_file,
-        maxBytes=conf.get("LOG_MAX_BYTES", 1_000_000),
-        backupCount=conf.get("LOG_BACKUP", 10),
+        maxBytes=int(conf.get("LOG_MAX_BYTES", 1_000_000)),
+        backupCount=int(conf.get("LOG_BACKUP", 10)),
     )
     file_handler.setLevel(log_level)
     file_handler.setFormatter(formatter)

@@ -5,7 +5,9 @@ dist/
 *.egg-info/
 .venv/
 .vscode/
+logs/
 *.log
+*.log.*
 *.out
 *.err
 .env
