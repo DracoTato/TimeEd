@@ -35,7 +35,7 @@ Formerly know as eTeach, TimeEd is a time management web application designed to
 2. Create a virtual environment and activate it:
    ```bash
    python3 -m venv .venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate  # On Windows powershell: venv\bin\activate.ps1
    ```
 
 3. Install dependencies:
@@ -43,7 +43,22 @@ Formerly know as eTeach, TimeEd is a time management web application designed to
    pip install -r requirements.txt
    ```
 
-4. Run the application:
+4. Create `.env` file in root directory:
+   ```bash
+   FLASK_ENV=development
+   FLASK_APP=app
+   FLASK_DEBUG=1
+   FLASK_RUN_HOST=0.0.0.0
+   LOG_FOLDER=logs
+   LOG_FILE=timeed.log
+   LOG_LEVEL=20
+   LOG_MAX_BYTES=100
+   LOG_BACKUP=2
+   ```
+   - search `flask environment variables list` on the internet for more detail on flask's built-in variables
+   - the log variables are documented in the `app/logging.py`:`setup_logging` function.
+
+5. Run the application:
    ```bash
    flask run
    ```
