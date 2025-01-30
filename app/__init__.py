@@ -1,11 +1,9 @@
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
 from typing import Dict, Any
 from .config import Config
-from .models import Base
 from .logging import setup_logging
-
-db = SQLAlchemy(model_class=Base)
+from .routes.auth import auth_bp
+from .db import db
 
 
 def create_app(config: Dict[Any, Any] = {}):
@@ -25,8 +23,11 @@ def create_app(config: Dict[Any, Any] = {}):
     except Exception as e:
         app.logger.error(e)
 
-    @app.route("/", methods=["GET"])
-    def landing_page():  # type: ignore (Pylance)
+    # Register blueprints
+    app.register_blueprint(auth_bp)
+
+    @app.route("/")
+    def landing_page():
         app.logger.info("Landing Page accessed.")
         return render_template("landing_page.html")
 
