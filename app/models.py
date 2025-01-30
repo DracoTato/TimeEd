@@ -2,15 +2,13 @@ from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from werkzeug.security import check_password_hash, generate_password_hash
 from enum import Enum
-from datetime import datetime
-from typing import Optional, List
+from datetime import date, datetime
 from app.db import Base
 
 
 class User_Types(Enum):
-    TEACHER = "teacher"
-    STUDENT = "student"
-    ADMIN = "admin"
+    TEACHER = 0
+    STUDENT = 1
 
 
 class Gender(Enum):
@@ -25,35 +23,60 @@ class SessionFreq(Enum):
 
 
 class User(Base):
-    """"""
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str]
     role: Mapped[User_Types]
-    full_name: Mapped[Optional[str]]
-    birthdate: Mapped[Optional[datetime]]
-    gender: Mapped[Optional[Gender]]
-    bio: Mapped[Optional[str]]
+    full_name: Mapped[str]
+    birthdate: Mapped[date]
+    gender: Mapped[Gender]
+    bio: Mapped[str | None]
 
-    owned_groups: Mapped[List["Group"]] = relationship(
+    owned_groups: Mapped[list["Group"]] = relationship(
         back_populates="owner", cascade="all, delete-orphan"
     )
-    enrolled_groups: Mapped[List["Enroll"]] = relationship(back_populates="user")
+    enrolled_groups: Mapped[list["Enroll"]] = relationship(back_populates="user")
 
-    def set_password(self, value: str):
-        """Store the password as a hash."""
+    def __set_password__(self, value: str):
+        """Store the password as a hash.
+        Note: Use `create` instead of directly using this method!
+        """
         self.password_hash = generate_password_hash(value)
-
-    password = property(fset=set_password) # Enables User.password = "..."
 
     def check_password(self, value: str):
         """Check the given password against the stored hash."""
         return check_password_hash(self.password_hash, value)
 
+    @classmethod
+    def create(
+        cls,
+        email: str,
+        password: str,
+        role: User_Types,
+        full_name: str,
+        birthdate: date,
+        gender: Gender,
+        bio: str | None = None,
+    ):
+        """Return a new instance of `User`."""
+        try:
+            user = cls(
+                email=email,
+                role=role,
+                full_name=full_name,
+                birthdate=birthdate,
+                gender=gender,
+                bio=bio,
+            )
+            user.__set_password__(password)
+            return user
+        except Exception as e:
+            raise e
+
     def __repr__(self) -> str:
-        return f"<User(id: {self.id!r}, email: {self.email!r}, owned groups: {self.owned_groups!r}, enrolled groups: {self.enrolled_groups!r})>"
+        return f"<User {self.id!r} (email: {self.email!r}, role: {self.role!r})>"
 
 
 class Group(Base):
@@ -65,11 +88,21 @@ class Group(Base):
     description: Mapped[str] = mapped_column(String(256))
 
     owner: Mapped["User"] = relationship(back_populates="owned_groups")
-    enrolls: Mapped[List["Enroll"]] = relationship(back_populates="group")
-    sessions: Mapped[List["Session"]] = relationship(back_populates="group")
+    enrolls: Mapped[list["Enroll"]] = relationship(back_populates="group")
+    sessions: Mapped[list["Session"]] = relationship(back_populates="group")
 
-    def __repr__(self):
-        return f"<Group(id: {self.id!r}, owner id: {self.owner.id!r}, owner email: {self.owner.email!r}, title: {self.title!r}, enrolled_students: {self.enrolls!r}, sessions: {self.sessions!r})>"
+    @classmethod
+    def create(cls, owner: User, title: str, description: str):
+        """Return a new instance of `Group`."""
+        try:
+            group = cls(title=title, description=description)
+            group.owner = owner
+            return group
+        except Exception as e:
+            raise e
+
+    def __repr__(self) -> str:
+        return f"<Group {self.id!r} (title: {self.title!r}, owner: {self.owner!r})>"
 
 
 class Enroll(Base):
@@ -82,6 +115,20 @@ class Enroll(Base):
     user: Mapped["User"] = relationship(back_populates="enrolled_groups")
     group: Mapped["Group"] = relationship(back_populates="enrolls")
 
+    @classmethod
+    def create(cls, user: User, group: Group):
+        """Return a new instance of `Enroll`."""
+        try:
+            enroll = cls()
+            enroll.user = user
+            enroll.group = group
+            return enroll
+        except Exception as e:
+            raise e
+
+    def __repr__(self) -> str:
+        return f"<Enroll {self.id!r} (user: {self.user!r}, group: {self.group!r})>"
+
 
 class Session(Base):
     __tablename__ = "sessions"
@@ -89,15 +136,44 @@ class Session(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"))
     title: Mapped[str] = mapped_column(String(32))
-    description: Mapped[Optional[str]] = mapped_column(String(256))
+    description: Mapped[str | None] = mapped_column(String(256))
     start_date: Mapped[datetime]
     end_date: Mapped[datetime]
-    max_students: Mapped[Optional[int]]
-    frequency: Mapped[Optional[SessionFreq]]
-    repeat_until: Mapped[Optional[datetime]]
-    deleted_at: Mapped[Optional[datetime]]
+    max_students: Mapped[int | None]
+    frequency: Mapped[SessionFreq | None]
+    repeat_until: Mapped[date | None]
 
     group: Mapped["Group"] = relationship(back_populates="sessions")
+
+    @classmethod
+    def create(
+        cls,
+        group: Group,
+        title: str,
+        description: str,
+        start_date: datetime,
+        end_date: datetime,
+        max_students: int | None = None,
+        freqeuncy: SessionFreq | None = None,
+        repeat_until: date | None = None,
+    ):
+        """Return a new instance of `Session`."""
+        try:
+            session = cls(
+                title=title,
+                description=description,
+                start_date=start_date,
+                end_date=end_date,
+                max_students=max_students,
+                freqeuncy=freqeuncy,
+                repeat_until=repeat_until,
+            )
+            session.group = group
+        except Exception as e:
+            raise e
+
+    def __repr__(self) -> str:
+        return f"<Session {self.id!r} (title: {self.title!r}, group: {self.group!r})>"
 
 
 class CancelledSession(Base):
@@ -106,4 +182,19 @@ class CancelledSession(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     session_id: Mapped[int] = mapped_column(ForeignKey("sessions.id"))
     start_date: Mapped[datetime]
-    reason: Mapped[Optional[str]] = mapped_column(String(256))
+    reason: Mapped[str | None] = mapped_column(String(256))
+
+    @classmethod
+    def create(
+        cls,
+        session: Session,
+        start_date: datetime | None = None,
+        reason: str | None = None,
+    ):
+        """Return a new instance of `CancelledSession`."""
+        return CancelledSession(
+            session_id=session.id, start_date=start_date, reason=reason
+        )
+
+    def __repr__(self) -> str:
+        return f"<CancelledSession {self.id!r} (session id: {self.session_id!r}, start_date: {self.start_date!r})>"
