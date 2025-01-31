@@ -12,8 +12,10 @@ from app.models import Gender, User_Types
 
 
 def name_validator(_, field):
-    if len(str(field.data).strip().split()) < 3:
-        raise ValidationError("Full name must be 3 names or more.")
+    if len(str(field.data).strip().split()) < 2:
+        raise ValidationError("Full name must be 2-5 names.")
+    elif len(str(field.data).strip().split()) > 5:
+        raise ValidationError("Too long.")
 
 
 def gender_coerce(value: int):
@@ -29,7 +31,7 @@ class RegisterForm(FlaskForm):
         "Full Name",
         validators=[name_validator, validators.DataRequired("Please fill this field.")],
         render_kw={"autocomplete": "name"},
-        # filters=[str.strip],
+        filters=[lambda s: s.strip() if s else s],
     )
     gender = RadioField(
         "Gender",
@@ -48,10 +50,10 @@ class RegisterForm(FlaskForm):
     )
     account_type = RadioField(
         "Account Type",
-        choices=[(t.value, t.name.title()) for t in list(User_Types)],
+        choices=[(t.value, t.name.title()) for t in list(User_Types) if not t.name.startswith("_")],
         validators=[
             validators.DataRequired("Please choose one."),
-            validators.AnyOf(list(User_Types), "Invalid choice."),
+            validators.AnyOf([t for t in list(User_Types) if not t.name.startswith("_")], "Invalid choice."),
         ],
         render_kw={"autocomplete": "off"},
         coerce=user_coerce,
@@ -63,12 +65,14 @@ class RegisterForm(FlaskForm):
             validators.DataRequired("Please Enter your Email."),
         ],
         render_kw={"autocomplete": "email"},
-        # filters=[str.strip, str.lower],
+        filters=[lambda s: s.strip().lower() if s else s],
     )
     password = PasswordField(
         "Password",
         validators=[
-            validators.Length(12, 64, "Password must be more than 8 and less than 64."),
+            validators.Length(
+                8, 64, "Password must be 8-64 characters."
+            ),
             validators.DataRequired("Please create a password."),
         ],
         render_kw={"autocomplete": "new-password"},
