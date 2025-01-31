@@ -93,9 +93,12 @@ function validateTab(tab) {
             valid = false;
             markInvalid(input, "Please fill this field.");
         } else if (input.getAttribute("id") === "full_name") {
-            if (input.value.trim().split(/\s/).length < 3) {
+            if (
+                input.value.trim().split(/\s/).length < 2 ||
+                input.value.trim().split(/\s/).length > 5
+            ) {
                 valid = false;
-                markInvalid(input, "Full name must be 3 names or more.");
+                markInvalid(input, "Full name must be 2-5 names.");
             }
         } else if (input.type == "password") {
             if (input.getAttribute("autocomplete") === "current-password") {
@@ -108,17 +111,14 @@ function validateTab(tab) {
                     markInvalid(input, "Passwords don't match.");
                 }
             } else {
-                if (input.value.length < 12 || input.value.length > 64) {
+                if (input.value.length < 8 || input.value.length > 64) {
                     valid = false;
-                    markInvalid(
-                        input,
-                        "Password must be more than 12 characters and less than 64 characters."
-                    );
+                    markInvalid(input, "Password must be 8-64 characters.");
                 } else if (new Set(input.value).size < 5) {
                     valid = false;
                     markInvalid(
                         input,
-                        "Password must contain more than 5 unique characters."
+                        "Password must contain 5 or more unique characters."
                     );
                 }
             }

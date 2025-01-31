@@ -9,6 +9,7 @@ from app.db import Base
 class User_Types(Enum):
     TEACHER = 0
     STUDENT = 1
+    _ADMIN = 2  # Restricted type
 
 
 class Gender(Enum):
@@ -192,9 +193,12 @@ class CancelledSession(Base):
         reason: str | None = None,
     ):
         """Return a new instance of `CancelledSession`."""
-        return CancelledSession(
-            session_id=session.id, start_date=start_date, reason=reason
-        )
+        try:
+            return CancelledSession(
+                session_id=session.id, start_date=start_date, reason=reason
+            )
+        except Exception as e:
+            raise e
 
     def __repr__(self) -> str:
         return f"<CancelledSession {self.id!r} (session id: {self.session_id!r}, start_date: {self.start_date!r})>"
