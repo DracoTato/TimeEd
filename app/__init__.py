@@ -1,12 +1,12 @@
 from flask import Flask, render_template
-from typing import Dict, Any
+from typing import Any
 from .config import Config
 from .logging import setup_logging
 from .routes.auth import auth_bp
 from .db import db
 
 
-def create_app(config: Dict[Any, Any] = {}):
+def create_app(config: dict[str, Any] = {}):
     app = Flask(__name__.split(".")[0])
 
     if config:

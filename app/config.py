@@ -5,7 +5,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = getenv("DATA_URI", "sqlite:///dev.db")
     SECRET_KEY = getenv("SECRET_KEY", "development")
 
-    def __init__(self, prefixes: list = ["LOG_"]):
+    def __init__(self, prefixes: list[str] = ["LOG_"]):
         """Add env variables starting with `prefixes` as attributes.
 
         Note: Please add an underscore after to prevent catching compound words, e.g. LOGGER_SMTH
