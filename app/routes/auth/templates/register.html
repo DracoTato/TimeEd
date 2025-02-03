@@ -11,12 +11,18 @@ body %}
     <div class="tab">
         <h3>Let's Get To Know You Better :)</h3>
         <div class="input-container">
-            {{ form.full_name.label }} {{ form.full_name }} {% if
-            form.full_name.errors %} {% for error in form.full_name.errors %}
+            <div class="input">
+                {{ form.full_name.label }} {{ form.full_name }}
+            </div>
+            {% if form.full_name.errors %} {% for error in form.full_name.errors
+            %}
             <p class="error">{{ error }}</p>
-            {% endfor %} {% endif %} {{ form.birthdate.label }} {{
-            form.birthdate }} {% if form.birthdate.errors %} {% for error in
-            form.birthdate.errors %}
+            {% endfor %} {% endif %}
+            <div class="input">
+                {{ form.birthdate.label }} {{ form.birthdate }}
+            </div>
+            {% if form.birthdate.errors %} {% for error in form.birthdate.errors
+            %}
             <p class="error">{{ error }}</p>
             {% endfor %} {% endif %}
             <div class="input-group">
@@ -44,21 +50,31 @@ body %}
     </div>
     <div class="tab">
         <h3>Enter Your Email.</h3>
-        <div class="input-container">{{ form.email }}</div>
+        <div class="input-container">
+            <div class="input">{{ form.email.label }}{{ form.email }}</div>
+        </div>
         {% if form.email.errors %} {% for error in form.email.errors %}
         <p class="error">{{ error }}</p>
         {% endfor %} {% endif %}
     </div>
     <div class="tab">
         <h3>Set A Strong Password.</h3>
-        <div class="input-container">{{ form.password }}</div>
+        <div class="input-container">
+            <div class="input">
+                {{ form.password.label }}{{ form.password }}
+            </div>
+        </div>
         {% if form.password.errors %} {% for error in form.password.errors %}
         <p class="error">{{ error }}</p>
         {% endfor %} {% endif %}
     </div>
     <div class="tab">
         <h3>Confirm your password</h3>
-        <div class="input-container">{{ form.confirm_password }}</div>
+        <div class="input-container">
+            <div class="input">
+                {{ form.confirm_password.label }}{{ form.confirm_password }}
+            </div>
+        </div>
         {% if form.confirm_password.errors %} {% for error in
         form.confirm_password.errors %}
         <p class="error">{{ error }}</p>

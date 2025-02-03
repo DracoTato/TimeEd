@@ -50,10 +50,17 @@ class RegisterForm(FlaskForm):
     )
     account_type = RadioField(
         "Account Type",
-        choices=[(t.value, t.name.title()) for t in list(User_Types) if not t.name.startswith("_")],
+        choices=[
+            (t.value, t.name.title())
+            for t in list(User_Types)
+            if not t.name.startswith("_")
+        ],
         validators=[
             validators.DataRequired("Please choose one."),
-            validators.AnyOf([t for t in list(User_Types) if not t.name.startswith("_")], "Invalid choice."),
+            validators.AnyOf(
+                [t for t in list(User_Types) if not t.name.startswith("_")],
+                "Invalid choice.",
+            ),
         ],
         render_kw={"autocomplete": "off"},
         coerce=user_coerce,
@@ -70,9 +77,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField(
         "Password",
         validators=[
-            validators.Length(
-                8, 64, "Password must be 8-64 characters."
-            ),
+            validators.Length(8, 64, "Password must be 8-64 characters."),
             validators.DataRequired("Please create a password."),
         ],
         render_kw={"autocomplete": "new-password"},
@@ -84,4 +89,22 @@ class RegisterForm(FlaskForm):
             validators.EqualTo("password", "Passwords don't match."),
         ],
         render_kw={"autocomplete": "new-password"},
+    )
+
+
+class LoginForm(FlaskForm):
+    email = EmailField(
+        "Email",
+        validators=[
+            validators.DataRequired("Please Enter your email address."),
+        ],
+        render_kw={"autocomplete": "email"},
+        filters=[lambda s: s.strip().lower() if s else s],
+    )
+    password = PasswordField(
+        "Password",
+        validators=[
+            validators.DataRequired("Please enter your password"),
+        ],
+        render_kw={"autocomplete": "current-password"},
     )
