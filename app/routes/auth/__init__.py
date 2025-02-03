@@ -37,7 +37,6 @@ def register():
             gender=form.gender.data,
         )
         db.session.add(user)
-        ca.logger.debug(f"New User w/ email: {user.email}")
 
         try:
             db.session.commit()

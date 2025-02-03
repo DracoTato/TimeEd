@@ -2,41 +2,57 @@
     display: flex;
     flex-direction: column;
     row-gap: var(--xs);
-    background-color: var(--primary);
+    background-image: linear-gradient(
+        35deg,
+        var(--primary) 10%,
+        var(--secondary)
+    );
     text-align: center;
     padding: var(--xxl) var(--m);
     margin-bottom: var(--xl);
 }
 
 .hero h1 {
-    color: var(--white);
+    color: var(--gray-f);
 }
 
 .hero p {
-    color: var(--light-gray)
+    color: var(--gray-e);
 }
 
-button.cta {
-    background-image: linear-gradient(10deg, var(--primary) 15%, var(--secondary) 65%);
+.cta {
+    background-color: var(--secondary-light);
+    color: var(--primary);
     margin-left: var(--m);
     padding: var(--m);
+    border: 1.5px solid var(--primary);
+}
+
+.cta:hover,
+.cta:focus-visible {
+    background-color: var(--secondary);
+    outline: none;
+    color: var(--gray-1);
+    border-color: var(--gray-1);
 }
 
 .section > h2 {
-    text-align: center; 
+    text-align: center;
     margin-bottom: var(--xl);
 }
 
-.section.intro, .section.about {
+.section.intro,
+.section.about {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--light-sec);
+    background-color: var(--info-light);
     position: relative;
-    box-shadow: 0px 0px 4px 4px var(--light-gray);
+    box-shadow: 0px 0px 6px 2px var(--gray-b);
 }
 
-.section.intro p, .section.about p {
+.section.intro p,
+.section.about p {
     width: clamp(300px, 90%, 700px);
 }
 
@@ -51,30 +67,41 @@ button.cta {
 }
 
 .section.features .sub-section .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: var(--m);
-    row-gap: var(--m);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: var(--m);
+}
+
+.section.features .sub-section .cards-container > .card:nth-child(3n) {
+    grid-column: span 2;
 }
 
 .section.features .card {
-    background-color: var(--primary);
+    background-color: var(--secondary-light);
     min-width: 300px;
     flex-basis: 200px;
     flex-grow: 1;
-    padding: var(--s);
-    box-shadow: 0px 0px 4px 2px var(--light-gray);
-    border: 2px solid var(--black);
+    padding: var(--l);
+    box-shadow: 0px 0px 6px 2px var(--gray-b);
+    border: 2px solid var(--primary);
     border-radius: var(--xxs);
 }
 
 .section.features .card h4 {
-    color: var(--white);
+    color: var(--gray-1);
     text-align: center;
     margin-bottom: var(--xs);
 }
 
 .section.features .card p {
-    color: var(--light-gray);
+    color: var(--gray-2);
     text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .section.features .sub-section .cards-container {
+        display: flex;
+        flex-direction: column;
+    }
 }
