@@ -69,7 +69,6 @@
 .section.features .sub-section .cards-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
     gap: var(--m);
 }
 
@@ -101,7 +100,9 @@
 
 @media screen and (max-width: 600px) {
     .section.features .sub-section .cards-container {
-        display: flex;
-        flex-direction: column;
+        grid-template-columns: 1fr;
+    }
+    .section.features .sub-section .cards-container > .card:nth-child(3n) {
+        grid-column: span 1;
     }
 }
