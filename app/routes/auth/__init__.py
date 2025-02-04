@@ -5,9 +5,14 @@ from flask import (
     redirect,
     url_for,
     flash,
+    session,
+    g,
+    abort,
 )
-from app.models import User
-from app.forms import RegisterForm
+from functools import wraps
+from app.models import User, User_Type
+from typing import Sequence
+from app.forms import RegisterForm, LoginForm
 from app.db import db
 
 auth_bp = Blueprint(
@@ -19,7 +24,70 @@ auth_bp = Blueprint(
 )
 
 
+# Helper functions
+@auth_bp.before_app_request
+def load_user():
+    user_id = session.get("user_id")
+    if user_id:
+        g.user = db.session.query(User).get(user_id)
+    else:
+        g.user = None
+
+
+def logout_required(view):
+    @wraps(view)
+    def wrapper(*args, **kwargs):
+        if g.user:
+            flash("Logged in successfully.", "info")
+            # TODO Redirect to dashboard
+
+        return view(*args, **kwargs)
+
+    return wrapper
+
+
+def login_required(view):
+    @wraps(view)
+    def wrapper(*args, **kwargs):
+        if not g.user:
+            flash("Please log in first.", "warning")
+            return redirect(url_for("auth.login"))
+        return view(*args, **kwargs)
+
+    return wrapper
+
+
+def role_required(type: User_Type | Sequence[User_Type]):
+    """Return a 403 error if the user accessing the page is not in `type`."""
+
+    def decorator(view):
+        @wraps(view)
+        def wrapper(*args, **kwargs):
+            if not g.user:
+                flash("Please log in first.", "error")
+                return redirect(url_for("auth.login"))
+
+            allowed_roles = {type} if isinstance(type, User_Type) else set(type)
+
+            if not isinstance(allowed_roles, set) or not all(
+                isinstance(role, User_Type) for role in allowed_roles
+            ):
+                raise TypeError(
+                    "Invalid role type. Expected User_Types or list/tuple of User_Types."
+                )
+
+            if g.user.role not in allowed_roles:
+                flash("You don't have permission to access this page.", "warning")
+                return abort(403)
+            return view(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
 @auth_bp.route("register/", methods=["GET", "POST"])
+@logout_required
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -40,8 +108,6 @@ def register():
 
         try:
             db.session.commit()
-            flash("Your account has been successfully created! Please login.", "info")
-            return redirect(url_for("auth.login"))
         except Exception as e:
             ca.logger.error(f"Error while creating new user: {e}")
             flash(
@@ -49,10 +115,33 @@ def register():
                 "warning",
             )
             return render_template("register.html", form=form)
+        else:
+            flash("Your account has been successfully created! Please login.", "info")
+            return redirect(url_for("auth.login"))
 
     return render_template("register.html", form=form)
 
 
-@auth_bp.route("login", methods=["POST", "GET"])
+@auth_bp.route("login/", methods=["POST", "GET"])
+@logout_required
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = db.session.query(User).filter_by(email=form.email.data).first()
+        if user and user.check_password(form.password.data):  # type: ignore (Pylance)
+            session["user_id"] = user.id
+            flash("Logged in successfully.", "info")
+            # TODO Redirect to dashboard
+        else:
+            flash("Wrong email or password.", "warning")
+
+    return render_template("login.html", form=form)
+
+
+@auth_bp.route("logout/", methods=["GET"])
+@login_required
+def logout():
+    session.pop("user_id")
+    g.user = None
+    flash("Logged out successfully. Please log in to use the application.", "info")
+    return redirect(url_for("auth.login"))
