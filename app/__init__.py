@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from typing import Any
 from .config import Config
 from .logging import setup_logging
-from .routes.auth import auth_bp
+from .routes import blueprints
 from .db import db
 
 
@@ -24,7 +24,8 @@ def create_app(config: dict[str, Any] = {}):
         app.logger.error(e)
 
     # Register blueprints
-    app.register_blueprint(auth_bp)
+    for bp in blueprints:
+        app.register_blueprint(bp)
 
     @app.route("/")
     def landing_page():
