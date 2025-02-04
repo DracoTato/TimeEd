@@ -28,7 +28,6 @@ def create_app(config: dict[str, Any] = {}):
 
     @app.route("/")
     def landing_page():
-        app.logger.info("Landing Page accessed.")
         return render_template("landing_page.html")
 
     return app

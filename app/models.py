@@ -6,7 +6,7 @@ from datetime import date, datetime
 from app.db import Base
 
 
-class User_Types(Enum):
+class User_Type(Enum):
     TEACHER = 0
     STUDENT = 1
     _ADMIN = 2  # Restricted type
@@ -29,7 +29,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str]
-    role: Mapped[User_Types]
+    role: Mapped[User_Type]
     full_name: Mapped[str]
     birthdate: Mapped[date]
     gender: Mapped[Gender]
@@ -55,7 +55,7 @@ class User(Base):
         cls,
         email: str,
         password: str,
-        role: User_Types,
+        role: User_Type,
         full_name: str,
         birthdate: date,
         gender: Gender,

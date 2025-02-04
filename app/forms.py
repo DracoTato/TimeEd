@@ -8,7 +8,7 @@ from wtforms import (
     validators,
     ValidationError,
 )
-from app.models import Gender, User_Types
+from app.models import Gender, User_Type
 
 
 def name_validator(_, field):
@@ -23,7 +23,7 @@ def gender_coerce(value: int):
 
 
 def user_coerce(value: int):
-    return list(User_Types)[int(value)]
+    return list(User_Type)[int(value)]
 
 
 class RegisterForm(FlaskForm):
@@ -52,13 +52,13 @@ class RegisterForm(FlaskForm):
         "Account Type",
         choices=[
             (t.value, t.name.title())
-            for t in list(User_Types)
+            for t in list(User_Type)
             if not t.name.startswith("_")
         ],
         validators=[
             validators.DataRequired("Please choose one."),
             validators.AnyOf(
-                [t for t in list(User_Types) if not t.name.startswith("_")],
+                [t for t in list(User_Type) if not t.name.startswith("_")],
                 "Invalid choice.",
             ),
         ],
