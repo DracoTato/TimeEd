@@ -1,0 +1,83 @@
+main > section h1 {
+    margin-bottom: 52px;
+}
+
+main > section:nth-child(odd) {
+    background-color: var(--gray-30);
+}
+
+footer {
+    background-color: var(--gray-100);
+    color: var(--gray-10);
+    padding: 152px 52px 28px;
+}
+
+footer .section-container {
+    display: flex;
+    justify-content: center;
+    gap: 152px;
+    margin-bottom: 128px;
+}
+
+footer .section-container h2 {
+    margin-bottom: 42px;
+}
+
+footer #contact {
+    display: flex;
+    flex-direction: column;
+}
+
+.msg-container {
+    margin-bottom: 32px;
+}
+
+.msg-container textarea {
+    width: 100%;
+    max-width: 100%;
+    min-height: 150px;
+    max-height: 300px;
+    padding: 8px;
+    resize: vertical;
+    -webkit-resize: vertical;
+    -moz-resize: vertical;
+}
+
+.msg-container p {
+    color: var(--gray-30);
+}
+
+footer .contact a {
+    color: inherit;
+}
+
+footer .resources ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style-type: none;
+}
+
+footer .resources ul a {
+    color: var(--gray-30);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+footer .resources ul a:hover {
+    color: var(--gray-10);
+}
+
+.copyrights {
+    text-align: center;
+}
+
+.copyrights > small {
+    color: var(--gray-30);
+}
+
+@media screen and (max-width: 786px) {
+    footer .section-container {
+        flex-direction: column;
+    }
+}
