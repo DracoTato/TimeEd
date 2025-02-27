@@ -7,7 +7,11 @@ from .db import db
 
 
 def create_app(config: dict[str, Any] = {}):
-    app = Flask(__name__.split(".")[0])
+    app = Flask(
+        __name__.split(".")[0],
+        static_folder="web/assets",
+        template_folder="web/templates",
+    )
 
     if config:
         app.config.from_mapping(config)  # Highest priority
@@ -28,7 +32,7 @@ def create_app(config: dict[str, Any] = {}):
         app.register_blueprint(bp)
 
     @app.route("/")
-    def landing_page():
-        return render_template("landing_page.html")
+    def index():
+        return render_template("index.html")
 
     return app
