@@ -19,8 +19,8 @@ auth_bp = Blueprint(
     "auth",
     __name__,
     url_prefix="/auth",
-    template_folder="./templates",
-    static_folder="./static",
+    template_folder="../../web/templates/routes/auth",
+    static_folder="../../web/static/",
 )
 
 
@@ -116,6 +116,7 @@ def register():
             )
             return render_template("register.html", form=form)
         else:
+            print("User created successfully.")
             flash("Your account has been successfully created! Please login.", "info")
             return redirect(url_for("auth.login"))
 
@@ -128,10 +129,11 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = db.session.query(User).filter_by(email=form.email.data).first()
+        ca.logger.info(f"User {form.email.data} is trying to log in. exists? {bool(user)}")
         if user and user.check_password(form.password.data):  # type: ignore (Pylance)
             session["user_id"] = user.id
             flash("Logged in successfully.", "info")
-            # TODO Redirect to dashboard
+            return redirect(url_for("index")) # TODO Redirect to dashboard 
         else:
             flash("Wrong email or password.", "warning")
 
