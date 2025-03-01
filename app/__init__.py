@@ -4,6 +4,7 @@ from .config import Config
 from .logging import setup_logging
 from .routes import blueprints
 from .db import db
+from .db.commands import register_commands  
 
 
 def create_app(config: dict[str, Any] = {}):
@@ -20,12 +21,7 @@ def create_app(config: dict[str, Any] = {}):
         app.config.from_object(conf)  # Load from file
     setup_logging(app)
 
-    try:
-        db.init_app(app)  # Load the DB
-        with app.app_context():
-            db.create_all()  # Create the DB tables
-    except Exception as e:
-        app.logger.error(e)
+    db.init_app(app)  # Register db w/ flask instance
 
     # Register blueprints
     for bp in blueprints:

@@ -10,7 +10,7 @@ from flask import (
     abort,
 )
 from functools import wraps
-from app.models import User, User_Type
+from app.db.models import User, User_Type
 from typing import Sequence
 from app.forms import RegisterForm, LoginForm
 from app.db import db

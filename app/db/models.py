@@ -3,13 +3,14 @@ from sqlalchemy.orm import Mapped, relationship, mapped_column
 from werkzeug.security import check_password_hash, generate_password_hash
 from enum import Enum
 from datetime import date, datetime
-from app.db import Base
+from . import Base
 
 
 class User_Type(Enum):
-    TEACHER = 0
-    STUDENT = 1
-    _ADMIN = 2  # Restricted type
+    _SUPER_ADMIN = 0  # Restricted type
+    _ADMIN = 1  # Restricted type
+    TEACHER = 2
+    STUDENT = 3
 
 
 class Gender(Enum):
@@ -18,9 +19,9 @@ class Gender(Enum):
 
 
 class SessionFreq(Enum):
-    DAILY = "daily"
-    WEEKLY = "weekly"
-    MONTHLY = "monthly"
+    DAILY = 0
+    WEEKLY = 1
+    MONTHLY = 2
 
 
 class User(Base):
@@ -29,10 +30,10 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str]
-    role: Mapped[User_Type]
+    role: Mapped[int] # User_Type.value
     full_name: Mapped[str]
     birthdate: Mapped[date]
-    gender: Mapped[Gender]
+    gender: Mapped[int] # Gender.value
     bio: Mapped[str | None]
 
     owned_groups: Mapped[list["Group"]] = relationship(
@@ -65,10 +66,10 @@ class User(Base):
         try:
             user = cls(
                 email=email,
-                role=role,
+                role=role.value,
                 full_name=full_name,
                 birthdate=birthdate,
-                gender=gender,
+                gender=gender.value,
                 bio=bio,
             )
             user.__set_password__(password)
