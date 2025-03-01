@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from typing import Any
 from .config import Config
 from .logging import setup_logging
-from .routes import blueprints
+from .routes import register_blueprints
 from .db import db
 from .db.commands import register_commands  
 
@@ -23,9 +23,8 @@ def create_app(config: dict[str, Any] = {}):
 
     db.init_app(app)  # Register db w/ flask instance
 
-    # Register blueprints
-    for bp in blueprints:
-        app.register_blueprint(bp)
+    register_blueprints(app)
+    register_commands(app)
 
     @app.route("/")
     def index():
