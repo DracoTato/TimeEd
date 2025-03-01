@@ -8,7 +8,7 @@ from wtforms import (
     validators,
     ValidationError,
 )
-from app.models import Gender, User_Type
+from app.db.models import Gender, User_Type
 
 
 def name_validator(_, field):
