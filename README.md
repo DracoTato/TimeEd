@@ -79,6 +79,13 @@ Formerly know as eTeach, TimeEd is a time management web application designed to
     - Start Command: `gunicorn app:app`
 4. Deploy and access your application at the provided Render URL.
 
+### On PythonAnyWhere
+
+1. Create a new web service.
+2. Create a deploy SSH key.
+3. Specify your application variable in the wsgi file.
+4. pull from the GitHub repo.
+
 ## License
 
 TimeEd may be used for personal and/or learning purposes, however it may NOT be used for commercial use without consent from the owner.
