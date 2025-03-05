@@ -1,6 +1,6 @@
 from os import environ
 import click
-from flask.cli import with_appcontext
+from sqlalchemy.exc import OperationalError
 
 from . import db
 
@@ -10,6 +10,7 @@ def init_db():
     """Create the db tables"""
     db.create_all()
     click.echo("Database initialized successfully.")
+
 
 @click.command("reset-db")
 def reset_db():
@@ -57,9 +58,18 @@ def init_superadmin():
     sudo_data: dict[str, str] = get_admin_data()
 
     # Check if the admin user already exists
-    if db.session.query(User).filter_by(email=sudo_data["email"]).first():
-        click.echo("Superadmin user already exists, Doing nothing.")
-        return
+    try:
+        if db.session.query(User).filter_by(email=sudo_data["email"]).first():
+            click.echo("Superadmin user already exists, Doing nothing.")
+            return
+    except OperationalError as e:
+        if click.confirm(
+            "It looks the DB tables don't exist, would you like to create them?"
+        ):
+            db.create_all()
+            pass
+        else:
+            return
 
     gender_str = sudo_data["gender"].upper()
     if gender_str not in Gender.__members__:
@@ -82,6 +92,7 @@ def init_superadmin():
 
 
 COMMANDS = [init_superadmin, init_db, reset_db]
+
 
 def register_commands(app):
     """Register CLI commands with a flask instance"""
