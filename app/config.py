@@ -1,9 +1,15 @@
-from os import getenv, environ
+import os
+from secrets import token_hex
 
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = getenv("DATA_URI", "sqlite:///dev.db")
-    SECRET_KEY = getenv("SECRET_KEY", "development")
+    """Base Config"""
+
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATA_URI", "sqlite:///timeed.db")
+    SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
+    SQLALCHEMY_TRACK_MODIFICATION = False
+    DEBUG = False
+    TESTING = False
 
     def __init__(self, prefixes: list[str] = ["LOG_"]):
         """Add env variables starting with `prefixes` as attributes.
@@ -13,10 +19,41 @@ class Config:
         """
         matching_vars = {
             key: value
-            for key, value in environ.items()
+            for key, value in os.environ.items()
             if any(key.startswith(prefix) for prefix in prefixes)
         }  # Check if key starts with any of the prefixes
 
         for key, value in matching_vars.items():
             if not hasattr(self, key):
                 setattr(self, key, value)
+
+
+class DevelopmentConfig(Config):
+    """Development Config"""
+
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATA_URI", "sqlite:///dev.db")
+    DEBUGGING = True
+
+
+class ProductionConfig(Config):
+    """Production Config"""
+
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATA_URI", "sqlite:///production.db")
+    DEBUG = False
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SAMESITE = "Lax"
+
+
+class TestConfig(Config):
+    """Test Config"""
+
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    TESTING = True
+    WTF_CSRF_ENABLED = False
+
+
+config_dict = {
+    "development": DevelopmentConfig,
+    "production": ProductionConfig,
+    "testing": TestConfig,
+}
