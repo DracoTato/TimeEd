@@ -66,7 +66,7 @@ def init_superadmin():
         raise ValueError(f"Invalid gender value: {gender_str}")
 
     # Create a new admin user
-    admin = User.create(
+    admin = User(
         sudo_data["email"],
         sudo_data["password"],
         User_Type._SUPER_ADMIN,
