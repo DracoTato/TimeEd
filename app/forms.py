@@ -8,7 +8,7 @@ from wtforms import (
     validators,
     ValidationError,
 )
-from app.db.models import Gender, User_Type
+from app.db.schema.models import Gender, User_Type
 
 
 def name_validator(_, field):
@@ -19,11 +19,17 @@ def name_validator(_, field):
 
 
 def gender_coerce(value: int):
-    return list(Gender)[int(value)]
+    try:
+        return Gender(int(value))
+    except:
+        return None
 
 
 def user_coerce(value: int):
-    return list(User_Type)[int(value)]
+    try:
+        return User_Type(int(value))
+    except:
+        return None
 
 
 class RegisterForm(FlaskForm):

@@ -10,7 +10,7 @@ from flask import (
     abort,
 )
 from functools import wraps
-from app.db.models import User, User_Type
+from app.db.schema import User, User_Type
 from typing import Sequence
 from app.forms import RegisterForm, LoginForm
 from app.db import db
@@ -96,7 +96,7 @@ def register():
             form.email.errors.append("This email is already in use.")  # type: ignore (Pylance)
             return render_template("register.html", form=form)
 
-        user = User.create(
+        user = User(
             email=form.email.data,  # type: ignore (Pylance)
             password=form.password.data,  # type: ignore (Pylance)
             role=form.account_type.data,
@@ -129,11 +129,10 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = db.session.query(User).filter_by(email=form.email.data).first()
-        ca.logger.info(f"User {form.email.data} is trying to log in. exists? {bool(user)}")
         if user and user.check_password(form.password.data):  # type: ignore (Pylance)
             session["user_id"] = user.id
             flash("Logged in successfully.", "info")
-            return redirect(url_for("index")) # TODO Redirect to dashboard 
+            return redirect(url_for("index"))  # TODO Redirect to dashboard
         else:
             flash("Wrong email or password.", "warning")
 
