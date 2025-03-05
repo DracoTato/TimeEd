@@ -51,7 +51,7 @@ def get_admin_data():
 @click.command("init-superadmin")
 def init_superadmin():
     """Read superadmin credentials from env and add it to the db"""
-    from .models import User, User_Type, Gender
+    from .schema.models import User, User_Type, Gender
     from datetime import date
 
     sudo_data: dict[str, str] = get_admin_data()
