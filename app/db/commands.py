@@ -108,7 +108,7 @@ def create_seed(users, groups):
         "gender": Gender.MALE,
     }
 
-    if not current_app.config["DEBUGGING"] and not current_app.config["TESTING"]:
+    if not current_app.config["DEBUG"] and not current_app.config["TESTING"]:
         if not click.confirm(
             "Are you sure you want to create seed data in production?"
         ):
