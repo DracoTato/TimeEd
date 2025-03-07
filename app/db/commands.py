@@ -1,8 +1,13 @@
 from os import environ
 import click
 from sqlalchemy.exc import OperationalError
+from random import choice
+from flask import current_app
 
 from . import db
+from .schema.models import User, Group
+from .schema.enums import User_Type, Gender
+from datetime import date
 
 
 @click.command("init-db")
@@ -52,8 +57,6 @@ def get_admin_data():
 @click.command("init-superadmin")
 def init_superadmin():
     """Read superadmin credentials from env and add it to the db"""
-    from .schema.models import User, User_Type, Gender
-    from datetime import date
 
     sudo_data: dict[str, str] = get_admin_data()
 
@@ -62,7 +65,7 @@ def init_superadmin():
         if db.session.query(User).filter_by(email=sudo_data["email"]).first():
             click.echo("Superadmin user already exists, Doing nothing.")
             return
-    except OperationalError as e:
+    except OperationalError:
         if click.confirm(
             "It looks the DB tables don't exist, would you like to create them?"
         ):
@@ -91,7 +94,49 @@ def init_superadmin():
     click.echo("Superadmin created successfully.")
 
 
-COMMANDS = [init_superadmin, init_db, reset_db]
+@click.command("create-seed")
+@click.option("--users", type=int, default=10, help="Number of users to create")
+@click.option("--groups", type=int, default=10, help="Number of groups to create")
+def create_seed(users, groups):
+    """Create seed data for development and testing"""
+    user_template = {
+        "email": "user@example.com",
+        "password": "password",
+        "role": User_Type.STUDENT,
+        "full_name": "John Doe",
+        "birthdate": date(1990, 1, 1),
+        "gender": Gender.MALE,
+    }
+
+    if not current_app.config["DEBUGGING"] and not current_app.config["TESTING"]:
+        if not click.confirm(
+            "Are you sure you want to create seed data in production?"
+        ):
+            return
+
+    if db.session.query(User).filter_by(email="user0@example.com").first():
+        click.echo("Seed data already exists.")
+        click.echo("Aborting.")
+        return
+
+    seed_users = []
+    for i in range(users):
+        data = user_template
+        data.update(email=f"user{i}@example.com")
+        user = User(**data)
+        db.session.add(user)
+        seed_users.append(user)
+
+    for i in range(groups):
+        group = Group(choice(seed_users), f"Group {i + 1}", "Group Description")
+        db.session.add(group)
+
+    db.session.commit()
+
+    click.echo(f"{users} users, {groups} groups created successfully.")
+
+
+COMMANDS = [init_superadmin, init_db, reset_db, create_seed]
 
 
 def register_commands(app):
