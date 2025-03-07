@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date, datetime
 from uuid import uuid4
 
-from .enums import *
+from . import enums
 from .. import Base
 
 
@@ -14,11 +14,13 @@ class User(Base):
     uuid: Mapped[str] = mapped_column(default=lambda: str(uuid4()), unique=True)
     email: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str]
-    role: Mapped[User_Type]
-    status: Mapped[Account_Status] = mapped_column(default=Account_Status.UNVERIFIED)
+    role: Mapped[enums.User_Type]
+    status: Mapped[enums.Account_Status] = mapped_column(
+        default=enums.Account_Status.UNVERIFIED
+    )
     full_name: Mapped[str]
     birthdate: Mapped[date]
-    gender: Mapped[Gender]
+    gender: Mapped[enums.Gender]
     bio: Mapped[str | None]
 
     owned_groups: Mapped[list["Group"]] = relationship(
@@ -38,10 +40,10 @@ class User(Base):
         self,
         email: str,
         password: str,
-        role: User_Type,
+        role: enums.User_Type,
         full_name: str,
         birthdate: date,
-        gender: Gender,
+        gender: enums.Gender,
         bio: str | None = None,
     ):
         self.email = email
@@ -230,7 +232,9 @@ class AbsenceRequest(Base):
     session_id: Mapped[int] = mapped_column(ForeignKey("sessions.id"))
     start_date: Mapped[datetime | None]
     reason: Mapped[str]
-    status: Mapped[Request_Status] = mapped_column(default=Request_Status.PENDING)
+    status: Mapped[enums.Request_Status] = mapped_column(
+        default=enums.Request_Status.PENDING
+    )
 
     user: Mapped["User"] = relationship(back_populates="absence_requests")
     session: Mapped["Session"] = relationship(back_populates="absence_requests")
@@ -251,7 +255,9 @@ class Question(Base):
     group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"))
     title: Mapped[str]
     description: Mapped[str]
-    status: Mapped[Question_Status] = mapped_column(default=Question_Status.OPEN)
+    status: Mapped[enums.Question_Status] = mapped_column(
+        default=enums.Question_Status.OPEN
+    )
 
     user: Mapped["User"] = relationship(back_populates="questions")
     group: Mapped["Group"] = relationship(back_populates="questions")
