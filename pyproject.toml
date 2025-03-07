@@ -1,0 +1,30 @@
+[project]
+name = "timeed"
+version = "0.1.0"
+description = "A web app to help teachers manage students"
+authors = [
+    {name = "DracoTato",email = "160530153+DracoTato@users.noreply.github.com"}
+]
+license = {text = "GPL-3.0-only"}
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flask (>=3.1.0,<4.0.0)",
+    "sqlalchemy (>=2.0.38,<3.0.0)",
+    "flask-sqlalchemy (>=3.1.1,<4.0.0)",
+    "python-dotenv (>=1.0.1,<2.0.0)",
+    "flask-wtf (>=1.2.2,<2.0.0)",
+    "wtforms[email-validator] (>=3.2.1,<4.0.0)",
+    "email-validator (>=2.2.0,<3.0.0)",
+    "pre-commit (>=4.1.0,<5.0.0)"
+]
+
+[tool.poetry]
+packages = [{ include = "app" }]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
