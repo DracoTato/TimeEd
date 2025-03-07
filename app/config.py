@@ -32,7 +32,7 @@ class DevelopmentConfig(Config):
     """Development Config"""
 
     SQLALCHEMY_DATABASE_URI = os.getenv("DATA_URI", "sqlite:///dev.db")
-    DEBUGGING = True
+    DEBUG = True
 
 
 class ProductionConfig(Config):
