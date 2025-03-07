@@ -10,7 +10,8 @@ from flask import (
     abort,
 )
 from functools import wraps
-from app.db.schema import User, User_Type
+from app.db.schema.models import User
+from app.db.schema.enums import User_Type
 from typing import Sequence
 from app.forms import RegisterForm, LoginForm
 from app.db import db
