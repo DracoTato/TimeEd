@@ -93,3 +93,5 @@ TimeEd may be used for personal and/or learning purposes, however it may NOT be 
 ## About
 
 TimeEd is created and maintained by **DracoTato**. The app is inspired by the need to simplify time management for teachers and students. Feedback and suggestions are always welcome!
+
+Shoutout to [AATANKI](https://github.com/AA-TANKI) for contributing to the previous version of TimeED (eTeach)
