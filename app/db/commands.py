@@ -11,19 +11,27 @@ from datetime import date
 
 
 @click.command("init-db")
-def init_db():
+@click.pass_context
+def init_db(ctx):
     """Create the db tables"""
     db.create_all()
     click.echo("Database initialized successfully.")
 
+    if click.confirm("Would you like to initialize the admin account as well?"):
+        ctx.invoke(init_superadmin)
+
 
 @click.command("reset-db")
-def reset_db():
+@click.pass_context
+def reset_db(ctx):
     """Drop all tables and create new ones"""
     if click.confirm("Are you sure? this action is irreversible"):
         db.drop_all()
         db.create_all()
         click.echo("Database reset successfully.")
+
+        if click.confirm("Would you like to initialize the admin account as well?"):
+            ctx.invoke(init_superadmin)
     else:
         click.echo("Action cancelled.")
 
