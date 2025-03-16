@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField,
@@ -18,17 +19,30 @@ def name_validator(_, field):
         raise ValidationError("Too long.")
 
 
+def age_validator(_, field):
+    # 120 yo max
+    today = date.today()
+    max_age = today - timedelta(days=365 * 120)
+    # 8 yo min
+    min_age = today - timedelta(days=365 * 8)
+
+    if field.data > min_age:
+        raise ValidationError("You're too young for this platform.")
+    if field.data < max_age:
+        raise ValidationError("Please enter your real age :|")
+
+
 def gender_coerce(value: int):
     try:
         return Gender(int(value))
-    except:
+    except ValueError:
         return None
 
 
 def user_coerce(value: int):
     try:
         return User_Type(int(value))
-    except:
+    except ValueError:
         return None
 
 
@@ -51,7 +65,7 @@ class RegisterForm(FlaskForm):
     )
     birthdate = DateField(
         "Birthdate",
-        validators=[validators.DataRequired("Please fill this field.")],
+        validators=[age_validator, validators.DataRequired("Please fill this field.")],
         render_kw={"autocomplete": "bday"},
     )
     account_type = RadioField(
