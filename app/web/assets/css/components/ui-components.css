@@ -128,7 +128,9 @@ button {
     display: inline-block;
     background-color: var(--gray-50);
     color: var(--gray-90);
+    max-width: 16rem;
     min-width: 8rem;
+    min-height: 4rem;
     padding: 1.2rem 1.5rem;
     border-radius: 1rem;
     border: 2px solid var(--gray-70);
