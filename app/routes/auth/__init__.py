@@ -65,7 +65,7 @@ def role_required(type: User_Type | Sequence[User_Type]):
         @wraps(view)
         def wrapper(*args, **kwargs):
             if not g.user:
-                flash("Please log in first.", "error")
+                flash("Please log in first.", "warning")
                 return redirect(url_for("auth.login"))
 
             allowed_roles = {type} if isinstance(type, User_Type) else set(type)
@@ -78,7 +78,7 @@ def role_required(type: User_Type | Sequence[User_Type]):
                 )
 
             if g.user.role not in allowed_roles:
-                flash("You don't have permission to access this page.", "warning")
+                flash("You don't have permission to access this page.", "error")
                 return abort(403)
             return view(*args, **kwargs)
 
@@ -94,7 +94,7 @@ def register():
     if form.validate_on_submit():
         if db.session.query(User).filter_by(email=form.email.data).first():
             flash("This user already exists! please login instead.", "warning")
-            form.email.errors.append("This email is already in use.")  # type: ignore (Pylance)
+            form.email.errors.append("An account is registered using this email.")  # type: ignore (Pylance)
             return render_template("register.html", form=form)
 
         user = User(
@@ -113,12 +113,13 @@ def register():
             ca.logger.error(f"Error while creating new user: {e}")
             flash(
                 "We're sorry, an unknown error occurred while trying to create your account. We'll solve it as fast as we can.",
-                "warning",
+                "error",
             )
             return render_template("register.html", form=form)
         else:
-            print("User created successfully.")
-            flash("Your account has been successfully created! Please login.", "info")
+            flash(
+                "Your account has been successfully created! Please login.", "success"
+            )
             return redirect(url_for("auth.login"))
 
     return render_template("register.html", form=form)
@@ -132,10 +133,10 @@ def login():
         user = db.session.query(User).filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):  # type: ignore (Pylance)
             session["user_id"] = user.id
-            flash("Logged in successfully.", "info")
+            flash("Logged in successfully.", "success")
             return redirect(url_for("index"))  # TODO Redirect to dashboard
         else:
-            flash("Wrong email or password.", "warning")
+            flash("Wrong email or password.", "error")
 
     return render_template("login.html", form=form)
 
