@@ -1,248 +1,245 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TimeED is a time management tool for teachers and students.">
-    <meta name="keywords" content="time management, time, management, tool, teachers, students, teaching, learning">
-    <meta name="author" content="DracoTato">
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/routes/index.css') }}">
-    <style>
-        :root {
-            --hero-image: url("{{ url_for('static', filename='images/hero.webp') }}");
-        }
-    </style>
-    <title>TimeED</title>
-</head>
 
-<body>
-    <svg style="display: none;">
-        <symbol id="quote-icon" viewBox="0 0 16.933 11.937">
-            <g id="g" transform="matrix(.25687 0 0 .25687 -39.041 -21.002)">
-                <path id="path"
-                    d="m160.67 81.76c-4.81 0-8.68 3.87-8.68 8.68v9.85c0 4.81 3.87 8.68 8.68 8.68h12.44v4.43c0 3.99-3.23 7.22-7.22 7.22h-7.18c-1.69 0-3.04 1.36-3.04 3.04v1.51c0 1.69 1.36 3.04 3.04 3.04h9.95c4.44 0 8.53-3.31 10.61-7.24 1.02-1.92 1.6-4.11 1.6-6.43v-24.12c0-4.81-3.87-8.68-8.68-8.68z"
-                    stroke-linecap="round" stroke-width="1.2933" />
-                <use transform="translate(37.042)" xlink:href="#path" />
-            </g>
-        </symbol>
-    </svg>
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TimeED is a time management tool for teachers and students.">
+<meta name="keywords" content="time management, time, management, tool, teachers, students, teaching, learning">
+<meta name="author" content="DracoTato">
+<link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/routes/index.css') }}">
+<style>
+    :root {
+        --hero-image: url("{{ url_for('static', filename='images/hero.webp') }}");
+    }
+</style>
+<title>TimeED</title>
+{% endblock head %}
 
-    {# Enf of icons def #}
+{% block body %}
+<svg style="display: none;">
+    <symbol id="quote-icon" viewBox="0 0 16.933 11.937">
+        <g id="g" transform="matrix(.25687 0 0 .25687 -39.041 -21.002)">
+            <path id="path"
+                d="m160.67 81.76c-4.81 0-8.68 3.87-8.68 8.68v9.85c0 4.81 3.87 8.68 8.68 8.68h12.44v4.43c0 3.99-3.23 7.22-7.22 7.22h-7.18c-1.69 0-3.04 1.36-3.04 3.04v1.51c0 1.69 1.36 3.04 3.04 3.04h9.95c4.44 0 8.53-3.31 10.61-7.24 1.02-1.92 1.6-4.11 1.6-6.43v-24.12c0-4.81-3.87-8.68-8.68-8.68z"
+                stroke-linecap="round" stroke-width="1.2933" />
+            <use transform="translate(37.042)" xlink:href="#path" />
+        </g>
+    </symbol>
+</svg>
 
-    <div class="topbar">
-        <nav>
-            <ul class="font-roboto font-h6">
-                <div class="active-box"></div>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#info">Info</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#footer">Contact</a></li>
-            </ul>
-        </nav>
+{# Enf of icons def #}
+
+<div class="topbar">
+    <nav>
+        <ul class="font-roboto font-h6">
+            <div class="active-box"></div>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#info">Info</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#footer">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+<header id="home">
+    <div class="container">
+        <div class="hero">
+            <h1 class="font-super">Teach Smarter, <div class="secondary">Not Harder.</div>
+            </h1>
+            <p>TimeED helps teachers manage groups, sessions, and students effortlessly—so you can
+                focus
+                on what truly
+                matters: teaching.</p>
+        </div>
+        <div class="action"><a class="button btn-secondary" href="{{ url_for('auth.register') }}">Get Started</a>
+        </div>
     </div>
-    <header id="home">
+</header>
+<main>
+    <section id="info">
         <div class="container">
-            <div class="hero">
-                <h1 class="font-super">Teach Smarter, <div class="secondary">Not Harder.</div>
-                </h1>
-                <p>TimeED helps teachers manage groups, sessions, and students effortlessly—so you can
-                    focus
-                    on what truly
-                    matters: teaching.</p>
-            </div>
-            <div class="action"><a class="button btn-secondary" href="{{ url_for('auth.register') }}">Get Started</a>
-            </div>
+            <h1>Time Management</h1>
+            <p class="card">
+                <svg viewBox="0 0 16.933 11.937" class="icon quotes-icon">
+                    <use href="#quote-icon" />
+                </svg>
+                Time management is essential for both teachers and students, as it fosters
+                productivity,
+                reduces stress, and enhances overall performance. For teachers, managing time effectively allows
+                them to
+                plan lessons, assess student work, and balance administrative tasks without feeling overwhelmed. It
+                also
+                enables them to dedicate more energy to personalized support for their students. For students,
+                learning
+                time management cultivates discipline, helps them meet deadlines, and provides a sense of control
+                over
+                their studies, leading to better academic outcomes and personal growth. With the right tools, both
+                teachers and students can maximize their potential and achieve their goals efficiently.
+                <svg viewBox="0 0 16.933 11.937" class="icon quotes-icon">
+                    <use href="#quote-icon" />
+                </svg>
+            </p>
+            <img id="alarm-img" src="{{ url_for('static', filename='images/alarm.svg') }}"
+                alt="Illustration of an alarm clock">
         </div>
-    </header>
-    <main>
-        <section id="info">
-            <div class="container">
-                <h1>Time Management</h1>
-                <p class="card">
-                    <svg viewBox="0 0 16.933 11.937" class="icon quotes-icon">
-                        <use href="#quote-icon" />
-                    </svg>
-                    Time management is essential for both teachers and students, as it fosters
-                    productivity,
-                    reduces stress, and enhances overall performance. For teachers, managing time effectively allows
-                    them to
-                    plan lessons, assess student work, and balance administrative tasks without feeling overwhelmed. It
-                    also
-                    enables them to dedicate more energy to personalized support for their students. For students,
-                    learning
-                    time management cultivates discipline, helps them meet deadlines, and provides a sense of control
-                    over
-                    their studies, leading to better academic outcomes and personal growth. With the right tools, both
-                    teachers and students can maximize their potential and achieve their goals efficiently.
-                    <svg viewBox="0 0 16.933 11.937" class="icon quotes-icon">
-                        <use href="#quote-icon" />
-                    </svg>
-                </p>
-                <img id="alarm-img" src="{{ url_for('static', filename='images/alarm.svg') }}"
-                    alt="Illustration of an alarm clock">
-            </div>
-        </section>
-        <section id="features">
-            <div class="container">
-                <h1>Features</h1>
-                <div class="timeline-container">
-                    <div class="timeline-card">
-                        <div class="line-container">
-                            <div class="dot"></div>
-                            <div class="line"></div>
-                        </div>
-                        <div class="card-header">
-                            <h2 class="card-title">
-                                <svg version="1.1" viewBox="0 0 16.933 16.934" class="icon">
-                                    <g transform="translate(-16.934)">
-                                        <g id="a" transform="matrix(.20602 0 0 .20602 -7.263 -11.659)"
-                                            stroke-linecap="round">
-                                            <g transform="matrix(.95706 0 0 .95706 34.054 6.014)">
-                                                <path
-                                                    d="m130.83 90.265a19.944 19.944 0 0 0 14.406 6.217 19.944 19.944 0 0 0 19.944-19.944 19.944 19.944 0 0 0-19.944-19.944 19.944 19.944 0 0 0-11.388 3.6193 21.475 21.475 0 0 1 4.8056 13.476 21.475 21.475 0 0 1-7.8239 16.577z"
-                                                    stroke-width=".26458" />
-                                                <path
-                                                    d="m144.62 138.73h23.35a5.05 4.89 0 0 0 5.05-4.89v-18.08a17.22 16.69 0 0 0-17.22-16.69h-18.46a18.54 17.97 0 0 1 9.76 15.78v19.47a5.43 5.27 0 0 1-2.48 4.41z"
-                                                    stroke-width=".28198" />
-                                            </g>
-                                            <g transform="translate(-.00010281)">
-                                                <circle cx="145.23" cy="76.538" r="19.944" stroke-width=".26458" />
-                                                <path transform="matrix(1 0 0 .96943 0 2.0049)"
-                                                    d="m134.67 100.19h21.136a17.217 17.217 45 0 1 17.217 17.217v18.648a5.0457 5.0457 135 0 1-5.0457 5.0457h-45.479a5.0457 5.0457 45 0 1-5.0457-5.0457v-18.648a17.217 17.217 135 0 1 17.217-17.217z"
-                                                    stroke-width=".28639" />
-                                            </g>
-                                        </g>
-                                    </g>
-                                </svg>
-                                Create A Group
-                            </h2>
-                            <p class="card-description">Set up a new group for your class, course, or tutoring session.
-                            </p>
-                        </div>
-                        <div class="card-body"></div>
+    </section>
+    <section id="features">
+        <div class="container">
+            <h1>Features</h1>
+            <div class="timeline-container">
+                <div class="timeline-card">
+                    <div class="line-container">
+                        <div class="dot"></div>
+                        <div class="line"></div>
                     </div>
-                    <div class="timeline-card">
-                        <div class="line-container">
-                            <div class="dot"></div>
-                            <div class="line"></div>
-                        </div>
-                        <div class="card-header">
-                            <h2 class="card-title">
-                                <svg version="1.1" viewBox="0 0 16.933 16.933" class="icon">
-                                    <g transform="translate(-33.867)">
-                                        <g id="a" transform="translate(-92.717 -83.089)">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg version="1.1" viewBox="0 0 16.933 16.934" class="icon">
+                                <g transform="translate(-16.934)">
+                                    <g id="a" transform="matrix(.20602 0 0 .20602 -7.263 -11.659)"
+                                        stroke-linecap="round">
+                                        <g transform="matrix(.95706 0 0 .95706 34.054 6.014)">
                                             <path
-                                                d="m133.94 85.73v4.7141h-4.7141v2.222h4.7141v4.7141h2.222v-4.7141h4.7141v-2.222h-4.7141v-4.7141z" />
-                                            <circle cx="135.05" cy="91.556" r="8.0698" fill="none"
-                                                stroke-linecap="round" stroke-width=".79375" />
+                                                d="m130.83 90.265a19.944 19.944 0 0 0 14.406 6.217 19.944 19.944 0 0 0 19.944-19.944 19.944 19.944 0 0 0-19.944-19.944 19.944 19.944 0 0 0-11.388 3.6193 21.475 21.475 0 0 1 4.8056 13.476 21.475 21.475 0 0 1-7.8239 16.577z"
+                                                stroke-width=".26458" />
+                                            <path
+                                                d="m144.62 138.73h23.35a5.05 4.89 0 0 0 5.05-4.89v-18.08a17.22 16.69 0 0 0-17.22-16.69h-18.46a18.54 17.97 0 0 1 9.76 15.78v19.47a5.43 5.27 0 0 1-2.48 4.41z"
+                                                stroke-width=".28198" />
+                                        </g>
+                                        <g transform="translate(-.00010281)">
+                                            <circle cx="145.23" cy="76.538" r="19.944" stroke-width=".26458" />
+                                            <path transform="matrix(1 0 0 .96943 0 2.0049)"
+                                                d="m134.67 100.19h21.136a17.217 17.217 45 0 1 17.217 17.217v18.648a5.0457 5.0457 135 0 1-5.0457 5.0457h-45.479a5.0457 5.0457 45 0 1-5.0457-5.0457v-18.648a17.217 17.217 135 0 1 17.217-17.217z"
+                                                stroke-width=".28639" />
                                         </g>
                                     </g>
-                                </svg>
-                                Add Sessions
-                            </h2>
-                            <p class="card-description">Schedule lessons, assignments, or meetings within the group.</p>
-                        </div>
-                        <div class="card-body"></div>
+                                </g>
+                            </svg>
+                            Create A Group
+                        </h2>
+                        <p class="card-description">Set up a new group for your class, course, or tutoring session.
+                        </p>
                     </div>
-                    <div class="timeline-card">
-                        <div class="line-container">
-                            <div class="dot"></div>
-                            <div class="line"></div>
-                        </div>
-                        <div class="card-header">
-                            <h2 class="card-title">
-                                <svg version="1.1" viewBox="0 0 16.934 16.934" class="icon">
-                                    <g transform="translate(-50.8)">
-                                        <g id="a" transform="matrix(.20602 0 0 .20602 29.7 -11.659)">
-                                            <g transform="translate(-15.03)" stroke-linecap="round">
-                                                <circle cx="145.23" cy="76.538" r="19.944" stroke-width=".26458" />
-                                                <path transform="matrix(1 0 0 .96943 0 2.0049)"
-                                                    d="m134.67 100.19h21.136a17.217 17.217 45 0 1 17.217 17.217v18.648a5.0457 5.0457 135 0 1-5.0457 5.0457h-45.479a5.0457 5.0457 45 0 1-5.0457-5.0457v-18.648a17.217 17.217 135 0 1 17.217-17.217z"
-                                                    stroke-width=".28639" />
-                                            </g>
-                                            <path transform="matrix(4.854 0 0 4.854 -144.16 56.594)"
-                                                d="m63.71 3.98v2.02h-2.02v0.96h2.02v2.02h0.96v-2.02h2.02v-0.96h-2.02v-2.02z" />
+                    <div class="card-body"></div>
+                </div>
+                <div class="timeline-card">
+                    <div class="line-container">
+                        <div class="dot"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg version="1.1" viewBox="0 0 16.933 16.933" class="icon">
+                                <g transform="translate(-33.867)">
+                                    <g id="a" transform="translate(-92.717 -83.089)">
+                                        <path
+                                            d="m133.94 85.73v4.7141h-4.7141v2.222h4.7141v4.7141h2.222v-4.7141h4.7141v-2.222h-4.7141v-4.7141z" />
+                                        <circle cx="135.05" cy="91.556" r="8.0698" fill="none" stroke-linecap="round"
+                                            stroke-width=".79375" />
+                                    </g>
+                                </g>
+                            </svg>
+                            Add Sessions
+                        </h2>
+                        <p class="card-description">Schedule lessons, assignments, or meetings within the group.</p>
+                    </div>
+                    <div class="card-body"></div>
+                </div>
+                <div class="timeline-card">
+                    <div class="line-container">
+                        <div class="dot"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg version="1.1" viewBox="0 0 16.934 16.934" class="icon">
+                                <g transform="translate(-50.8)">
+                                    <g id="a" transform="matrix(.20602 0 0 .20602 29.7 -11.659)">
+                                        <g transform="translate(-15.03)" stroke-linecap="round">
+                                            <circle cx="145.23" cy="76.538" r="19.944" stroke-width=".26458" />
+                                            <path transform="matrix(1 0 0 .96943 0 2.0049)"
+                                                d="m134.67 100.19h21.136a17.217 17.217 45 0 1 17.217 17.217v18.648a5.0457 5.0457 135 0 1-5.0457 5.0457h-45.479a5.0457 5.0457 45 0 1-5.0457-5.0457v-18.648a17.217 17.217 135 0 1 17.217-17.217z"
+                                                stroke-width=".28639" />
                                         </g>
+                                        <path transform="matrix(4.854 0 0 4.854 -144.16 56.594)"
+                                            d="m63.71 3.98v2.02h-2.02v0.96h2.02v2.02h0.96v-2.02h2.02v-0.96h-2.02v-2.02z" />
                                     </g>
-                                </svg>
-                                Invite Students
-                            </h2>
-                            <p class="card-description">Share a unique referral code or invite link with students.</p>
-                        </div>
-                        <div class="card-body"></div>
+                                </g>
+                            </svg>
+                            Invite Students
+                        </h2>
+                        <p class="card-description">Share a unique referral code or invite link with students.</p>
                     </div>
-                    <div class="timeline-card">
-                        <div class="line-container">
-                            <div class="dot"></div>
-                            <div class="line"></div>
-                        </div>
-                        <div class="card-header">
-                            <h2 class="card-title">
-                                <svg version="1.1" viewBox="0 0 16.553 12.913" class="icon">
-                                    <g transform="translate(-67.73 .0028466)">
-                                        <path id="a" transform="translate(-.13816 -3.4814)"
-                                            d="m68.53 15.73 3.396-5.8931a0.45115 0.45115 176.73 0 1 0.75362-0.043011l3.9807 5.3822a0.45151 0.45151 176.75 0 0 0.75405-0.04277l6.3456-10.993"
-                                            fill="none" stroke-linecap="round" stroke-width="1.3229" />
-                                    </g>
-                                </svg>
-                                Track & Analyze Progress
-                            </h2>
-                            <p class="card-description">Monitor attendance, participation, and engagement.</p>
-                        </div>
-                        <div class="card-body"></div>
+                    <div class="card-body"></div>
+                </div>
+                <div class="timeline-card">
+                    <div class="line-container">
+                        <div class="dot"></div>
+                        <div class="line"></div>
                     </div>
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg version="1.1" viewBox="0 0 16.553 12.913" class="icon">
+                                <g transform="translate(-67.73 .0028466)">
+                                    <path id="a" transform="translate(-.13816 -3.4814)"
+                                        d="m68.53 15.73 3.396-5.8931a0.45115 0.45115 176.73 0 1 0.75362-0.043011l3.9807 5.3822a0.45151 0.45151 176.75 0 0 0.75405-0.04277l6.3456-10.993"
+                                        fill="none" stroke-linecap="round" stroke-width="1.3229" />
+                                </g>
+                            </svg>
+                            Track & Analyze Progress
+                        </h2>
+                        <p class="card-description">Monitor attendance, participation, and engagement.</p>
+                    </div>
+                    <div class="card-body"></div>
                 </div>
             </div>
-        </section>
-        <section id="about">
-            <div class="container">
-                <h1>About TimeED</h1>
-                <p class="card">I was just chilling there one day and wondered how teachers manage their time? How can
-                    they
-                    do all of that
-                    stuff
-                    without getting overwhelmed? It's not unusual for some teachers to work more than 10 hours a day! I
-                    would definitely get burnt out after a couple of days (that's if I lasted a day). So I thought of
-                    TimeED, a time management tool primarily for teachers, but students can use it too! You can easily
-                    set/cancel/delete sessions, and we'll keep both you and your students updated ^_^ and that was the
-                    main
-                    idea. I hope you enjoy TimeED.</p>
-            </div>
-        </section>
-    </main>
-    <footer id="footer">
-        <div class="section-container">
-            <div class="contact">
-                <h2>Contact Me</h2>
-                <div class="msg-container">
-                    <textarea name="msg" id="msg" placeholder="Message..."></textarea>
-                    <p class="font-small">You'll be redirected to your default email client, recipient is <a id="email"
-                            ***REMOVED***
-href="mailto:dracotato@example.com">DracoTato</a>.</p>
-                </div>
-                <button type="submit" class="btn-primary" onclick="sendEmail();">Send</button>
-            </div>
-            <div class="resources">
-                <h2>Resources</h2>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Report an Issue</a></li>
-                    <li><a href="{{ url_for('auth.register') }}">Sign Up</a></li>
-                    <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
-                </ul>
-            </div>
         </div>
-        <div class="copyrights">
-            <p class="font-small">&copy; 2023 TimeED. All rights reserved.</p>
-            <small>An App Made By DracoTato.</small>
+    </section>
+    <section id="about">
+        <div class="container">
+            <h1>About TimeED</h1>
+            <p class="card">I was just chilling there one day and wondered how teachers manage their time? How can
+                they
+                do all of that
+                stuff
+                without getting overwhelmed? It's not unusual for some teachers to work more than 10 hours a day! I
+                would definitely get burnt out after a couple of days (that's if I lasted a day). So I thought of
+                TimeED, a time management tool primarily for teachers, but students can use it too! You can easily
+                set/cancel/delete sessions, and we'll keep both you and your students updated ^_^ and that was the
+                main
+                idea. I hope you enjoy TimeED.</p>
         </div>
-    </footer>
-    <script src="{{ url_for('static', filename='js/send_email.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/update_topbar.js')}}"></script>
-</body>
-
-</html>
+    </section>
+</main>
+<footer id="footer">
+    <div class="section-container">
+        <div class="contact">
+            <h2>Contact Me</h2>
+            <div class="email-container">
+                <textarea name="email-subject" id="email-subject" placeholder="Message..."></textarea>
+                <p class="font-small">You'll be redirected to your default email client, recipient is <a id="email"
+                        href="mailto:dracotato@example.com">DracoTato</a>.</p>
+            </div>
+            <button type="submit" class="btn-primary" onclick="sendEmail();">Send</button>
+        </div>
+        <div class="resources">
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Report an Issue</a></li>
+                <li><a href="{{ url_for('auth.register') }}">Sign Up</a></li>
+                <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyrights">
+        <p class="font-small">&copy; 2023 TimeED. All rights reserved.</p>
+        <small>An App Made By DracoTato.</small>
+    </div>
+</footer>
+<script src="{{ url_for('static', filename='js/send_email.js')}}"></script>
+<script src="{{ url_for('static', filename='js/update_topbar.js')}}"></script>
+{% endblock body %}
