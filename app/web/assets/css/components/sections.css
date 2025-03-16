@@ -28,11 +28,11 @@ footer #contact {
     flex-direction: column;
 }
 
-.msg-container {
+.email-container {
     margin-bottom: 32px;
 }
 
-.msg-container textarea {
+.email-container textarea {
     width: 100%;
     max-width: 100%;
     min-height: 150px;
@@ -43,7 +43,7 @@ footer #contact {
     -moz-resize: vertical;
 }
 
-.msg-container p {
+.email-container p {
     color: var(--gray-30);
 }
 

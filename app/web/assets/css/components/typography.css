@@ -18,13 +18,13 @@ h6,
 .font-super {
     font-size: 3.5832rem;
     font-weight: 900;
-    }
+}
 
 .font-h1,
 h1:not(.font-super) {
     font-size: 2.986rem;
     font-weight: 800;
-    }
+}
 
 .font-h2,
 h2 {
@@ -57,9 +57,17 @@ h6 {
 }
 
 .font-p,
-p {
+p,
+input,
+.msg {
     font-size: 1.1rem;
     font-weight: 500;
+    line-height: 2.2rem;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: 400;
     line-height: 2.2rem;
 }
 
