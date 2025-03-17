@@ -147,7 +147,7 @@ input.valid:not([type="radio"]) {
     position: absolute;
     width: 50%;
     height: 2px;
-    border: 2px solid var(--gray-10);
+    outline: 2px solid var(--gray-10);
     transform-origin: 50% 50%;
     transform: rotate(45deg);
     transition: background-color 0.2s, opacity 0.3s;
