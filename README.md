@@ -1,97 +1,98 @@
-# TimeEd
+# **TimeED**
 
-Formerly know as eTeach, TimeEd is a time management web application designed to help teachers and students organize their schedules, track progress, and boost productivity. Built with Flask (Server-Side Rendering), TimeEd aims to simplify session and group management for educational purposes.
+Formerly known as **eTeach**, **TimeED** is a **time management web application** designed to help **teachers and students** organize their schedules, track progress, and boost productivity.
 
-## Features
+Built with **Flask (Server-Side Rendering)**, TimeED simplifies **session and group management** for educational purposes.
 
-### For Teachers:
+## **✨ Features**
 
--   **Create and Manage Groups**: Add groups with specific descriptions and manage their details.
--   **Schedule and Manage Sessions**: Set, edit, or cancel sessions with ease.
--   **Track Attendance**: Stay updated with students' attendance for sessions.
+### **For Teachers**
 
-### For Students:
+✅ **Create & Manage Groups** – Set up groups with descriptions and manage them easily.  
+✅ **Schedule & Manage Sessions** – Plan, edit, or cancel sessions effortlessly.  
+✅ **Track Attendance** – Stay updated on student attendance.
 
--   **View and Join Groups**: Keep track of your enrolled groups and join new ones.
--   **Session Updates**: Receive session reminders and notifications about cancellations.
--   **Request Absence**: Notify teachers if you are unable to attend a session.
+### **For Students**
 
-## Tech Stack
+✅ **View & Join Groups** – Track enrolled groups and discover new ones.  
+✅ **Session Updates** – Receive reminders and cancellation alerts.  
+✅ **Request Absence** – Notify teachers if you can't attend a session.
 
--   **Backend**: Flask (Python)
--   **Frontend**: HTML, CSS, and JavaScript (SSR)
--   **Database**: SQLite (for development), extendable to PostgreSQL or MySQL
--   **Deployment**: Render
+## **🛠️ Tech Stack**
 
-## Installation
+-   **Backend:** Flask (Python)
+-   **Frontend:** HTML, CSS, JavaScript (SSR)
+-   **Database:** SQLite, extendable to PostgreSQL/MySQL
 
-1. Clone the repository:
+## **📦 Installation**
 
-    ```bash
-    git clone https://github.com/yourusername/TimeEd.git
-    cd TimeEd
-    ```
+### 1️⃣ Clone the repository:
 
-2. Create a virtual environment and activate it:
+```bash
+git clone git@github.com:DracoTato/TimeEd.git
+cd TimeEd
+```
 
-    ```bash
-    python3 -m venv .venv
-    source venv/bin/activate  # On Windows powershell: venv\bin\activate.ps1
-    ```
+### 2️⃣ Install dependencies (using [Poetry](https://python-poetry.org/)):
 
-3. Install dependencies:
+If you don't have **Poetry**, install it first:
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+```bash
+pip install poetry
+```
 
-4. Create `.env` file in root directory:
+Then, install the required dependencies:
 
-    ```bash
-    FLASK_ENV=development
-    FLASK_APP=app
-    FLASK_DEBUG=1
-    FLASK_RUN_HOST=0.0.0.0 # Only if on trusted network
-    LOG_FOLDER=logs
-    LOG_FILE=timeed.log
-    LOG_LEVEL=20
-    LOG_MAX_BYTES=100
-    LOG_BACKUP=2
-    ```
+```bash
+poetry install
+```
 
-    - search `flask environment variables list` on the internet for more detail on flask's built-in variables
-    - the log variables are documented in the `app/logging.py`:`setup_logging` function.
+### 3️⃣ Create a `.env` file (required for configuration)
 
-5. Run the application:
-    ```bash
-    flask run
-    ```
-    Assuming you used the default settings, The application will be available at `http://127.0.0.1:5000`.
+Inside the project directory, create a `.env` file and add:
 
-## Deployment
+```bash
+FLASK_ENV=development
+FLASK_APP=app
+FLASK_DEBUG=1
+FLASK_RUN_HOST=0.0.0.0  # Only if on a trusted network
+LOG_FOLDER=logs
+LOG_FILE=timeed.log
+LOG_LEVEL=20
+LOG_MAX_BYTES=100
+LOG_BACKUP=2
 
-### On Render
+ADMIN_EMAIL=admin@timeed.com
+ADMIN_GENDER=male # or female
+ADMIN_NAME="Super Admin"
+ADMIN_PASSWORD=Admin-Password
+```
 
-1. Push your code to GitHub.
-2. Sign in to [Render](https://render.com) and connect your GitHub repository.
-3. Create a new "Web Service" with the following settings:
-    - Build Command: `pip install -r requirements.txt`
-    - Start Command: `gunicorn app:app`
-4. Deploy and access your application at the provided Render URL.
+-   Search `flask environment variables list` online for more details on Flask's built-in variables.
+-   The log variables are explained in `app/logging.py` under the `setup_logging` function.
 
-### On PythonAnyWhere
+### 4️⃣ Run the application:
 
-1. Create a new web service.
-2. Create a deploy SSH key.
-3. Specify your application variable in the wsgi file.
-4. pull from the GitHub repo.
+```bash
+poetry run flask run
+```
 
-## License
+By default, the app will be available at **[http://127.0.0.1:5000](http://127.0.0.1:5000)**.
 
-TimeEd may be used for personal and/or learning purposes, however it may NOT be used for commercial use without consent from the owner.
+## **📜 License**
 
-## About
+TimeED is licensed under a **custom restrictive license**.  
+You may **view, run, and analyze** the code, but you **cannot** modify, redistribute, or use it for commercial purposes.
 
-TimeEd is created and maintained by **DracoTato**. The app is inspired by the need to simplify time management for teachers and students. Feedback and suggestions are always welcome!
+✅ **Contributions are welcome via pull requests**, but all changes require approval.  
+❌ **Forking for personal modifications or redistribution is prohibited.**
 
-Shoutout to [AATANKI](https://github.com/AA-TANKI) for contributing to the previous version of TimeED (eTeach)
+For full details, see [LICENSE.md](./LICENSE.md).
+
+## **👤 About**
+
+TimeED is created and maintained by **DracoTato**. The app was inspired by the need to simplify time management for teachers and students.
+
+**Feedback and suggestions are always welcome!**
+
+Special thanks to [AATANKI](https://github.com/AA-TANKI) for contributing to the previous version of TimeED (**eTeach**).
