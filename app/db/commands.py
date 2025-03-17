@@ -103,9 +103,10 @@ def init_superadmin():
 
 
 @click.command("create-seed")
+@click.option("--teacher", help="Create teachers account", is_flag=True)
 @click.option("--users", type=int, default=10, help="Number of users to create")
 @click.option("--groups", type=int, default=10, help="Number of groups to create")
-def create_seed(users, groups):
+def create_seed(teacher, users, groups):
     """Create seed data for development and testing"""
     user_template = {
         "email": "user@example.com",
@@ -115,6 +116,10 @@ def create_seed(users, groups):
         "birthdate": date(1990, 1, 1),
         "gender": Gender.MALE,
     }
+    email_start_index = 0
+
+    if teacher:
+        user_template["role"] = User_Type.TEACHER
 
     if not current_app.config["DEBUG"] and not current_app.config["TESTING"]:
         if not click.confirm(
@@ -122,15 +127,23 @@ def create_seed(users, groups):
         ):
             return
 
-    if db.session.query(User).filter_by(email="user0@example.com").first():
+    existing_seed = (
+        db.session.query(User)
+        .filter(User.email.regexp_match(r"user[0-9]+@example\.com"))
+        .all()
+    )
+    if existing_seed:
         click.echo("Seed data already exists.")
-        click.echo("Aborting.")
-        return
+        if click.confirm("Would you like to append on the existing seed data?"):
+            email_start_index = len(existing_seed)
+        else:
+            click.echo("Aborting.")
+            return
 
     seed_users = []
+    data = user_template
     for i in range(users):
-        data = user_template
-        data.update(email=f"user{i}@example.com")
+        data.update(email=f"user{email_start_index + i}@example.com")
         user = User(**data)
         db.session.add(user)
         seed_users.append(user)
