@@ -128,7 +128,10 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="button btn-primary">Sign Up</button>
+    <div class="action-container">
+        <button type="submit" class="button btn-primary">Sign Up</button>
+        <div>Have an account? <a href="{{ url_for('auth.login') }}">login</a></div>
+    </div>
 </form>
 <script src="{{ url_for('static', filename='js/pass_toggle.js') }}"></script>
 <script src="{{ url_for('static', filename='js/register.js') }}"></script>
