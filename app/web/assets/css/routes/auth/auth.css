@@ -50,6 +50,7 @@ label {
     border: 1px solid var(--gray-50);
     border-radius: 4px;
     box-shadow: 0px 0px 2px 1px var(--gray-50);
+    user-select: none;
     transition: background-color 0.4s, border 0.3s, color 0.4s;
 }
 
@@ -57,6 +58,10 @@ label {
     background-color: var(--primary-90);
     border-color: var(--primary-100);
     color: var(--gray-10);
+}
+
+.choice:has(input[type="radio"]:focus-visible) label {
+    outline: 2px solid var(--primary-90);
 }
 
 input {
@@ -75,7 +80,13 @@ input:not([type="radio"]) {
 }
 
 input[type="radio"] {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
 }
 
 input[type="date"] {
@@ -85,12 +96,12 @@ input[type="date"] {
 }
 
 input.invalid {
-    border-color: var(--secondary-90);
-    color: var(--secondary-90);
+    border-color: var(--danger-90);
+    color: var(--danger-90);
 }
 
 .inputs-container > div:has(input.invalid) > label {
-    color: var(--secondary-90);
+    color: var(--danger-90);
 }
 
 input.valid:not([type="radio"]) {
@@ -107,16 +118,19 @@ input.valid:not([type="radio"]) {
 }
 
 .errors {
-    color: var(--secondary-90);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--danger-90);
     width: fit-content;
     list-style-type: none;
     margin-top: 1rem;
 }
 
 .errors li {
-    background-color: color-mix(in srgb, var(--secondary-10) 30%, transparent);
+    background-color: color-mix(in srgb, var(--danger-10) 30%, transparent);
     padding: 0.3rem;
-    border-left: 4px solid var(--secondary-90);
+    border-left: 4px solid var(--danger-90);
     border-radius: 0px 4px 4px 0px;
 }
 

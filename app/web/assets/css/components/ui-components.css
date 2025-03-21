@@ -1,13 +1,6 @@
 :root {
-    --timeline-header-color: var(--secondary-50);
-    --timeline-cards-gap: 6rem;
-    --timeline-decor-top-offset: 3rem;
-    --timeline-decor-left-offset: calc(clamp(12px, 5vw, 48px) * -1);
-    --timeline-dot-size: 1.5rem;
-    --timeline-dot-weight: 0.2rem;
-    --timeline-dot-color: var(--secondary-30);
-    --timeline-line-width: 0.2rem;
-    --timeline-line-color: var(--primary-50);
+    --button-shadow-offset: 0px 2px 4px;
+    --button-shadow-color: var(--gray-30);
 }
 
 * {
@@ -21,6 +14,7 @@ body {
     color: var(--gray-90);
 }
 
+/* Status Messages */
 .msg-container {
     display: flex;
     flex-direction: column;
@@ -57,65 +51,11 @@ body {
 .msg.warning {
     background-color: color-mix(in srgb, var(--warning-30) 90%, transparent);
 }
-.msg.error {
-    background-color: color-mix(in srgb, var(--secondary-30) 90%, transparent);
+.msg.danger {
+    background-color: color-mix(in srgb, var(--danger-30) 90%, transparent);
 }
 
-.icon {
-    fill: var(--gray-90);
-    width: 3rem;
-}
-
-.topbar {
-    display: flex;
-    justify-content: end;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 100;
-}
-
-.topbar ul {
-    display: flex;
-    background-color: color-mix(in srgb, var(--primary-90) 85%, transparent);
-    width: 100%;
-    height: 100%;
-    border: 2px solid var(--primary-110);
-    list-style: none;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    overflow: hidden;
-    position: relative;
-}
-
-.topbar ul .active-box {
-    background-color: var(--accent-90);
-    width: 50px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: left 0.3s ease-out, width 0.5s ease;
-    z-index: -1;
-}
-
-.topbar ul li {
-    flex-grow: 1;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.topbar li a {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    color: var(--gray-10);
-    font-weight: 600;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.3s ease;
-}
-
+/* Container */
 .container {
     max-width: 100vw;
     width: clamp(3rem, 85vw, 70rem);
@@ -123,26 +63,25 @@ body {
     padding-block: 6rem;
 }
 
-.button,
+/* Buttons */
+.btn,
 button {
     display: inline-block;
     background-color: var(--gray-50);
     color: var(--gray-90);
     max-width: 16rem;
     min-width: 8rem;
-    min-height: 4rem;
+    height: 4rem;
     padding: 1.2rem 1.5rem;
     border-radius: 1rem;
-    border: 2px solid var(--gray-70);
+    border: none;
+    border: 2px solid var(--gray-90);
+    box-shadow: var(--button-shadow-offset) var(--button-shadow-color);
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+    user-select: none;
     transition: background-color 0.3s ease-out, border-color 0.3s ease-out;
-}
-
-.btn-gray {
-    background-color: var(--gray-50);
-    border-color: var(--gray-70);
 }
 
 .btn-primary {
@@ -150,151 +89,133 @@ button {
     border-color: var(--primary-90);
 }
 
-.btn-secondary {
-    background-color: var(--secondary-30);
-    border-color: var(--secondary-70);
-    color: var(--gray-10);
-}
-
 .btn-accent {
     background-color: var(--accent-30);
     border-color: var(--accent-90);
-    color: var(--gray-10);
 }
 
-.btn-gray:hover {
-    background-color: var(--gray-70);
-    border-color: var(--gray-50);
+.btn-danger {
+    background-color: var(--danger-30);
+    border-color: var(--danger-90);
+}
+
+.btn-success {
+    background-color: var(--success-30);
+    border-color: var(--success-90);
+}
+
+.btn-warning {
+    background-color: var(--warning-30);
+    border-color: var(--warning-90);
+}
+
+.btn:hover {
+    background-color: var(--gray-90);
+    color: var(--gray-10);
 }
 
 .btn-primary:hover {
     background-color: var(--primary-90);
-    border-color: var(--primary-50);
-}
-
-.btn-secondary:hover {
-    background-color: var(--secondary-90);
-    border-color: var(--secondary-50);
 }
 
 .btn-accent:hover {
     background-color: var(--accent-90);
-    border-color: var(--accent-50);
 }
 
-.card {
-    background-color: var(--gray-10);
-    color: var(--gray-90);
-    border-radius: 1rem;
-    box-shadow: 0px 0px 4px 2px var(--gray-50);
-    padding: 2rem;
+.btn-danger:hover {
+    background-color: var(--danger-90);
 }
 
-.timeline-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--timeline-cards-gap);
+.btn-success:hover {
+    background-color: var(--success-90);
 }
 
-.timeline-card {
-    background-color: var(--gray-10);
-    border-radius: 1rem;
-    box-shadow: 0px 0px 4px 2px var(--gray-50);
-    padding: 2rem;
-    position: relative;
+.btn-warning:hover {
+    background-color: var(--warning-90);
 }
 
-.timeline-card .card-title {
+/* Main */
+main > section h1 {
+    margin-bottom: 52px;
+}
+
+main > section:nth-child(odd) {
+    background-color: var(--gray-30);
+}
+
+/* Footer */
+footer {
+    background-color: var(--gray-100);
+    color: var(--gray-10);
+    padding: 152px 52px 28px;
+}
+
+footer .section-container {
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    margin-bottom: 24px;
-    color: var(--timeline-header-color);
-    text-align: center;
-}
-
-.timeline-card .card-title svg {
-    fill: var(--timeline-header-color);
-    stroke: var(--timeline-header-color);
-}
-
-.timeline-card p {
-    text-align: center;
-    color: var(--gray-70);
+    gap: 152px;
     margin-bottom: 128px;
 }
 
-@media screen and (min-width: 651px) {
-    .topbar {
-        padding: 1rem;
-    }
-
-    .topbar nav {
-        max-width: 480px;
-        width: 60%;
-        height: 4rem;
-    }
-
-    .topbar ul {
-        border-radius: 1rem;
-    }
-
-    .timeline-card::before {
-        content: "";
-        background-color: var(--timeline-line-color);
-        width: calc(
-            (var(--timeline-decor-left-offset) * -1) - var(--timeline-dot-size)
-        );
-        height: var(--timeline-line-width);
-        position: absolute;
-        top: calc(
-            var(--timeline-decor-top-offset) + (var(--timeline-dot-size) / 2)
-        );
-        left: calc(
-            var(--timeline-decor-left-offset) + var(--timeline-dot-size)
-        );
-    }
-
-    .timeline-container .line-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: start;
-        width: fit-content;
-        height: calc(100% + var(--timeline-cards-gap));
-        position: absolute;
-        top: var(--timeline-decor-top-offset);
-        left: var(--timeline-decor-left-offset);
-    }
-
-    .timeline-card .line-container .dot {
-        aspect-ratio: 1/1;
-        width: var(--timeline-dot-size);
-        height: var(--timeline-dot-size);
-        border-radius: 50%;
-        border: var(--timeline-dot-weight) solid var(--timeline-dot-color);
-    }
-
-    .timeline-card:not(:last-child) .line-container .line {
-        background-color: var(--timeline-line-color);
-        width: var(--timeline-line-width);
-        height: 100%;
-    }
+footer .section-container h2 {
+    margin-bottom: 42px;
 }
 
-@media (max-width: 650px) {
-    .topbar {
-        padding-block: 0px;
-        padding-inline: 0px;
-    }
+footer #contact {
+    display: flex;
+    flex-direction: column;
+}
 
-    .topbar nav {
-        width: 100%;
-        height: 4rem;
-    }
+.email-container {
+    margin-bottom: 32px;
+}
 
-    .timeline-card .card-title {
+.email-container textarea {
+    width: 100%;
+    max-width: 100%;
+    min-height: 150px;
+    max-height: 300px;
+    padding: 8px;
+    resize: vertical;
+    -webkit-resize: vertical;
+    -moz-resize: vertical;
+}
+
+.email-container p {
+    color: var(--gray-30);
+}
+
+footer .contact a {
+    color: inherit;
+}
+
+footer .resources ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style-type: none;
+}
+
+footer .resources ul a {
+    color: var(--gray-30);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+footer .resources ul a:hover {
+    color: var(--gray-10);
+}
+
+.copyrights {
+    text-align: center;
+}
+
+.copyrights > small {
+    color: var(--gray-30);
+}
+
+@media screen and (max-width: 786px) {
+    footer .section-container {
         flex-direction: column;
-        align-items: center;
     }
 }

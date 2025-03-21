@@ -7,13 +7,6 @@
     --primary-95: #10578a;
     --primary-100: #073e66;
 
-    --danger-10: #ffb3b3;
-    --danger-30: #ff8080;
-    --danger-50: #ff5c5c;
-    --danger-70: #e64545;
-    --danger-90: #cc3333;
-    --danger-100: #a82828;
-
     --accent-10: #c4a8ff;
     --accent-30: #a67eff;
     --accent-50: #8754e6;
@@ -21,6 +14,12 @@
     --accent-90: #5729a3;
     --accent-100: #421f7a;
 
+    --danger-10: #ffb3b3;
+    --danger-30: #ff8080;
+    --danger-50: #ff5c5c;
+    --danger-70: #e64545;
+    --danger-90: #cc3333;
+    --danger-100: #a82828;
     --success-10: #c9f7b8;
     --success-30: #96e881;
     --success-50: #62d14d;
