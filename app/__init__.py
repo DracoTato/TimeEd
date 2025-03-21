@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, url_for
 from typing import Any
 from os import getenv
 from .config import config_dict
@@ -32,6 +32,6 @@ def create_app(config: dict[str, Any] = {}):
 
     @app.route("/")
     def index():
-        return render_template("index.html")
+        return redirect(url_for("auth.register"))
 
     return app

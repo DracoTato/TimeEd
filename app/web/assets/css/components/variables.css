@@ -1,46 +1,49 @@
 :root {
-    --hero-image: none;
+    --primary-10: #c7ebff;
+    --primary-30: #94d8ff;
+    --primary-50: #5fc2f5;
+    --primary-70: #3598d6;
+    --primary-90: #1f7bb3;
+    --primary-95: #10578a;
+    --primary-100: #073e66;
 
-    --primary-10: #a3e4ff;
-    --primary-30: #7bd6ff;
-    --primary-50: #5ac5e6;
-    --primary-70: #49ccff;
-    --primary-90: #33a9d6;
-    --primary-100: #1c7a9f;
-    --primary-110: #084862;
+    --danger-10: #ffb3b3;
+    --danger-30: #ff8080;
+    --danger-50: #ff5c5c;
+    --danger-70: #e64545;
+    --danger-90: #cc3333;
+    --danger-100: #a82828;
 
-    --secondary-10: #ff9e9e;
-    --secondary-30: #ff7a7a;
-    --secondary-50: #ff5252;
-    --secondary-70: #ff4c4c;
-    --secondary-90: #e63946;
-    --secondary-100: #d42d2d;
+    --accent-10: #c4a8ff;
+    --accent-30: #a67eff;
+    --accent-50: #8754e6;
+    --accent-70: #6f3bcc;
+    --accent-90: #5729a3;
+    --accent-100: #421f7a;
 
-    --accent-10: #9b4dff;
-    --accent-30: #8a43e6;
-    --accent-50: #7939cc;
-    --accent-70: #6930b3;
-    --accent-90: #582696;
-    --accent-100: #4a1f7a;
+    --success-10: #c9f7b8;
+    --success-30: #96e881;
+    --success-50: #62d14d;
+    --success-70: #4bb03d;
+    --success-90: #36822b;
+    --success-100: #26611f;
 
-    --success-10: #c7ff94;
-    --success-30: #b1ff7f;
-    --success-50: #8bff68;
-    --success-70: #a3ff6e;
-    --success-90: #7bcc55;
-    --success-100: #6d9c46;
+    --warning-10: #ffe2b3;
+    --warning-30: #ffc980;
+    --warning-50: #ffb14d;
+    --warning-70: #ff991a;
+    --warning-90: #d87b14;
+    --warning-100: #a85f10;
 
-    --warning-10: #ffdba3;
-    --warning-30: #ffcb7d;
-    --warning-50: #ffbf5e;
-    --warning-70: #ffb84d;
-    --warning-90: #ff9a1d;
-    --warning-100: #d97f1a;
-
-    --gray-10: #f5f5f5;
-    --gray-30: #d9d9d9;
-    --gray-50: #bfbfbf;
-    --gray-70: #808080;
-    --gray-90: #404040;
+    --gray-10: #f7f7f7;
+    --gray-20: #eaeaea;
+    --gray-30: #d5d5d5;
+    --gray-40: #bfbfbf;
+    --gray-50: #a8a8a8;
+    --gray-60: #909090;
+    --gray-70: #777777;
+    --gray-80: #5e5e5e;
+    --gray-90: #3f3f3f;
+    --gray-95: #2a2a2a;
     --gray-100: #1a1a1a;
 }
