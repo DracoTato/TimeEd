@@ -45,7 +45,6 @@ function getParentUntil(element, target) {
  */
 function getErrorList(input) {
     const parent = getParentUntil(input, ".inputs-container > div");
-    console.log(`Parent of ${input}.${input.name} is ${parent}`);
     return parent.querySelector("ul.errors");
 }
 
@@ -111,6 +110,17 @@ const customValidators = {
             return false;
         }
     },
+    password: (input) => {
+        if (new Set(input.value).size > 5) {
+            markValid(input);
+            return true;
+        } else {
+            markInvalid(
+                input,
+                "Password must have at least 5 unique characters."
+            );
+        }
+    },
 };
 
 /**
@@ -136,7 +146,6 @@ function validateForm() {
     let isValid = true;
 
     inputs.forEach((input) => {
-        console.log(`Validating ${input}`);
         isValid = validateInput(input);
     });
 

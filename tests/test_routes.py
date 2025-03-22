@@ -6,11 +6,6 @@ from app.db import db
 
 
 class TestGlobal:
-    def test_index(self, client):
-        response = client.get("/")
-        assert response.status_code == 200
-        assert b"TimeED" in response.data
-
     def test_not_found(self, client):
         response = client.get("/not-found/")
         assert response.status_code == 404

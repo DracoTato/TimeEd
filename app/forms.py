@@ -19,6 +19,11 @@ def name_validator(_, field):
         raise ValidationError("Too long.")
 
 
+def password_validator(_, field):
+    if not len(set(field.data)) > 5:
+        raise ValidationError("Password must contain at least 5 unique character.")
+
+
 def age_validator(_, field):
     # 120 yo max
     today = date.today()
@@ -97,6 +102,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField(
         "Password",
         validators=[
+            password_validator,
             validators.Length(8, 64, "Password must be 8-64 characters."),
             validators.DataRequired("Please create a password."),
         ],

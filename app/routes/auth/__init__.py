@@ -4,17 +4,20 @@ from flask import (
     current_app as ca,
     redirect,
     url_for,
-    flash,
     session,
     g,
-    abort,
 )
 from functools import wraps
 from app.db.schema.models import User
-from app.db.schema.enums import User_Type
-from typing import Sequence
 from app.forms import RegisterForm, LoginForm
 from app.db import db
+from app.messages import (
+    flash_message,
+    ErrorMessages,
+    WarningMessages,
+    SuccessMessages,
+    InfoMessages,
+)
 
 auth_bp = Blueprint(
     "auth",
@@ -39,7 +42,7 @@ def logout_required(view):
     @wraps(view)
     def wrapper(*args, **kwargs):
         if g.user:
-            flash("Logged in successfully.", "info")
+            flash_message(InfoMessages.LOGIN_EXISTS)
             # TODO Redirect to dashboard
 
         return view(*args, **kwargs)
@@ -51,40 +54,11 @@ def login_required(view):
     @wraps(view)
     def wrapper(*args, **kwargs):
         if not g.user:
-            flash("Please log in first.", "warning")
+            flash_message(WarningMessages.LOGIN_REQUIRED)
             return redirect(url_for("auth.login"))
         return view(*args, **kwargs)
 
     return wrapper
-
-
-def role_required(type: User_Type | Sequence[User_Type]):
-    """Return a 403 error if the user accessing the page is not in `type`."""
-
-    def decorator(view):
-        @wraps(view)
-        def wrapper(*args, **kwargs):
-            if not g.user:
-                flash("Please log in first.", "warning")
-                return redirect(url_for("auth.login"))
-
-            allowed_roles = {type} if isinstance(type, User_Type) else set(type)
-
-            if not isinstance(allowed_roles, set) or not all(
-                isinstance(role, User_Type) for role in allowed_roles
-            ):
-                raise TypeError(
-                    "Invalid role type. Expected User_Types or list/tuple of User_Types."
-                )
-
-            if g.user.role not in allowed_roles:
-                flash("You don't have permission to access this page.", "error")
-                return abort(403)
-            return view(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
 
 
 @auth_bp.route("register/", methods=["GET", "POST"])
@@ -93,7 +67,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if db.session.query(User).filter_by(email=form.email.data).first():
-            flash("This user already exists! please login instead.", "warning")
+            flash_message(ErrorMessages.USER_EXISTS)
             form.email.errors.append("An account is registered using this email.")  # type: ignore (Pylance)
             return render_template("register.html", form=form)
 
@@ -111,16 +85,14 @@ def register():
             db.session.commit()
         except Exception as e:
             ca.logger.error(f"Error while creating new user: {e}")
-            flash(
-                "We're sorry, an unknown error occurred while trying to create your account. We'll solve it as fast as we can.",
-                "error",
-            )
+            flash_message(ErrorMessages.UNKNOWN_ERROR)
             return render_template("register.html", form=form)
         else:
-            flash(
-                "Your account has been successfully created! Please login.", "success"
-            )
+            flash_message(SuccessMessages.ACCOUNT_CREATED)
+            ca.logger.info(f"New user created: {user.email}")
             return redirect(url_for("auth.login"))
+    elif form.errors:
+        flash_message(ErrorMessages.INVALID_FORM)
 
     return render_template("register.html", form=form)
 
@@ -133,10 +105,10 @@ def login():
         user = db.session.query(User).filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):  # type: ignore (Pylance)
             session["user_id"] = user.id
-            flash("Logged in successfully.", "success")
+            flash_message(SuccessMessages.LOGIN_SUCCESS)
             return redirect(url_for("index"))  # TODO Redirect to dashboard
         else:
-            flash("Wrong email or password.", "error")
+            flash_message(ErrorMessages.INVALID_CREDENTIALS)
 
     return render_template("login.html", form=form)
 
@@ -146,5 +118,5 @@ def login():
 def logout():
     session.pop("user_id")
     g.user = None
-    flash("Logged out successfully. Please log in to use the application.", "info")
+    flash_message(SuccessMessages.LOGOUT_SUCCESS)
     return redirect(url_for("auth.login"))
