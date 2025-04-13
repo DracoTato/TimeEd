@@ -1,8 +1,11 @@
 import pytest
+from dotenv import load_dotenv
 from click.testing import CliRunner
 
 from app import create_app
 from app.db import db
+
+load_dotenv()  # Load env variables (needed for some tests)
 
 
 @pytest.fixture
