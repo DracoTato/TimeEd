@@ -24,7 +24,6 @@ auth_bp = Blueprint(
     __name__,
     url_prefix="/auth",
     template_folder="../../web/templates/routes/auth",
-    static_folder="../../web/static/",
 )
 
 

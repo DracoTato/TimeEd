@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask
 from typing import Any
 from os import getenv
 from .config import config_dict
@@ -27,11 +27,8 @@ def create_app(config: dict[str, Any] = {}):
 
     db.init_app(app)  # Register db w/ flask instance
 
-    register_blueprints(app)
-    register_commands(app)
+    register_blueprints(app)  # Register all other blueprints under root_bp
 
-    @app.route("/")
-    def index():
-        return redirect(url_for("auth.register"))
+    register_commands(app)
 
     return app
