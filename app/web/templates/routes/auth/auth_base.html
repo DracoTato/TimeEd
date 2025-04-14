@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{% block title %} {% endblock %}</title>
+{% endblock head %}
+
+{% block body %}
+<div class="container margin-b-12xl row align-r"><a class="btn ghost primary"
+        href="{% block btn_url %}{% endblock %}">{% block btn_text %}{%
+        endblock %}</a></div>
+
+
+<div class="container text-center">
+    <h1>{% block heading %} {% endblock %}</h1>
+    <p>{% block paragraph %} {% endblock %}</p>
+</div>
+
+<div class="container">
+    <form class="form" action="{% block form_action %}{% endblock %}" method="post">
+        {{ form.hidden_tag() }}
+
+        {% for field in form if field.name != 'csrf_token' %}
+        <div class="input">
+            {% if form.is_required(field) %}
+            <span>
+                {{ field.label }}
+                <span class="required">*</span>
+            </span>
+            {% else %}
+            {{ field.label }}
+            {% endif %}
+            {% if field.type == "RadioField" %}
+            {{ field(class="radio") }}
+            {% else %}
+            {{ field }}
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        {% block extra_fields %} {% endblock %}
+        <hr>
+        <button class="btn primary" type="submit">{% block submit_btn %} {% endblock %}</button>
+        <a class="btn ghost primary" href="{% block secondary_url %}{% endblock %}">{% block secondary_btn %} {%
+            endblock %}</a>
+    </form>
+</div>
+{% endblock body %}

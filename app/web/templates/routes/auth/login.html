@@ -1,0 +1,15 @@
+{% extends "auth_base.html" %}
+
+{% block title %} Log In {% endblock %}
+
+{% block btn_url %}{{ url_for("auth.register") }}{% endblock %}
+{% block btn_text %} Sign Up {% endblock %}
+
+
+{% block heading %} Welcome Back :D {% endblock %}
+{% block paragraph %} Let's get you back up and running. {% endblock %}
+
+{% block form_action %} {{ url_for("auth.login") }} {% endblock %}
+{% block submit_btn %} Log In {% endblock %}
+{% block secondary_btn %} Sign Up {% endblock %}
+{% block secondary_url %} {{ url_for("auth.register") }} {% endblock %}

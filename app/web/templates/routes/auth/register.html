@@ -1,0 +1,15 @@
+{% extends "auth_base.html" %}
+
+{% block title %} Register {% endblock %}
+
+{% block btn_url %}{{ url_for("auth.login") }}{% endblock %}
+{% block btn_text %} Log In {% endblock %}
+
+
+{% block heading %} Create Your TimeED Account {% endblock %}
+{% block paragraph %} Simplify teaching—Save time, it all starts here. {% endblock %}
+
+{% block form_action %} {{ url_for("auth.register") }} {% endblock %}
+{% block submit_btn %} Sign Up {% endblock %}
+{% block secondary_btn %} Log In {% endblock %}
+{% block secondary_url %} {{ url_for("auth.login") }} {% endblock %}

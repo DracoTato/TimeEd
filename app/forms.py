@@ -9,14 +9,22 @@ from wtforms import (
     validators,
     ValidationError,
 )
+from re import fullmatch
 from app.db.schema.enums import Gender, User_Type
 
 
-def name_validator(_, field):
-    if len(str(field.data).strip().split()) < 2:
-        raise ValidationError("Full name must be 2-5 names.")
-    elif len(str(field.data).strip().split()) > 5:
-        raise ValidationError("Too long.")
+def display_validator(_, field):
+    if not fullmatch(r"^[A-Za-z0-9-_\.\s]$"):
+        raise ValidationError(
+            "Display name contains one or more illegal characters. only letters, numbers, -, _, . are allowed"
+        )
+
+
+def username_validator(_, field):
+    if not fullmatch(r"^[a-z0-9-]$"):
+        raise ValidationError(
+            "Username contains one or more illegal characters. only letters, numbers, -, _, . are allowed"
+        )
 
 
 def password_validator(_, field):
@@ -52,12 +60,28 @@ def user_coerce(value: int):
 
 
 class RegisterForm(FlaskForm):
-    full_name = StringField(
-        "Full Name",
-        validators=[name_validator, validators.DataRequired("Please fill this field.")],
-        render_kw={"autocomplete": "name"},
+    display_name = StringField(
+        "Display Name",
+        validators=[
+            display_validator,
+            validators.DataRequired("Please fill this field."),
+        ],
+        render_kw={"autocomplete": "name", "title": "Name shown on your profile."},
         filters=[lambda s: s.strip() if s else s],
     )
+    username = StringField(
+        "Username",
+        validators=[
+            display_validator,
+            validators.DataRequired("Please fill this field."),
+        ],
+        render_kw={
+            "autocomplete": "name",
+            "title": "Your unique username, can't be changed.",
+        },
+        filters=[lambda s: s.strip() if s else s],
+    )
+
     gender = RadioField(
         "Gender",
         choices=[(g.value, g.name.title()) for g in list(Gender)],
@@ -87,7 +111,10 @@ class RegisterForm(FlaskForm):
                 "Invalid choice.",
             ),
         ],
-        render_kw={"autocomplete": "off"},
+        render_kw={
+            "autocomplete": "off",
+            "title": "Different account types have different permissions.",
+        },
         coerce=user_coerce,
     )
     email = EmailField(
@@ -96,7 +123,10 @@ class RegisterForm(FlaskForm):
             validators.Email("Invalid email address."),
             validators.DataRequired("Please Enter your Email."),
         ],
-        render_kw={"autocomplete": "email"},
+        render_kw={
+            "autocomplete": "email",
+            "title": "Your email, e.g. example@gmail.com",
+        },
         filters=[lambda s: s.strip().lower() if s else s],
     )
     password = PasswordField(
@@ -106,7 +136,10 @@ class RegisterForm(FlaskForm):
             validators.Length(8, 64, "Password must be 8-64 characters."),
             validators.DataRequired("Please create a password."),
         ],
-        render_kw={"autocomplete": "new-password"},
+        render_kw={
+            "autocomplete": "new-password",
+            "title": "Your account password, the stronger, the better.",
+        },
     )
     confirm_password = PasswordField(
         "Confirm Your Password",
@@ -114,8 +147,14 @@ class RegisterForm(FlaskForm):
             validators.DataRequired("Please confirm your password."),
             validators.EqualTo("password", "Passwords don't match."),
         ],
-        render_kw={"autocomplete": "new-password"},
+        render_kw={
+            "autocomplete": "new-password",
+            "title": "Repeat your password again.",
+        },
     )
+
+    def is_required(self, field):
+        return any(isinstance(v, validators.DataRequired) for v in field.validators)
 
 
 class LoginForm(FlaskForm):
@@ -134,3 +173,6 @@ class LoginForm(FlaskForm):
         ],
         render_kw={"autocomplete": "current-password"},
     )
+
+    def is_required(self, field):
+        return any(isinstance(v, validators.DataRequired) for v in field.validators)
