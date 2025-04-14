@@ -18,12 +18,13 @@ from app.messages import (
     SuccessMessages,
     InfoMessages,
 )
+from app.utils import join_web
 
 auth_bp = Blueprint(
     "auth",
     __name__,
     url_prefix="/auth",
-    template_folder="../../web/templates/routes/auth",
+    template_folder=join_web("templates/routes/auth"),
 )
 
 
