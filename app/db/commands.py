@@ -39,10 +39,13 @@ def reset_db(ctx):
 def get_admin_data():
     """Load admin data from env
     Required variables (all in the form ADMIN_*):
-    -EMAIL(account email)
-    -PASSWORD(account pass)
-    -NAME(the username)
-    -GENDER(male, female)
+    - EMAIL (account email)
+    - PASSWORD (account pass)
+    - USERNAME (the username)
+    - DISPLAY (the display name)
+    - GENDER (male, female)
+
+    Note: this function will return any variable in the form ADMIN_*
     """
     data = {}
 
@@ -50,7 +53,7 @@ def get_admin_data():
         if key.startswith("ADMIN_"):
             data[key.removeprefix("ADMIN_").lower()] = value
 
-    required_data = {"email", "password", "name", "gender"}
+    required_data = {"email", "password", "username", "display", "gender"}
     missing_fields = required_data - data.keys()
 
     if missing_fields:
@@ -88,12 +91,13 @@ def init_superadmin():
 
     # Create a new admin user
     admin = User(
-        sudo_data["email"],
-        sudo_data["password"],
-        User_Type._SUPER_ADMIN,
-        sudo_data["name"],
-        date.today(),
-        Gender[gender_str],
+        email=sudo_data["email"],
+        password=sudo_data["password"],
+        role=User_Type._SUPER_ADMIN,
+        username=sudo_data["username"],
+        display_name=sudo_data["display"],
+        birthdate=date.today(),
+        gender=Gender[gender_str],
     )
 
     db.session.add(admin)
@@ -110,13 +114,14 @@ def create_seed(teacher, users, groups):
     """Create seed data for development and testing"""
     user_template = {
         "email": "user@example.com",
+        "username": "user",
         "password": "password",
         "role": User_Type.STUDENT,
-        "full_name": "John Doe",
+        "display_name": "John Doe",
         "birthdate": date(1990, 1, 1),
         "gender": Gender.MALE,
     }
-    email_start_index = 0
+    start_index = 0
 
     if teacher:
         user_template["role"] = User_Type.TEACHER
@@ -135,15 +140,15 @@ def create_seed(teacher, users, groups):
     if existing_seed:
         click.echo("Seed data already exists.")
         if click.confirm("Would you like to append on the existing seed data?"):
-            email_start_index = len(existing_seed)
+            start_index = len(existing_seed)
         else:
             click.echo("Aborting.")
             return
 
     seed_users = []
     data = user_template
-    for i in range(users):
-        data.update(email=f"user{email_start_index + i}@example.com")
+    for i in range(start_index, start_index + users):
+        data.update(email=f"user{i}@example.com", username=f"user{i}")
         user = User(**data)
         db.session.add(user)
         seed_users.append(user)

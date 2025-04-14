@@ -2,7 +2,6 @@ from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date, datetime
-from uuid import uuid4
 
 from . import enums
 from .. import Base
@@ -11,14 +10,14 @@ from .. import Base
 class User(Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True)
-    uuid: Mapped[str] = mapped_column(default=lambda: str(uuid4()), unique=True)
+    username: Mapped[str] = mapped_column(unique=True)
     email: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str]
     role: Mapped[enums.User_Type]
     status: Mapped[enums.Account_Status] = mapped_column(
         default=enums.Account_Status.UNVERIFIED
     )
-    full_name: Mapped[str]
+    display_name: Mapped[str]
     birthdate: Mapped[date]
     gender: Mapped[enums.Gender]
     bio: Mapped[str | None]
@@ -41,14 +40,16 @@ class User(Base):
         email: str,
         password: str,
         role: enums.User_Type,
-        full_name: str,
+        username: str,
+        display_name: str,
         birthdate: date,
         gender: enums.Gender,
         bio: str | None = None,
     ):
         self.email = email
         self.role = role
-        self.full_name = full_name
+        self.username = username
+        self.display_name = display_name
         self.birthdate = birthdate
         self.gender = gender
         self.bio = bio
