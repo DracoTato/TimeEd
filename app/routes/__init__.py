@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, url_for
+
 from .auth import auth_bp
 
 root_bp = Blueprint("root", __name__)

@@ -3,11 +3,11 @@ import click
 from sqlalchemy.exc import OperationalError
 from random import choice
 from flask import current_app as ca
+from datetime import date
 
 from . import db
 from .schema.models import User, Group
 from .schema.enums import User_Type, Gender
-from datetime import date
 
 
 @click.command("init-db")

@@ -10,6 +10,7 @@ from wtforms import (
     ValidationError,
 )
 from re import fullmatch
+
 from app.db.schema.enums import Gender, User_Type
 
 

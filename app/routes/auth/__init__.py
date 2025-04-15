@@ -8,6 +8,7 @@ from flask import (
     g,
 )
 from functools import wraps
+
 from app.db.schema.models import User
 from app.forms import RegisterForm, LoginForm
 from app.db import db

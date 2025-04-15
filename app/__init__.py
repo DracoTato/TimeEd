@@ -1,6 +1,7 @@
 from flask import Flask
 from typing import Any
 from os import getenv
+
 from .config import config_dict
 from .logging import setup_logging
 from .routes import register_blueprints

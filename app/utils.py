@@ -1,10 +1,11 @@
-from .db.schema.enums import User_Type
-from app.messages import flash_message, ErrorMessages, WarningMessages
 from flask_sqlalchemy import SQLAlchemy
 from flask import g, redirect, url_for, abort, current_app as ca
 from wtforms import Field
 from os import getcwd, path
 from typing import Sequence, Callable
+
+from .db.schema.enums import User_Type
+from app.messages import flash_message, ErrorMessages, WarningMessages
 
 WEB_PATH = path.join(getcwd(), "app/web")
 
