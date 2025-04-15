@@ -1,6 +1,6 @@
 from .db.schema.enums import User_Type
 from app.messages import flash_message, ErrorMessages, WarningMessages
-from flask import g, redirect, url_for, abort
+from flask import g, redirect, url_for, abort, current_app as ca
 from os import getcwd, path
 
 WEB_PATH = path.join(getcwd(), "app/web")
@@ -13,6 +13,7 @@ def require_role(user_type: User_Type | list[User_Type]):
         if not isinstance(allowed_roles, list) or not all(
             isinstance(role, User_Type) for role in allowed_roles
         ):
+            ca.logger.warning("Invalid role type given to require_role method.")
             raise TypeError(
                 "Invalid role type. Expected User_Types or list of User_Types."
             )

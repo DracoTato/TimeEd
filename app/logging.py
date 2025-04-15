@@ -48,7 +48,8 @@ def setup_logging(app):
     if default_handler in app.logger.handlers:
         app.logger.removeHandler(default_handler)
 
-    app.logger.addHandler(file_handler)
+    if app.config.get("ENV") != "testing":
+        app.logger.addHandler(file_handler)
     app.logger.addHandler(stream_handler)
 
 

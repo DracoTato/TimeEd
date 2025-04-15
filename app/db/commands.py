@@ -2,7 +2,7 @@ from os import environ
 import click
 from sqlalchemy.exc import OperationalError
 from random import choice
-from flask import current_app
+from flask import current_app as ca
 
 from . import db
 from .schema.models import User, Group
@@ -57,9 +57,8 @@ def get_admin_data():
     missing_fields = required_data - data.keys()
 
     if missing_fields:
-        raise ValueError(
-            f"Missing required admin fields: {missing_fields}, please add these env variables."
-        )
+        err = f"Missing required admin fields: {missing_fields}, please add these env variables."
+        ca.logger.warning(err)
 
     return data
 
@@ -87,6 +86,7 @@ def init_superadmin():
 
     gender_str = sudo_data["gender"].upper()
     if gender_str not in Gender.__members__:
+        ca.logger.warning("Invalid superadmin gender value.")
         raise ValueError(f"Invalid gender value: {gender_str}")
 
     # Create a new admin user
@@ -126,7 +126,7 @@ def create_seed(teacher, users, groups):
     if teacher:
         user_template["role"] = User_Type.TEACHER
 
-    if not current_app.config["DEBUG"] and not current_app.config["TESTING"]:
+    if not ca.config["DEBUG"] and not ca.config["TESTING"]:
         if not click.confirm(
             "Are you sure you want to create seed data in production?"
         ):
