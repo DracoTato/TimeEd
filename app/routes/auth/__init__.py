@@ -18,7 +18,7 @@ from app.messages import (
     SuccessMessages,
     InfoMessages,
 )
-from app.utils import join_web
+from app.utils import join_web, check_unique_cols
 
 auth_bp = Blueprint(
     "auth",
@@ -42,7 +42,7 @@ def logout_required(view):
     @wraps(view)
     def wrapper(*args, **kwargs):
         if g.user:
-            flash_message(InfoMessages.LOGIN_EXISTS)
+            flash_message(InfoMessages.ALREADY_LOGGED)
             # TODO Redirect to dashboard
 
         return view(*args, **kwargs)
@@ -66,17 +66,22 @@ def login_required(view):
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        if db.session.query(User).filter_by(email=form.email.data).first():
-            flash_message(ErrorMessages.USER_EXISTS)
-            form.email.errors.append("An account is registered using this email.")  # type: ignore (Pylance)
+        if not check_unique_cols(
+            db=db,
+            db_table=User,
+            form_fields=[form.email, form.username],
+            db_cols=["email", "username"],
+            err_msgs=[ErrorMessages.USER_EXISTS, ErrorMessages.USERNAME_INUSE],
+        ):
             return render_template("register.html", form=form)
 
         user = User(
-            email=form.email.data,  # type: ignore (Pylance)
-            password=form.password.data,  # type: ignore (Pylance)
+            email=form.email.data,
+            password=form.password.data,
             role=form.account_type.data,
-            full_name=form.full_name.data,  # type: ignore (Pylance)
-            birthdate=form.birthdate.data,  # type: ignore (Pylance)
+            username=form.username.data,
+            display_name=form.display_name.data,
+            birthdate=form.birthdate.data,
             gender=form.gender.data,
         )
         db.session.add(user)
@@ -89,11 +94,12 @@ def register():
             return render_template("register.html", form=form)
         else:
             flash_message(SuccessMessages.ACCOUNT_CREATED)
-            ca.logger.info(f"New user created: {user.email}")
+            ca.logger.info(f"New user created: {user.username}")
             return redirect(url_for("auth.login"))
     elif form.errors:
         flash_message(ErrorMessages.INVALID_FORM)
 
+    ca.logger.debug(form.errors)
     return render_template("register.html", form=form)
 
 
@@ -103,7 +109,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = db.session.query(User).filter_by(email=form.email.data).first()
-        if user and user.check_password(form.password.data):  # type: ignore (Pylance)
+        if user and user.check_password(form.password.data):
             session["user_id"] = user.id
             flash_message(SuccessMessages.LOGIN_SUCCESS)
             return redirect(url_for("index"))  # TODO Redirect to dashboard
