@@ -9,6 +9,7 @@ from flask import flash
 # Error messages
 class ErrorMessages(Enum):
     USER_EXISTS = _("User already exists.")
+    USERNAME_INUSE = _("Username is in use, please choose another one.")
     INVALID_CREDENTIALS = _("Invalid email or password.")
     PERMISSION_DENIED = _("You don't have permission to access this page.")
     UNKNOWN_ERROR = _(
@@ -28,7 +29,7 @@ class SuccessMessages(Enum):
 
 
 class InfoMessages(Enum):
-    LOGIN_EXISTS = _("You are already logged in.")
+    ALREADY_LOGGED = _("You are already logged in.")
 
 
 FlashableMessages = Union[ErrorMessages, WarningMessages, SuccessMessages, InfoMessages]

@@ -6,7 +6,7 @@ from sys import stdout
 from flask.logging import default_handler
 
 
-def setup_logging(app):
+def setup_logging(app) -> None:
     """### Description:
     Add a RotatingFile handler and a Stream handler to the application and remove the default handler.
 
