@@ -44,7 +44,7 @@ def logout_required(view):
     def wrapper(*args, **kwargs):
         if g.user:
             flash_message(InfoMessages.ALREADY_LOGGED)
-            # TODO Redirect to dashboard
+            return redirect(url_for("root.index"))
 
         return view(*args, **kwargs)
 
@@ -100,7 +100,6 @@ def register():
     elif form.errors:
         flash_message(ErrorMessages.INVALID_FORM)
 
-    ca.logger.debug(form.errors)
     return render_template("register.html", form=form)
 
 
@@ -113,7 +112,7 @@ def login():
         if user and user.check_password(form.password.data):
             session["user_id"] = user.id
             flash_message(SuccessMessages.LOGIN_SUCCESS)
-            return redirect(url_for("index"))  # TODO Redirect to dashboard
+            return redirect(url_for("root.index"))
         else:
             flash_message(ErrorMessages.INVALID_CREDENTIALS)
 

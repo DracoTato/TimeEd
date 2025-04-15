@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, url_for
 
+from app.utils import get_user_home
 from .auth import auth_bp
 
 root_bp = Blueprint("root", __name__)
@@ -17,4 +18,8 @@ def register_blueprints(app):
 # routes
 @root_bp.route("/")
 def index():
-    return redirect(url_for("auth.login"))
+    user_home = get_user_home()
+    if not user_home:
+        return redirect(url_for("auth.login"))
+    else:
+        return redirect(user_home)

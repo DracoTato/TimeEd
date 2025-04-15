@@ -71,3 +71,9 @@ def check_unique_cols(
             ca.logger.error(e)
 
     return is_unique
+
+
+def get_user_home():
+    """Return user's home url, if user is logged in"""
+    role = g.user.role
+    return url_for(f"{role.name.lower().removeprefix('_')}.index") if role else None
