@@ -187,7 +187,8 @@ body {
 }
 
 small,
-input {
+input,
+.input-errors {
     font-size: 0.833rem;
     font-weight: 300;
     line-height: 1.8;
@@ -195,6 +196,61 @@ input {
 
 /* Components */
 /* --------------- */
+.notif-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    position: fixed;
+    top: 0;
+    right: 50%;
+    translate: 50% 0;
+    list-style-type: none;
+}
+
+.notif {
+    --bg: var(--color-gray-30);
+    --border: var(--color-gray-100);
+    background-color: color-mix(in srgb, var(--bg) 80%, transparent);
+    color: var(--color-gray-100);
+    backdrop-filter: blur(8px);
+    width: 40vw;
+    max-width: var(--sizing-16xl);
+    padding-block: var(--spacing-lg);
+    padding-inline: var(--spacing-xl);
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+    transition: opacity 0.4s ease-out, transform 0.35s ease-out;
+}
+
+.notif.fade-out {
+    opacity: 0;
+    transform: translateX(-20vw);
+}
+
+.notif.info {
+    --bg: var(--color-primary-30);
+    --border: var(--color-primary-100);
+}
+
+.notif.success {
+    --bg: var(--color-success-30);
+    --border: var(--color-success-100);
+}
+
+.notif.warning {
+    --bg: var(--color-danger-10);
+    --border: var(--color-danger-100);
+}
+
+.notif.danger {
+    --bg: var(--color-danger-30);
+    --border: var(--color-danger-100);
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -241,6 +297,11 @@ input {
     color: var(--color-danger-70);
 }
 
+.form .input .input-errors {
+    color: var(--color-danger-100);
+    margin-left: var(--spacing-md);
+}
+
 .form input:not([type="radio"]) {
     display: block;
     width: 100%;
@@ -260,11 +321,12 @@ input {
 }
 
 .form input:focus-visible,
-.form .radio li:has(input[type="radio"]:focus-visible) {
+.form .radio li:has(input[type="radio"]:focus-visible) label {
     outline: 2px solid var(--color-gray-80);
 }
 
 .form .input input[type="radio"] {
+    position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
@@ -283,9 +345,11 @@ input {
     border: 2px solid var(--color-gray-60);
 }
 
-.form .radio li {
+.form .radio label {
     --radio-color: var(--color-gray-80);
     --radio-checked-color: var(--color-primary-100);
+
+    display: inline-block;
     padding-block: var(--spacing-sm);
     padding-inline: var(--spacing-md);
     border-radius: 8px;
@@ -295,7 +359,7 @@ input {
     transition: background-color 0.15s ease-out;
 }
 
-.form .radio li:has(input[type="radio"]:checked) {
+.form .radio li:has(input[type="radio"]:checked) label {
     background-color: var(--color-primary-10);
     color: var(--radio-checked-color);
     border-color: var(--radio-checked-color);
@@ -360,7 +424,7 @@ input {
         padding-inline: calc(var(--spacing-3xl));
         padding-block: calc(var(--spacing-4xl));
         box-shadow: 0px 0px 4px
-            color-mix(in srgb, var(--color-gray-100), transparent 80%);
+            color-mix(in srgb, var(--color-gray-100) 80%, transparent);
     }
 }
 

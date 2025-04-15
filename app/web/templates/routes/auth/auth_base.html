@@ -29,10 +29,19 @@
             {% else %}
             {{ field.label }}
             {% endif %}
+
             {% if field.type == "RadioField" %}
             {{ field(class="radio") }}
             {% else %}
             {{ field }}
+            {% endif %}
+
+            {% if field.errors %}
+            <ul class="input-errors">
+                {% for err in field.errors %}
+                <li>{{ err }}</li>
+                {% endfor %}
+            </ul>
             {% endif %}
         </div>
         {% endfor %}
