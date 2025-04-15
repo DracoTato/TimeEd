@@ -14,14 +14,14 @@ from app.db.schema.enums import Gender, User_Type
 
 
 def display_validator(_, field):
-    if not fullmatch(r"^[A-Za-z0-9-_\.\s]$"):
+    if not fullmatch(r"[A-Za-z0-9-_\. ]+", field.data):
         raise ValidationError(
             "Display name contains one or more illegal characters. only letters, numbers, -, _, . are allowed"
         )
 
 
 def username_validator(_, field):
-    if not fullmatch(r"^[a-z0-9-]$"):
+    if not fullmatch(r"[a-z0-9-]+", field.data):
         raise ValidationError(
             "Username contains one or more illegal characters. only letters, numbers, -, _, . are allowed"
         )
@@ -72,7 +72,7 @@ class RegisterForm(FlaskForm):
     username = StringField(
         "Username",
         validators=[
-            display_validator,
+            username_validator,
             validators.DataRequired("Please fill this field."),
         ],
         render_kw={
@@ -174,5 +174,5 @@ class LoginForm(FlaskForm):
         render_kw={"autocomplete": "current-password"},
     )
 
-    def is_required(self, field):
+    def is_required(self, field) -> bool:
         return any(isinstance(v, validators.DataRequired) for v in field.validators)
