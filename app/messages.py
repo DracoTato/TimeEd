@@ -8,8 +8,8 @@ from flask import flash
 
 # Error messages
 class ErrorMessages(Enum):
-    USER_EXISTS = _("User already exists.")
-    USERNAME_INUSE = _("Username is in use, please choose another one.")
+    EMAIL_EXISTS = _("Email is already registered, please log in instead.")
+    USERNAME_EXISTS = _("Username is in use, please choose another one.")
     INVALID_CREDENTIALS = _("Invalid email or password.")
     PERMISSION_DENIED = _("You don't have permission to access this page.")
     UNKNOWN_ERROR = _(

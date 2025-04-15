@@ -65,7 +65,7 @@ def check_unique_cols(
         try:
             if db.session.query(db_table).filter_by(**{row[0]: row[1].data}).first():
                 flash_message(row[2])
-                row[1].errors.append(row[2])
+                row[1].errors.append(row[2].value)
                 is_unique = False
         except Exception as e:
             ca.logger.error(e)

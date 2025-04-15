@@ -72,7 +72,7 @@ def register():
             db_table=User,
             form_fields=[form.email, form.username],
             db_cols=["email", "username"],
-            err_msgs=[ErrorMessages.USER_EXISTS, ErrorMessages.USERNAME_INUSE],
+            err_msgs=[ErrorMessages.EMAIL_EXISTS, ErrorMessages.USERNAME_EXISTS],
         ):
             return render_template("register.html", form=form)
 
