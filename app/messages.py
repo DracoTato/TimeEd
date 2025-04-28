@@ -26,6 +26,7 @@ class SuccessMessages(Enum):
     LOGIN_SUCCESS = _("Logged in successfully.")
     LOGOUT_SUCCESS = _("Logged out successfully.")
     ACCOUNT_CREATED = _("Your account has been successfully created.")
+    GROUP_CREATE_SUCCESS = _("Your group has been successfully created.")
 
 
 class InfoMessages(Enum):

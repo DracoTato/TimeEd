@@ -75,7 +75,7 @@ class Group(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     title: Mapped[str] = mapped_column(String(32))
-    description: Mapped[str] = mapped_column(String(256))
+    description: Mapped[str] = mapped_column(String(64))
 
     owner: Mapped["User"] = relationship(back_populates="owned_groups")
     enrolls: Mapped[list["Enroll"]] = relationship(

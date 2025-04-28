@@ -110,6 +110,7 @@ def login():
     if form.validate_on_submit():
         user = db.session.query(User).filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
+            session.permanent = True
             session["user_id"] = user.id
             flash_message(SuccessMessages.LOGIN_SUCCESS)
             return redirect(url_for("root.index"))
