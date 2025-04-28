@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% endblock head %}
+
+
+{% block body %}
+<div class="column-container">
+    <nav class="sidebar">
+        <div class="inner-container">
+            <ul class="nav-links bold">
+                <div class="nav-group">
+                    <li><a href="{{ url_for('teacher.index') }}">Dashboard</a></li>
+                    <li><a href="">View All</a></li>
+                </div>
+                <hr>
+                <div class="nav-group">
+                    <li><a href="{{ url_for('teacher.groups.create') }}">New Group</a></li>
+                    <li><a href="">New Session</a></li>
+                </div>
+                <hr>
+                <div class="nav-group">
+                    <li><a href="">Students Q&A</a></li>
+                    <li><a href="">Analytics</a></li>
+                </div>
+                <hr>
+                <div class="nav-group">
+                    <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                </div>
+            </ul>
+            <div class="profile">
+                <ul>
+                    <li>{{ g.user.display_name }}</li>
+                    <li class="small">{{ g.user.username }}</li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <div class="main-content flex-grow">
+        <div class="topbar">
+            <div class="topbar-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <h4>{% block topbar_title %} {% endblock %}</h4>
+        </div>
+        <main class="container">
+            {% block content %} {% endblock %}
+        </main>
+        <footer class="footer container">
+            <ul class="footer-nav">
+                <li><a href="">Report</a></li>
+                <li><a href="">Contact Me</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                <li><a href="#">Back To Top</a></li>
+            </ul>
+            <hr>
+            <div class="footer-copyright small">© 2025 TimeEd by dracotato. All rights reserved.</div>
+        </footer>
+    </div>
+</div>
+
+<script>
+    const sidebar = document.querySelector(".sidebar");
+    const topbarBtn = document.querySelector(".topbar .topbar-icon");
+
+    function toggleSidebar() {
+        sidebar.classList.toggle("active");
+    }
+
+    topbarBtn.addEventListener("click", () => {
+        toggleSidebar()
+    });
+
+    window.addEventListener("keydown", (e) => {
+        const active = document.activeElement;
+        const isTyping =
+            active.tagName === "INPUT" ||
+            active.tagName === "TEXTAREA" ||
+            active.isContentEditable;
+
+        if (!isTyping && e.key == "/") {
+            e.preventDefault();
+            toggleSidebar();
+        };
+    });
+</script>
+{% endblock body %}

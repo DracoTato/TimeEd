@@ -9,6 +9,15 @@
 </head>
 
 <body>
+    <ul class="notif-container">
+        {% for cat, msg in get_flashed_messages(with_categories=True) %}
+        <li class="notif {{ cat }}" onclick="removeNotif(this)">{{msg}}</li>
+        {% endfor %}
+    </ul>
+
+    {% block body %}
+    {% endblock body %}
+
     <script>
         function removeNotif(notif) {
             notif.classList.add("fade-out");
@@ -30,15 +39,6 @@
             });
         });
     </script>
-
-
-    <ul class="notif-container">
-        {% for cat, msg in get_flashed_messages(with_categories=True) %}
-        <li class="notif {{ cat }}" onclick="removeNotif(this)">{{msg}}</li>
-        {% endfor %}
-    </ul>
-    {% block body %}
-    {% endblock body %}
 </body>
 
 </html>
