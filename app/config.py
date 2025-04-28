@@ -1,5 +1,6 @@
 import os
 from secrets import token_hex
+from datetime import timedelta
 
 
 class Config:
@@ -8,6 +9,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv("DATA_URI", "sqlite:///timeed.db")
     SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
     SQLALCHEMY_TRACK_MODIFICATION = False
+    PERMANENT_SESSION_LIFETIME = timedelta(days=31)
+
     DEBUG = False
     TESTING = False
 
@@ -40,8 +43,9 @@ class ProductionConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = os.getenv("DATA_URI", "sqlite:///production.db")
     DEBUG = False
+    SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SECURE = True
-    SESSION_COOKIE_SAMESITE = "Lax"
+    SESSION_COOKIE_SAMESITE = "strict"
 
 
 class TestConfig(Config):
