@@ -75,5 +75,13 @@ def check_unique_cols(
 
 def get_user_home():
     """Return user's home url, if user is logged in"""
-    role = g.user.role
-    return url_for(f"{role.name.lower().removeprefix('_')}.index") if role else None
+    user = g.get("user")
+    return (
+        url_for(f"{user.role.name.lower().removeprefix('_')}.index") if user else None
+    )
+
+
+def register_blueprints(parent, blueprints: list):
+    """Register blueprints with a flask instance or a another blueprint."""
+    for bp in blueprints:
+        parent.register_blueprint(bp)

@@ -9,12 +9,6 @@ root_bp = Blueprint("root", __name__)
 BLUEPRINTS = [root_bp, auth_bp]
 
 
-def register_blueprints(app):
-    """Register blueprints with a flask instance"""
-    for bp in BLUEPRINTS:
-        app.register_blueprint(bp)
-
-
 # routes
 @root_bp.route("/")
 def index():

@@ -4,7 +4,8 @@ from os import getenv
 
 from .config import config_dict
 from .logging import setup_logging
-from .routes import register_blueprints
+from .routes import BLUEPRINTS
+from .utils import register_blueprints
 from .db import db
 from .db.commands import register_commands
 
@@ -28,7 +29,7 @@ def create_app(config: dict[str, Any] = {}):
 
     db.init_app(app)  # Register db w/ flask instance
 
-    register_blueprints(app)  # Register all other blueprints under root_bp
+    register_blueprints(app, BLUEPRINTS)  # Register all other blueprints under root_bp
 
     register_commands(app)
 
