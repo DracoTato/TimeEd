@@ -22,9 +22,9 @@ def display_validator(_, field):
 
 
 def username_validator(_, field):
-    if not fullmatch(r"[a-z0-9-]+", field.data):
+    if not fullmatch(r"[a-z0-9-_\.]+", field.data):
         raise ValidationError(
-            "Username contains one or more illegal characters. only letters, numbers, -, _, . are allowed"
+            "Username contains one or more illegal characters. only lowercase letters, numbers, -, _, . are allowed"
         )
 
 
@@ -173,6 +173,26 @@ class LoginForm(FlaskForm):
             validators.DataRequired("Please enter your password"),
         ],
         render_kw={"autocomplete": "current-password"},
+    )
+
+    def is_required(self, field) -> bool:
+        return any(isinstance(v, validators.DataRequired) for v in field.validators)
+
+
+class GroupForm(FlaskForm):
+    title = StringField(
+        "Group Title",
+        validators=[
+            validators.DataRequired("Please enter a title for the group."),
+            validators.Length(8, 32, "Title must be %(min)d-%(max)d long."),
+        ],
+    )
+    description = StringField(
+        "Group Description",
+        validators=[
+            validators.DataRequired("Please enter a description for the group."),
+            validators.Length(8, 64, "Description must be %(min)d-%(max)d long."),
+        ],
     )
 
     def is_required(self, field) -> bool:

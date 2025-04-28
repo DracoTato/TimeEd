@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template
 
-from app.utils import join_web, require_role
+from app.utils import join_web, require_role, register_blueprints
 from app.db.schema.enums import User_Type
 
+from .groups import group_bp
 
 teacher_bp = Blueprint(
     "teacher",
@@ -12,6 +13,9 @@ teacher_bp = Blueprint(
 )
 
 teacher_bp.before_request(require_role(User_Type.TEACHER))
+
+BLUEPRINTS = [group_bp]
+register_blueprints(teacher_bp, BLUEPRINTS)
 
 
 @teacher_bp.route("/")
