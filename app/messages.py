@@ -28,6 +28,7 @@ class SuccessMessages(Enum):
     ACCOUNT_CREATED = _("Your account has been successfully created.")
     GROUP_CREATE_SUCCESS = _("Your group has been successfully created.")
     GROUP_UPDATE_SUCCESS = _("Your group has been successfully updated.")
+    GROUP_DELETE_SUCCESS = _("Your group has been successfully deleted.")
 
 
 class InfoMessages(Enum):

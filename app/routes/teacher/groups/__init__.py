@@ -6,6 +6,7 @@ from flask import (
     redirect,
     current_app as ca,
     abort,
+    jsonify,
 )
 from sqlalchemy.orm.exc import MultipleResultsFound
 
@@ -23,6 +24,7 @@ group_bp = Blueprint(
 )
 
 
+# TODO redirect user to the previous page (create, edit)
 @group_bp.route("/", methods=["GET", "POST"])
 def create():
     form = GroupForm()
@@ -33,7 +35,7 @@ def create():
         db.session.commit()
 
         flash_message(SuccessMessages.GROUP_CREATE_SUCCESS)
-        return redirect(url_for("teacher.index"))
+        return redirect(url_for("teacher.groups.view", id=group.id))
     else:
         return render_template(
             "group_form.html",
@@ -55,7 +57,7 @@ def edit(id):
         )
         return abort(500)
 
-    if not group.owner_id == g.user.id:
+    if not group.owner_id == g.user.id or not group:
         return abort(404)
 
     form = GroupForm(title=group.title, description=group.description)
@@ -65,7 +67,7 @@ def edit(id):
         db.session.commit()
 
         flash_message(SuccessMessages.GROUP_UPDATE_SUCCESS)
-        return redirect(url_for("teacher.index"))
+        return redirect(url_for("teacher.groups.view", id=group.id))
     else:
         return render_template(
             "group_form.html",
@@ -79,6 +81,9 @@ def edit(id):
 
 @group_bp.route("/<int:id>", methods=["DELETE"])
 def delete(id):
+    if not id:
+        return abort(400)
+
     try:
         group = db.session.query(Group).filter_by(id=id).one_or_none()
     except MultipleResultsFound:
@@ -90,7 +95,32 @@ def delete(id):
     if not group.owner_id == g.user.id:
         return abort(404)
 
-    db.delete(group)
-    db.commit()
+    db.session.delete(group)
+    db.session.commit()
 
     ca.logger.info(f"Deleted group with id {group.id}")
+
+    flash_message(SuccessMessages.GROUP_DELETE_SUCCESS)
+    return jsonify({"url": str(url_for("teacher.index"))})
+
+
+@group_bp.route("/view/<int:id>", methods=["GET"])
+def view(id):
+    try:
+        group = db.session.query(Group).filter_by(id=id).one_or_none()
+    except MultipleResultsFound:
+        ca.logger.error(
+            f"Multiple groups found with id {id}, requested by user {g.user.id}"
+        )
+        return abort(500)
+
+    if not group:
+        return abort(404)
+
+    is_owner = False
+    if group.owner_id == g.user.id:
+        is_owner = True
+
+    return render_template(
+        "view_group.html", title="View A Group", is_owner=is_owner, group=group
+    )

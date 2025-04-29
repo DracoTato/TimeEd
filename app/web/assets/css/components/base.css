@@ -114,10 +114,6 @@
     box-sizing: border-box;
 }
 
-html {
-    font-size: clamp(0.875rem, 1.2vw, 1.25rem);
-}
-
 body {
     background-color: var(--color-gray-20);
 }
@@ -201,7 +197,7 @@ input,
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
-    padding-top: var(--spacing-lg);
+    padding-top: var(--spacing-xl);
     position: fixed;
     top: 0;
     right: 50%;
@@ -216,9 +212,7 @@ input,
     background-color: color-mix(in srgb, var(--bg) 80%, transparent);
     color: var(--color-gray-100);
     backdrop-filter: blur(8px);
-    width: clamp(250px, 40vw, 800px);
     max-width: 95vw;
-    max-width: var(--sizing-16xl);
     padding-block: var(--spacing-lg);
     padding-inline: var(--spacing-xl);
     border-radius: 8px;
@@ -386,6 +380,7 @@ input,
     outline: none;
     text-align: center;
     text-decoration: none;
+    user-select: none;
     transition: background-color ease-out 0.35s;
 }
 
@@ -520,6 +515,8 @@ body:has(.sidebar.active) .topbar-icon span:nth-child(3) {
     flex-direction: column;
     background-color: var(--color-gray-100);
     color: var(--color-gray-10);
+    margin-top: 200px;
+    margin-bottom: 0; /* override .container */
 }
 
 .footer ul {
@@ -542,18 +539,83 @@ body:has(.sidebar.active) .topbar-icon span:nth-child(3) {
     text-align: center;
 }
 
+.group-view {
+    color: var(--color-gray-30);
+    margin-bottom: var(--spacing-13xl);
+}
+
+.group-view .column-container {
+    display: flex;
+}
+
+.group-view h1 {
+    color: var(--color-gray-10);
+}
+
+.group-view .action-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.group-view .info-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--spacing-2xl);
+}
+
+.group-view .info-column .text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.property-container {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.property {
+    --bg: var(--color-primary-95);
+
+    background-color: var(--bg);
+    padding-block: var(--spacing-sm);
+    padding-inline: var(--spacing-lg);
+    border-radius: 21px;
+}
+
 /* Flags */
 /* --------------- */
 .text-center {
     text-align: center;
 }
 
+.flex {
+    display: flex;
+}
+
+.flex.space-between {
+    justify-content: space-between;
+    align-items: start;
+}
+
 .flex-grow {
     flex-grow: 1;
 }
 
+.bg-primary-100 {
+    background-color: var(--color-primary-100);
+}
+
+.divider {
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--color-gray-40);
+}
+
 /* Mobile */
-@media screen and (max-width: 727px) {
+@media screen and (max-width: 921px) {
     .sidebar {
         display: none;
         background-color: color-mix(
@@ -563,7 +625,7 @@ body:has(.sidebar.active) .topbar-icon span:nth-child(3) {
         );
         color: var(--color-gray-10);
         width: 100vw;
-        backdrop-filter: blur(4px);
+        backdrop-filter: blur(8px);
         position: fixed;
         top: 0;
         right: 0;
@@ -590,9 +652,13 @@ body:has(.sidebar.active) .topbar-icon span:nth-child(3) {
 
         padding-block: var(--spacing-lg);
         padding-inline: var(--spacing-md);
+        position: relative;
     }
 
-    .topbar-icon {
+    body:has(.sidebar.active) .topbar-icon {
+        position: absolute;
+        top: var(--spacing-xl);
+        left: var(--spacing-md);
         z-index: 2;
     }
 
@@ -609,10 +675,20 @@ body:has(.sidebar.active) .topbar-icon span:nth-child(3) {
     .footer ul {
         flex-direction: column;
     }
+
+    .group-view {
+        padding-block: var(--spacing-xl);
+        padding-inline: var(--spacing-md);
+    }
+
+    .group-view .column-container {
+        flex-direction: column;
+        gap: var(--spacing-5xl);
+    }
 }
 
 /* PC */
-@media screen and (min-width: 728px) {
+@media screen and (min-width: 922px) {
     .container {
         padding-inline: 20%;
     }
@@ -653,6 +729,15 @@ body:has(.sidebar.active) .topbar-icon span:nth-child(3) {
         padding-inline: var(--spacing-6xl);
         padding-block: var(--spacing-14xl);
         gap: var(--spacing-3xl);
+    }
+
+    .group-view {
+        padding-block: var(--spacing-14xl);
+        padding-inline: 10%;
+    }
+
+    .group-view .column-container {
+        justify-content: space-between;
     }
 }
 

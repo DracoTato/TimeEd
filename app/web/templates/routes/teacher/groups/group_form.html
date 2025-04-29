@@ -10,38 +10,40 @@
 {% endblock topbar_title %}
 
 {% block content %}
-<form class="form" action="{{ action }}" method="{{ method }}">
-    {{ form.hidden_tag() }}
+<div class="container">
+    <form class="form" action="{{ action }}" method="{{ method }}">
+        {{ form.hidden_tag() }}
 
-    {% for field in form if field.name != 'csrf_token' %}
-    <div class="input">
-        {% if form.is_required(field) %}
-        <span>
+        {% for field in form if field.name != 'csrf_token' %}
+        <div class="input">
+            {% if form.is_required(field) %}
+            <span>
+                {{ field.label }}
+                <span class="required">*</span>
+            </span>
+            {% else %}
             {{ field.label }}
-            <span class="required">*</span>
-        </span>
-        {% else %}
-        {{ field.label }}
-        {% endif %}
+            {% endif %}
 
-        {% if field.type == "RadioField" %}
-        {{ field(class="radio") }}
-        {% else %}
-        {{ field }}
-        {% endif %}
+            {% if field.type == "RadioField" %}
+            {{ field(class="radio") }}
+            {% else %}
+            {{ field }}
+            {% endif %}
 
-        {% if field.errors %}
-        <ul class="input-errors">
-            {% for err in field.errors %}
-            <li>{{ err }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
-    {% endfor %}
+            {% if field.errors %}
+            <ul class="input-errors">
+                {% for err in field.errors %}
+                <li>{{ err }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
 
-    {% block extra_fields %} {% endblock %}
-    <hr>
-    <button class="btn primary" type="submit">{{ btn_txt }}</button>
-</form>
+        {% block extra_fields %} {% endblock %}
+        <hr>
+        <button class="btn primary" type="submit">{{ btn_txt }}</button>
+    </form>
+</div>
 {% endblock content %}
