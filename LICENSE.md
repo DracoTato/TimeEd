@@ -1,40 +1,19 @@
-# TimeED License
+TimeEd License
 
-Copyright (C) 2025 [DracoTato](https://github.com/DracoTato)
+Copyright (c) DracoTato 2025
 
-This software is provided for **personal, non-commercial use only**.
-You are allowed to **view, run, and analyze** the source code.
+Permission is hereby granted to anyone to view, study, and use the source code of TimeEd for personal and educational purposes only.
 
-## ❌ Restrictions
+You may not:
 
-You may NOT:
+    1. Use TimeEd or its code for any commercial purpose (selling, offering services, monetization, etc).
 
--   Modify the source code outside of the official repository.
--   Distribute (publicly or privately) **any** modified or unmodified copies of this software.
--   Use this software for **commercial purposes**.
+    2. Modify and redistribute TimeEd without explicit permission from the author.
 
-## ✅ Contributions
+    3. Claim ownership or original authorship of TimeEd or any modified versions.
 
--   All modifications must be submitted as **pull requests (PRs)** to the official repository.
--   Contributions require **explicit approval** from the repository owner before being merged.
--   Forking is allowed **only** for the purpose of submitting contributions (**not for personal modifications or redistribution**).
+All rights not expressly granted are reserved by the author.
 
-## 🤔 Why This License?
+For any use beyond personal or educational purposes, you must obtain written permission from the author.
 
-TimeED is an open-code project, meaning the source code is publicly available for learning purposes.  
-However, this project is **not open-source** in the traditional sense.
-
--   The restrictive license ensures **no unauthorized modifications or redistribution**.
--   Keeping the repository public allows **others to learn from the code** without using it in unintended ways.
-
-If you have questions regarding permissions, feel free to contact me: [https://github.com/DracoTato](https://github.com/DracoTato).
-
-## 📜 Third-Party Licenses
-
-This project uses open-source libraries such as **Flask, SQLAlchemy, and WTForms**,  
-which are licensed under **BSD or MIT licenses**.
-
-## ⚖️ Agreement
-
-By using this software, you agree to these terms.  
-For inquiries about permissions, please contact: **[https://github.com/DracoTato](https://github.com/DracoTato)**.
+For more information or to contact the author, visit: https://github.com/DracoTato
