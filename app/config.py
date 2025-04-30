@@ -1,5 +1,4 @@
 import os
-from secrets import token_hex
 from datetime import timedelta
 
 
@@ -7,7 +6,7 @@ class Config:
     """Base Config"""
 
     SQLALCHEMY_DATABASE_URI = os.getenv("DATA_URI", "sqlite:///timeed.db")
-    SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
+    SECRET_KEY = os.getenv("SECRET_KEY", None)
     SQLALCHEMY_TRACK_MODIFICATION = False
     PERMANENT_SESSION_LIFETIME = timedelta(days=31)
 
