@@ -1,4 +1,4 @@
-TimeEd License
+# TimeEd License
 
 Copyright (c) DracoTato 2025
 
