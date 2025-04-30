@@ -16,6 +16,7 @@ MODULES = {
     "messages",
     "poetry",
     "gitignore",
+    "hooks",
 }
 DESC_LEN = 60
 

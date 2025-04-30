@@ -45,7 +45,7 @@ All commit messages must follow this format:
 -   `docs`: Doc files like README, LICENSE — use with `Chore` and `Style`.
 -   `messages`: Any modifications to app messages — use with `Chore` and `Style`.
 -   `poetry`: Dependency management — use with `Chore` and `Style`.
--   `gitignore`: Git ignore — use with `Chore` and `Style`.
+-   `hooks`: Git hooks — use with `Chore` and `Style`.
 
 > **Note**  
 > You can use multiple modules, if you _need_, e.g. `Feat(front-end/blueprint): desc.`
