@@ -5,18 +5,18 @@
 {% endblock head %}
 
 {% block body %}
-<div class="container margin-b-12xl row align-r"><a class="btn ghost primary"
+<div class="container justify-right mrgn-btm-group pad-block pad-inline"><a class="btn ghost primary"
         href="{% block btn_url %}{% endblock %}">{% block btn_text %}{%
-        endblock %}</a></div>
+        endblock %}</a>
+</div>
 
-
-<div class="container text-center">
+<div class="container col text-center mrgn-btm-group">
     <h1>{% block heading %} {% endblock %}</h1>
     <p>{% block paragraph %} {% endblock %}</p>
 </div>
 
-<div class="container">
-    <form class="form" action="{% block form_action %}{% endblock %}" method="post">
+<div class="container pad-block pad-inline">
+    <form class="form flex-grow" action="{% block form_action %}{% endblock %}" method="post">
         {{ form.hidden_tag() }}
 
         {% for field in form if field.name != 'csrf_token' %}
