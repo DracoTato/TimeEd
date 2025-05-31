@@ -23,7 +23,7 @@
 }
 
 .mrgn-top-section {
-    margin-bottom: var(--spacing-15xl);
+    margin-top: var(--spacing-15xl);
 }
 
 .mrgn-btm-block {
@@ -31,7 +31,7 @@
 }
 
 .mrgn-top-block {
-    margin-bottom: var(--spacing-13xl);
+    margin-top: var(--spacing-13xl);
 }
 
 .mrgn-btm-group {
@@ -39,7 +39,7 @@
 }
 
 .mrgn-top-group {
-    margin-bottom: var(--spacing-4xl);
+    margin-top: var(--spacing-4xl);
 }
 
 .text-center {
