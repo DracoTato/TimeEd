@@ -31,31 +31,6 @@
         </div>
     </div>
 </div>
-
-{#
-<div class="group-view bg-primary-100">
-    <div class="column-container">
-        <div class="info-column">
-            <div class="text">
-                <h1>{{ group.title }}</h1>
-                <p>{{ group.description }}</p>
-            </div>
-            <div class="property-container">
-                <span class="property">{{ group.created_at.strftime("%Y-%m-%d") }}</span>
-                <span class="property">{{ group.sessions | length }} Sessions</span>
-                <span class="property">{{ group.enrolls | length }} Students</span>
-            </div>
-        </div>
-        <div class="action-column">
-            <button class="btn primary">Share</button>
-            {% if is_owner %}
-            <a href="{{ url_for('teacher.groups.edit', id=group.id) }}" class="btn">Edit</a>
-            <a onclick="deleteGroup('{{ url_for('teacher.groups.delete', id=group.id)}}')" class="btn danger">Delete</a>
-            {% endif %}
-        </div>
-    </div>
-</div> #}
-
 <div class="container col pad-inline">
     <div class="container justify-between divider flex-grow">
         <h2>Sessions</h2>
