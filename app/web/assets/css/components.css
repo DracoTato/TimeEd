@@ -1,0 +1,240 @@
+.notif-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    padding-top: var(--spacing-xl);
+    position: fixed;
+    top: 0;
+    right: 50%;
+    translate: 50% 0;
+    list-style-type: none;
+    z-index: 9999;
+}
+
+.notif {
+    --bg: var(--color-gray-30);
+    --border: var(--color-gray-100);
+    background-color: color-mix(in srgb, var(--bg) 80%, transparent);
+    color: var(--color-gray-100);
+    backdrop-filter: blur(8px);
+    max-width: 95vw;
+    padding-block: var(--spacing-lg);
+    padding-inline: var(--spacing-xl);
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+    transition:
+        opacity 0.4s ease-out,
+        transform 0.35s ease-out;
+}
+
+.notif.fade-out {
+    opacity: 0;
+    transform: translateX(-20vw);
+}
+
+.notif.info {
+    --bg: var(--color-primary-30);
+    --border: var(--color-primary-100);
+}
+
+.notif.success {
+    --bg: var(--color-success-30);
+    --border: var(--color-success-100);
+}
+
+.notif.warning {
+    --bg: var(--color-danger-10);
+    --border: var(--color-danger-100);
+}
+
+.notif.danger {
+    --bg: var(--color-danger-30);
+    --border: var(--color-danger-100);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3xl);
+    background-color: var(--color-gray-10);
+    padding-inline: var(--spacing-md);
+    padding-block: var(--spacing-xl);
+    border-radius: 8px;
+}
+
+.form .input {
+    --border-radius: 24px;
+    --hover-color: var(--color-primary-90);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.form .input span {
+    display: flex;
+    align-items: start;
+}
+
+.form .input .required {
+    color: var(--color-danger-70);
+}
+
+.form .input .input-errors {
+    color: var(--color-danger-100);
+    margin-left: var(--spacing-md);
+}
+
+.form input:not([type="radio"]) {
+    display: block;
+    width: 100%;
+    height: var(--sizing-xl);
+    padding-inline: clamp(var(--spacing-sm), 5%, var(--spacing-lg));
+    border-radius: var(--border-radius);
+    border: 2px solid var(--color-gray-60);
+    outline: none;
+}
+
+.form input:not([type="radio"]):focus {
+    border-color: var(--hover-color);
+}
+
+.form .input .radio:has(input[type="radio"]) {
+    list-style-type: none;
+}
+
+.form input:focus-visible,
+.form .radio li:has(input[type="radio"]:focus-visible) label {
+    outline: 2px solid var(--color-gray-80);
+}
+
+.form .input input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    cursor: none;
+}
+
+.form .radio {
+    display: flex;
+    width: fit-content;
+    padding-block: var(--spacing-lg);
+    padding-inline: var(--spacing-xl);
+    gap: var(--spacing-lg);
+    border-radius: 24px;
+    border: 2px solid var(--color-gray-60);
+}
+
+.form .radio label {
+    --radio-color: var(--color-gray-80);
+    --radio-checked-color: var(--color-primary-100);
+
+    display: inline-block;
+    padding-block: var(--spacing-sm);
+    padding-inline: var(--spacing-md);
+    border-radius: 8px;
+    border: 2px solid var(--radio-color);
+    color: var(--radio-color);
+    user-select: none;
+    transition: background-color 0.15s ease-out;
+}
+
+.form .radio li:has(input[type="radio"]:checked) label {
+    background-color: var(--color-primary-10);
+    color: var(--radio-checked-color);
+    border-color: var(--radio-checked-color);
+}
+
+.btn {
+    --btn-color: var(--color-gray-90);
+    background-color: var(--btn-color);
+    color: var(--color-gray-10);
+    min-width: var(--sizing-3xl);
+    padding-inline: calc(var(--spacing-xl));
+    padding-block: var(--spacing-md);
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px
+        color-mix(in srgb, var(--color-gray-100) 20%, transparent);
+    border: none;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color ease-out 0.35s;
+}
+
+.btn.ghost {
+    background-color: transparent;
+    color: var(--btn-color) !important;
+    border: 4px solid var(--btn-color);
+    box-shadow: none;
+}
+
+.btn.primary {
+    --btn-color: var(--color-primary-90);
+}
+
+.btn.danger {
+    --btn-color: var(--color-danger-90);
+}
+
+.btn.light {
+    --btn-color: var(--color-gray-30);
+    color: var(--color-gray-100);
+}
+
+.btn.primary.light {
+    --btn-color: var(--color-primary-30);
+}
+
+.btn.danger.light {
+    --btn-color: var(--color-danger-30);
+}
+
+.group-view {
+    color: var(--color-gray-30);
+}
+
+.group-view h1 {
+    color: var(--color-gray-10);
+}
+
+.group-view .action-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.group-view .info-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--spacing-2xl);
+}
+
+.group-view .info-column .text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.property-container {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.property {
+    --bg: var(--color-primary-95);
+
+    background-color: var(--bg);
+    padding-block: var(--spacing-sm);
+    padding-inline: var(--spacing-lg);
+    border-radius: 21px;
+}

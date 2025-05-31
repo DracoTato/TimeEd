@@ -1,0 +1,107 @@
+:root {
+    /* Base */
+    --base: 8px;
+
+    /* Colors: Success */
+    --color-success-10: #c9f7b8;
+    --color-success-30: #96e881;
+    --color-success-50: #62d14d;
+    --color-success-70: #4bb03d;
+    --color-success-90: #36822b;
+    --color-success-100: #26611f;
+
+    /* Colors: Warning */
+    --color-warning-10: #ffe2b3;
+    --color-warning-30: #ffc980;
+    --color-warning-50: #ffb14d;
+    --color-warning-70: #ff991a;
+    --color-warning-90: #d87b14;
+    --color-warning-100: #a85f10;
+
+    /* Colors: Danger */
+    --color-danger-10: #ffb3b3;
+    --color-danger-30: #ff8080;
+    --color-danger-50: #ff5c5c;
+    --color-danger-70: #e64545;
+    --color-danger-90: #cc3333;
+    --color-danger-100: #a82828;
+
+    /* Colors: Primary */
+    --color-primary-10: #c7ebff;
+    --color-primary-30: #94d8ff;
+    --color-primary-50: #5fc2f5;
+    --color-primary-70: #3598d6;
+    --color-primary-90: #1f7bb3;
+    --color-primary-95: #10578a;
+    --color-primary-100: #073e66;
+
+    /* Colors: Accent */
+    --color-accent-10: #c4a8ff;
+    --color-accent-30: #a67eff;
+    --color-accent-50: #8754e6;
+    --color-accent-70: #6f3bcc;
+    --color-accent-90: #5729a3;
+    --color-accent-100: #421f7a;
+
+    /* Colors: Gray */
+    --color-gray-10: #f7f7f7;
+    --color-gray-20: #eaeaea;
+    --color-gray-30: #d5d5d5;
+    --color-gray-40: #bfbfbf;
+    --color-gray-50: #a8a8a8;
+    --color-gray-60: #909090;
+    --color-gray-70: #777777;
+    --color-gray-80: #5e5e5e;
+    --color-gray-90: #3f3f3f;
+    --color-gray-95: #2a2a2a;
+    --color-gray-100: #1a1a1a;
+
+    /* Spacing */
+    --spacing-xxs: calc(var(--base) / 4);
+    --spacing-xs: calc(var(--base) / 2);
+    --spacing-sm: calc(var(--base) * 1);
+    --spacing-md: calc(var(--base) * 2);
+    --spacing-lg: calc(var(--base) * 3);
+    --spacing-xl: calc(var(--base) * 4);
+    --spacing-2xl: calc(var(--base) * 5);
+    --spacing-3xl: calc(var(--base) * 6);
+    --spacing-4xl: calc(var(--base) * 7);
+    --spacing-5xl: calc(var(--base) * 8);
+    --spacing-6xl: calc(var(--base) * 9);
+    --spacing-7xl: calc(var(--base) * 10);
+    --spacing-8xl: calc(var(--base) * 11);
+    --spacing-9xl: calc(var(--base) * 12);
+    --spacing-10xl: calc(var(--base) * 13);
+    --spacing-11xl: calc(var(--base) * 14);
+    --spacing-12xl: calc(var(--base) * 15);
+    --spacing-13xl: calc(var(--base) * 16);
+    --spacing-14xl: calc(var(--base) * 20);
+    --spacing-15xl: calc(var(--base) * 25);
+
+    /* Sizing */
+    --sizing-xxs: calc(var(--base) / 4);
+    --sizing-xs: calc(var(--base) / 2);
+    --sizing-sm: calc(var(--base) * 1);
+    --sizing-md: calc(var(--base) * 2);
+    --sizing-lg: calc(var(--base) * 3);
+    --sizing-xl: calc(var(--base) * 6);
+    --sizing-2xl: calc(var(--base) * 12);
+    --sizing-3xl: calc(var(--base) * 18);
+    --sizing-4xl: calc(var(--base) * 24);
+    --sizing-5xl: calc(var(--base) * 30);
+    --sizing-6xl: calc(var(--base) * 36);
+    --sizing-7xl: calc(var(--base) * 42);
+    --sizing-8xl: calc(var(--base) * 48);
+    --sizing-9xl: calc(var(--base) * 54);
+    --sizing-10xl: calc(var(--base) * 60);
+    --sizing-11xl: calc(var(--base) * 66);
+    --sizing-12xl: calc(var(--base) * 72);
+    --sizing-13xl: calc(var(--base) * 78);
+    --sizing-14xl: calc(var(--base) * 84);
+    --sizing-15xl: calc(var(--base) * 90);
+    --sizing-16xl: calc(var(--base) * 96);
+    --sizing-17xl: calc(var(--base) * 102);
+    --sizing-18xl: calc(var(--base) * 108);
+    --sizing-19xl: calc(var(--base) * 114);
+    --sizing-20xl: calc(var(--base) * 120);
+}
