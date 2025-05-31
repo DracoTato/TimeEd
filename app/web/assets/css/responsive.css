@@ -1,17 +1,17 @@
 @media screen and (max-width: 921px) {
-    .container.pad-inline {
+    .pad-inline {
         padding-inline: var(--spacing-md);
     }
 
-    .container.pad-block {
+    .pad-block {
         padding-block: var(--spacing-2xl);
     }
 
-    .container.pad-block-lg {
+    .pad-block-lg {
         padding-block: var(--spacing-4xl);
     }
 
-    .container.col {
+    .col {
         flex-direction: column;
     }
 
@@ -88,21 +88,21 @@
 
 /* PC */
 @media screen and (min-width: 922px) {
-    .container.pad-inline {
+    .pad-inline {
         padding-inline: 10%;
         max-width: 1920px;
     }
 
-    .container.pad-block {
+    .pad-block {
         padding-block: var(--spacing-3xl);
     }
 
-    .container.pad-block-lg {
+    .pad-block-lg {
         padding-block: var(--spacing-12xl);
     }
 
     /* don't stack vertically if auto-col */
-    .container.col:not(.auto-col) {
+    .col:not(.auto-col) {
         flex-direction: column;
     }
 
