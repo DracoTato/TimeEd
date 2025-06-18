@@ -5,7 +5,7 @@ from os import getenv
 from .config import config_dict
 from .logging import setup_logging
 from .routes import BLUEPRINTS
-from .utils import register_blueprints
+from .utils import register_blueprints, register_filters
 from .db import db
 from .db.commands import register_commands
 
@@ -32,5 +32,7 @@ def create_app(config: dict[str, Any] = {}):
     register_blueprints(app, BLUEPRINTS)  # Register all other blueprints under root_bp
 
     register_commands(app)
+
+    register_filters(app)
 
     return app

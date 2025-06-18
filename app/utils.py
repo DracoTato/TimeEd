@@ -85,3 +85,11 @@ def register_blueprints(parent, blueprints: list):
     """Register blueprints with a flask instance or a another blueprint."""
     for bp in blueprints:
         parent.register_blueprint(bp)
+
+
+def register_filters(app):
+    @app.template_filter("strftime")
+    def _jinja_filter_datetime(value, format="%Y-%m-%d"):
+        if value is None:
+            return ""
+        return value.strftime(format)

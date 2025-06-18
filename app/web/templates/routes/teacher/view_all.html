@@ -1,0 +1,53 @@
+{% extends "teacher_base.html" %} {% block head %}
+<title>{{ title }}</title>
+{% endblock head %} {% block topbar_title %} {{ title }} {% endblock
+topbar_title %} {% block content %}
+<div class="container col mrgn-top-group pad-inline">
+    <div class="container justify-between divider flex-grow">
+        <h2>Teaching Resources</h2>
+        <a href="" class="btn primary">Add</a>
+    </div>
+    <div class="container table-actions mrgn-top-item">
+        <button class="btn danger delete-all">Delete Selected</button>
+    </div>
+    <div class="container mrgn-top-group data-table-container">
+      {% if data | length == 0 %}
+      No Data {# TODO implement something better #}
+      {% else %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" class="select-all" /></th>
+                    <th>Type</th>
+                    <th>Title</th>
+                    <th>Creation Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in data %}
+                <tr>
+                    <td>
+                        <input
+                            type="checkbox"
+                            data-id="{{ entity['data'].id }}"
+                            data-type="{{ entity['type'] }}"
+                        />
+                    </td>
+                    <td>{{ entity["type"] }}</td>
+                    <td>
+                        <a
+                            href="{{ url_for('teacher.groups.view', id=entity['data'].id) }}"
+                            >{{ entity["data"].title }}</a
+                        >
+                    </td>
+                    <td>{{ entity["data"].created_at | strftime() }}</td>
+                    <td>~</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      {% endif %}
+    </div>
+</div>
+{% endblock content %}

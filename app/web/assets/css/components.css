@@ -242,3 +242,57 @@
     padding-inline: var(--spacing-lg);
     border-radius: 21px;
 }
+
+.data-table-container {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.data-table {
+    --border-color: var(--color-gray-40);
+    --padding-block: 12px;
+    --padding-inline: 12px;
+
+    min-width: 680px;
+    width: 100%;
+    border: 2px solid var(--border-color);
+    /* remove gaps between table borders */
+    border-spacing: 0;
+    border-radius: 8px;
+}
+
+.data-table td,
+.data-table th {
+    border-bottom: 2px solid var(--border-color);
+    padding-block: var(--padding-block);
+}
+
+.data-table td:first-child,
+.data-table th:first-child {
+    padding-left: var(--padding-inline);
+}
+
+.data-table td:last-child,
+.data-table th:last-child {
+    padding-right: var(--padding-inline);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table th {
+    background-color: var(--color-gray-10);
+    text-align: left;
+}
+
+.data-table a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.data-table a:hover {
+    text-decoration: underline;
+}
