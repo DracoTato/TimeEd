@@ -20,26 +20,26 @@ Built with **Flask (Server-Side Rendering)** and **SQLalchemy** as the back-end.
 
 **For Teachers**
 
--   **Create & Manage Groups** – Divide your students into smaller groups that can be manage individually.
--   **Schedule & Manage Sessions** – Plan, edit, or cancel sessions effortlessly.
--   **Track Attendance** – Stay updated on student attendance.
+- **Create & Manage Groups** – Divide your students into smaller groups that can be manage individually.
+- **Schedule & Manage Sessions** – Plan, edit, or cancel sessions effortlessly.
+- **Track Attendance** – Stay updated on student attendance.
 
 **For Students**
 
--   **View & Join Groups** – Track enrolled groups and discover new ones.
--   **Session Updates** – Receive reminders and cancellation alerts.
--   **Request Absence** – Notify teachers if you can't attend a session.
+- **View & Join Groups** – Track enrolled groups and discover new ones.
+- **Session Updates** – Receive reminders and cancellation alerts.
+- **Request Absence** – Notify teachers if you can't attend a session.
 
 ## Installation
 
-### 1️⃣ Clone the repository:
+### 1️⃣ Clone the repository
 
 ```bash
 git clone git@github.com:DracoTato/TimeEd.git
 cd TimeEd
 ```
 
-### 2️⃣ Install dependencies (using [Poetry](https://python-poetry.org/)):
+### 2️⃣ Install dependencies (using [Poetry](https://python-poetry.org/))
 
 If you don't have **Poetry**, install it first using **pip** or any other package manger:
 
@@ -80,10 +80,10 @@ ADMIN_NAME="Super Admin"
 ADMIN_PASSWORD=Admin-Password # Make sure it's secure
 ```
 
--   You can find more details on Flask environment variables [here](https://flask.palletsprojects.com/en/stable/config/#environment-and-debugging)
--   The log-related variables are explained in `app/logging.py` under the `setup_logging` function.
+- You can find more details on Flask environment variables in [flask docs](https://flask.palletsprojects.com/en/stable/config/#environment-and-debugging)
+- The log-related variables are explained in `app/logging.py` under the `setup_logging` function.
 
-### 4️⃣ Run the application:
+### 4️⃣ Run the application
 
 ```bash
 poetry run flask run
@@ -93,7 +93,7 @@ By default, the app will be available at **[http://127.0.0.1:5000](http://127.0.
 
 ## License
 
-TimeED is licensed under a **custom restrictive license**.
+TimeEd is licensed under a **custom restrictive license**.
 
 You may **view, study, and use it for personal purposes**. You **cannot** redistribute, or use it for commercial purposes.
 
@@ -107,7 +107,7 @@ Contributions are not currently accepted.
 
 In the future, I may allow contributions and fully open-source the project — but for now, that's not the case.
 
-For more details, see the [contribution guide](./Contributions.md)
+For more details, see the [contribution guide](./CONTRIBUTIONS.md)
 
 > **Note**  
 > The Contributions Guide is a personal document for tracking contribution rules and ideas. It's not meant for public contributions at this stage.
