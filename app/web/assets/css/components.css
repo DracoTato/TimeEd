@@ -152,9 +152,14 @@
 
 .btn {
     --btn-color: var(--color-gray-90);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: var(--btn-color);
     color: var(--color-gray-10);
     min-width: var(--sizing-3xl);
+    width: fit-content;
+    max-height: 58px;
     padding-inline: calc(var(--spacing-xl));
     padding-block: var(--spacing-md);
     border-radius: 8px;
@@ -162,7 +167,6 @@
         color-mix(in srgb, var(--color-gray-100) 20%, transparent);
     border: none;
     outline: none;
-    text-align: center;
     text-decoration: none;
     user-select: none;
     cursor: pointer;
