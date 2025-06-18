@@ -23,27 +23,8 @@
     {% block body %}
     {% endblock body %}
 
-    <script>
-        function removeNotif(notif) {
-            notif.classList.add("fade-out");
-            notif.addEventListener("transitionend", () => {
-                notif.remove();
-            })
-        }
-        document.addEventListener("DOMContentLoaded", () => {
-            const notifs = document.querySelectorAll(".notif-container .notif");
-            const baseDelay = 20000;
-            const step = 250;
+<script src="{{ url_for('static', filename='js/base.js') }}"></script>
 
-            notifs.forEach((notif, index) => {
-                const delay = baseDelay + (index * step);
-
-                setTimeout(() => {
-                    removeNotif(notif)
-                }, delay);
-            });
-        });
-    </script>
 </body>
 
 </html>

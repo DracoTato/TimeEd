@@ -61,41 +61,4 @@
         </footer>
     </div>
 </div>
-
-<script>
-    const sidebar = document.querySelector(".sidebar");
-    const topbarBtn = document.querySelector(".topbar .topbar-icon");
-
-    function toggleSidebar() {
-        sidebar.classList.toggle("active");
-    }
-
-
-    topbarBtn.addEventListener("click", () => {
-        toggleSidebar()
-    });
-
-    window.addEventListener("keydown", (e) => {
-        const active = document.activeElement;
-        const isTyping =
-            active.tagName === "INPUT" ||
-            active.tagName === "TEXTAREA" ||
-            active.isContentEditable;
-
-        if (!isTyping && e.key == "/") {
-            e.preventDefault();
-            toggleSidebar();
-        };
-    });
-
-    function deleteGroup(url) {
-        if (confirm("Are you sure you want to delete this group?")) {
-            fetch(url, {
-                method: 'DELETE'
-            })
-                .then(response => response.json())
-                .then(data => location.replace(data.url))
-        };
-    }
-</script>
 {% endblock body %}
