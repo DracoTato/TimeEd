@@ -2,21 +2,15 @@
 import sys
 import re
 
-# Allowed commit types and modules
-TYPES = {"Feat", "Refactor", "Fix", "Chore"}
+# Allowed commit ACTIONS and modules
+ACTIONS = {"Feat", "Refactor", "Fix", "Chore"}
 MODULES = {
-    "front-end",
-    "routes",
-    "logs",
-    "forms",
-    "config",
+    "frontend",
+    "backend",
     "db",
-    "utils",
+    "tests",
+    "infra",
     "docs",
-    "messages",
-    "poetry",
-    "gitignore",
-    "hooks",
 }
 DESC_LEN = 60
 
@@ -26,21 +20,21 @@ def main():
     with open(commit_msg_file, "r", encoding="utf-8") as f:
         commit_msg = f.readline().strip()
 
-    pattern = r"^(?P<type>\w+)\((?P<module>[\w\-/]+)\): (?P<desc>.+)$"
+    pattern = r"^(?P<action>\w+)\((?P<module>[\w\-/]+)\): (?P<desc>.+)$"
     match = re.match(pattern, commit_msg)
 
     if not match:
         print("❌ Commit message format is wrong.")
-        print("Expected format: Type(Module): description")
+        print("Expected format: Action(Module): description")
         sys.exit(1)
 
-    type_ = match.group("type")
+    action = match.group("action")
     module = match.group("module")
     desc = match.group("desc")
 
-    if type_ not in TYPES:
-        print(f"❌ Invalid commit type: {type_}")
-        print(f"Allowed types: {', '.join(TYPES)}")
+    if action not in ACTIONS:
+        print(f"❌ Invalid commit action: {action}")
+        print(f"Allowed ACTIONS: {', '.join(ACTIONS)}")
         sys.exit(1)
 
     if module not in MODULES:

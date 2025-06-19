@@ -27,27 +27,22 @@ All commit messages must follow this format:
 
 **List of Actions**
 
-- `Feat`: A new feature or block of code is introduced.
-- `Refactor`: A feature/block of code has been refactored. (no bug necessarily existed)
-- `Fix`: A bug has been fixed.
-- `Chore`: Non-functional changes. (configs, formatting, variable names, typos, etc...)
+- `Feat`: A new feature/block of code has been introduced.
+- `Refactor`: A feature/block of code has been refactored/removed. (no bug necessarily existed)
+- `Fix`: A bug/issue has been fixed.
+- `Chore`: Non-functional changes. (formatting, variable names, typos, etc...)
 
 **List of Modules**
 
-- `front-end`: Front-end related code.
-- `routes`: Route related code.
-- `logs`: Log related code.
-- `forms`: WTForms.
-- `config`: Config related code.
-- `db`: Database related code.
-- `utils`: Utility/helper functions.
-- `hooks`: Git hooks.
-- `docs`: Doc files like README, LICENSE — use with `Chore`.
-- `messages`: Any modifications to app messages — use with `Chore`.
-- `poetry`: Dependency management — use with `Chore`.
+- `frontend`: Frontend-related code.
+- `backend`: backend-related code.
+- `db`: Database-related code.
+- `tests`: Test-related code.
+- `infra`: Project infrastructure-related code, git hooks, file management, gitignore, dependency management.
+- `docs`: Doc files like README, LICENSE, etc.
 
 **Description Specs**
 
 - Be concise.
 - Use infinitive verbs, e.g. add instead of added.
-- Max 60 chars. (use a description message if you need to add more)
+- Max 60 chars. (Add a description if you need more)
