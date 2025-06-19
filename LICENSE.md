@@ -1,19 +1,9 @@
-# TimeEd License
+The MIT License (MIT)
 
-Copyright (c) DracoTato 2025
+Copyright © 2025 DracoTato
 
-Permission is hereby granted to anyone to view, study, and use the source code of TimeEd for personal and educational purposes only.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-You may not:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-    1. Use TimeEd or its code for any commercial purpose (selling, offering services, monetization, etc).
-
-    2. Modify and redistribute TimeEd without explicit permission from the author.
-
-    3. Claim ownership or original authorship of TimeEd or any modified versions.
-
-All rights not expressly granted are reserved by the author.
-
-For any use beyond personal or educational purposes, you must obtain written permission from the author.
-
-For more information or to contact the author, visit: https://github.com/DracoTato
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
