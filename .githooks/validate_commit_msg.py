@@ -3,7 +3,7 @@ import sys
 import re
 
 # Allowed commit types and modules
-TYPES = {"Feat", "Refactor", "Fix", "Style", "Chore"}
+TYPES = {"Feat", "Refactor", "Fix", "Chore"}
 MODULES = {
     "front-end",
     "routes",
