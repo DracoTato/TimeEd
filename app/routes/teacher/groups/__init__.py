@@ -8,7 +8,7 @@ from flask import (
     abort,
     jsonify,
 )
-from sqlalchemy.orm.exc import MultipleResultsFound
+from sqlalchemy.exc import MultipleResultsFound
 
 from app.forms import GroupForm
 from app.db import db
@@ -24,7 +24,6 @@ group_bp = Blueprint(
 )
 
 
-# TODO redirect user to the previous page (create, edit)
 @group_bp.route("/", methods=["GET", "POST"])
 def create():
     form = GroupForm()
@@ -47,10 +46,10 @@ def create():
         )
 
 
-@group_bp.route("/<int:id>", methods=["GET", "PUT"])
+@group_bp.route("/<int:id>", methods=["GET", "POST"])
 def edit(id):
     try:
-        group = db.session.query(Group).filter_by(id=id).one_or_none()
+        group = db.session.query(Group).filter_by(id=id).one()
     except MultipleResultsFound:
         ca.logger.error(
             f"Multiple groups found with id {id}, requested by user {g.user.id}"
@@ -74,7 +73,7 @@ def edit(id):
             form=form,
             title="Edit A Group",
             action=url_for("teacher.groups.edit", id=id),
-            method="put",
+            method="post",
             btn_txt="Update",
         )
 
@@ -85,7 +84,7 @@ def delete(id):
         return abort(400)
 
     try:
-        group = db.session.query(Group).filter_by(id=id).one_or_none()
+        group = db.session.query(Group).filter_by(id=id).one()
     except MultipleResultsFound:
         ca.logger.error(
             f"Multiple groups found with id {id}, requested by user {g.user.id}"
@@ -107,7 +106,7 @@ def delete(id):
 @group_bp.route("/view/<int:id>", methods=["GET"])
 def view(id):
     try:
-        group = db.session.query(Group).filter_by(id=id).one_or_none()
+        group = db.session.query(Group).filter_by(id=id).one()
     except MultipleResultsFound:
         ca.logger.error(
             f"Multiple groups found with id {id}, requested by user {g.user.id}"
