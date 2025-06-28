@@ -29,6 +29,9 @@ class SuccessMessages(Enum):
     GROUP_CREATE_SUCCESS = _("Your group has been successfully created.")
     GROUP_UPDATE_SUCCESS = _("Your group has been successfully updated.")
     GROUP_DELETE_SUCCESS = _("Your group has been successfully deleted.")
+    SESSION_CREATE_SUCCESS = _("Your session has been successfully created.")
+    SESSION_UPDATE_SUCCESS = _("Your session has been successfully updated.")
+    SESSION_DELETE_SUCCESS = _("Your session has been successfully deleted.")
 
 
 class InfoMessages(Enum):

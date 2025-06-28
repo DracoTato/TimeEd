@@ -1,17 +1,22 @@
 from datetime import date, timedelta
+from enum import Enum
 from flask_wtf import FlaskForm
-from wtforms import (
+from wtforms.fields import (
     StringField,
     RadioField,
     DateField,
     EmailField,
     PasswordField,
-    validators,
-    ValidationError,
+    DateTimeLocalField,
+    IntegerField,
+    SelectField,
 )
+from wtforms import validators, ValidationError
 from re import fullmatch
+from typing import Type
 
 from app.db.schema.enums import Gender, User_Type
+from app.utils import choices_from_enum, RRULE_FREQS
 
 
 def display_validator(_, field):
@@ -46,18 +51,30 @@ def age_validator(_, field):
         raise ValidationError("Please enter your real age :|")
 
 
-def gender_coerce(value: int):
-    try:
-        return Gender(int(value))
-    except ValueError:
-        return None
+def if_other_empty(other_field_name):
+    """Require another field to be empty"""
+
+    def _validator(form, field):
+        other_field = form._fields.get(other_field_name)
+        if not other_field:
+            raise Exception(f"No field named '{other_field_name}' in {form.__name__}")
+
+        if other_field.data:
+            raise ValidationError(
+                f"Please use either {other_field.label.text} or {field.label.text}, but not both!"
+            )
+
+    return _validator
 
 
-def user_coerce(value: int):
-    try:
-        return User_Type(int(value))
-    except ValueError:
-        return None
+def enum_coerce(enum: Type[Enum]):
+    def _coerce(value: int):
+        try:
+            return enum(int(value))
+        except (ValueError, TypeError):
+            return None
+
+    return _coerce
 
 
 class RegisterForm(FlaskForm):
@@ -85,13 +102,13 @@ class RegisterForm(FlaskForm):
 
     gender = RadioField(
         "Gender",
-        choices=[(g.value, g.name.title()) for g in list(Gender)],
+        choices=choices_from_enum(Gender),
         validators=[
             validators.DataRequired("Please choose one."),
             validators.AnyOf(list(Gender), "Invalid choice."),
         ],
         render_kw={"autocomplete": "sex"},
-        coerce=gender_coerce,
+        coerce=enum_coerce(Gender),
     )
     birthdate = DateField(
         "Birthdate",
@@ -100,11 +117,7 @@ class RegisterForm(FlaskForm):
     )
     account_type = RadioField(
         "Account Type",
-        choices=[
-            (t.value, t.name.title())
-            for t in list(User_Type)
-            if not t.name.startswith("_")
-        ],
+        choices=choices_from_enum(User_Type, startswithout="_"),
         validators=[
             validators.DataRequired("Please choose one."),
             validators.AnyOf(
@@ -116,7 +129,7 @@ class RegisterForm(FlaskForm):
             "autocomplete": "off",
             "title": "Different account types have different permissions.",
         },
-        coerce=user_coerce,
+        coerce=enum_coerce(User_Type),
     )
     email = EmailField(
         "Email",
@@ -193,6 +206,67 @@ class GroupForm(FlaskForm):
             validators.DataRequired("Please enter a description for the group."),
             validators.Length(8, 64, "Description must be %(min)d-%(max)d long."),
         ],
+    )
+
+    def is_required(self, field) -> bool:
+        return any(isinstance(v, validators.DataRequired) for v in field.validators)
+
+
+class SessionForm(FlaskForm):
+    title = StringField(
+        "Session Title",
+        validators=[
+            validators.DataRequired("Please enter a title for the session."),
+            validators.Length(8, 32, "Title must be %(min)d-%(max)d long."),
+        ],
+    )
+    description = StringField(
+        "Session Description",
+        validators=[
+            validators.DataRequired("Please enter a description for the session."),
+            validators.Length(8, 64, "Description must be %(min)d-%(max)d long."),
+        ],
+    )
+    start = DateTimeLocalField(
+        "Start Time",
+        validators=[validators.DataRequired()],
+    )
+    end = DateTimeLocalField(
+        "End Time",
+        validators=[validators.DataRequired()],
+    )
+    freq = SelectField(
+        "Frequency",
+        choices=choices_from_enum(RRULE_FREQS),
+        validators=[validators.Optional()],
+        default="None",
+        coerce=enum_coerce(RRULE_FREQS),
+    )
+    interval = IntegerField(
+        "Interval",
+        validators=[validators.Optional(), validators.NumberRange(min=1)],
+        render_kw={
+            "title": "Depends on frequency, if it's set to weekly and interval is 2, then repeat every 2 weeks",
+            "value": "1",
+        },
+    )
+    until = DateTimeLocalField(
+        "Repeat Until",
+        validators=[validators.Optional()],
+        render_kw={"title": "No further repetitions will occur after this date"},
+    )
+    count = IntegerField(
+        "Repeat Count",
+        validators=[
+            validators.Optional(),
+            validators.NumberRange(min=1),
+            if_other_empty("until"),
+        ],
+        render_kw={"title": "Will only generate the specified number of repetitions"},
+    )
+    max_students = IntegerField(
+        "Max Students",
+        validators=[validators.Optional(), validators.NumberRange(min=1)],
     )
 
     def is_required(self, field) -> bool:

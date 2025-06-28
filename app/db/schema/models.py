@@ -25,6 +25,9 @@ class User(Base):
     owned_groups: Mapped[list["Group"]] = relationship(
         back_populates="owner", cascade="all, delete-orphan"
     )
+    owned_sessions: Mapped[list["Session"]] = relationship(
+        back_populates="owner", cascade="all, delete-orphan"
+    )
     enrolled_groups: Mapped[list["Enroll"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
@@ -124,106 +127,42 @@ class Session(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"))
-    repeat_until: Mapped[date]
-    repeat_interval: Mapped[int]  # No. of days
-    title: Mapped[str]
-    description: Mapped[str]
-    start: Mapped[datetime]
-    end: Mapped[datetime]
+    title: Mapped[str] = mapped_column(String(32))
+    description: Mapped[str] = mapped_column(String(64))
+    start_time: Mapped[datetime]
+    end_time: Mapped[datetime]
+    rule: Mapped[str | None]
     max_students: Mapped[int | None]
-    properties: Mapped[str | None]  # JSON
 
+    owner: Mapped["User"] = relationship(back_populates="owned_sessions")
     group: Mapped["Group"] = relationship(back_populates="sessions")
     absence_requests: Mapped[list["AbsenceRequest"]] = relationship(
         back_populates="session", cascade="all, delete-orphan"
     )
-    occurrences: Mapped[list["SessionOccurrence"]] = relationship(
-        back_populates="session", cascade="all, delete-orphan"
-    )
 
     def __init__(
         self,
+        owner: User,
         group: Group,
-        repeat_until: date,
-        repeat_interval: int,
         title: str,
         description: str,
         start: datetime,
         end: datetime,
+        rule: str | None = None,
         max_students: int | None = None,
-        properties: str | None = None,
     ):
-        """Note: properties is json data"""
-        self.repeat_until = repeat_until
-        self.repeat_interval = repeat_interval
         self.title = title
         self.description = description
-        self.start = start
-        self.end = end
+        self.start_time = start
+        self.end_time = end
+        self.rule = rule
         self.max_students = max_students
-        self.properties = properties
 
+        self.owner = owner
         self.group = group
 
     def __repr__(self) -> str:
         return f"<Session {self.id!r} (title: {self.title!r}, group_id: {self.group_id!r})>"
-
-
-class SessionOccurrence(Base):
-    __tablename__ = "session_occurrences"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    session_id: Mapped[int] = mapped_column(ForeignKey("sessions.id"))
-    title: Mapped[str | None]
-    description: Mapped[str | None]
-    start: Mapped[datetime | None]
-    end: Mapped[datetime | None]
-    max_students: Mapped[int | None]
-    properties: Mapped[str | None]  # JSON
-
-    session: Mapped["Session"] = relationship(back_populates="occurrences")
-
-    def __init__(
-        self,
-        title: str,
-        description: str,
-        start: datetime,
-        end: datetime,
-        max_students: int | None = None,
-        properties: str | None = None,
-    ):
-        """Note: properties is json data"""
-        self.title = title
-        self.description = description
-        self.start = start
-        self.end = end
-        self.max_students = max_students
-        self.properties = properties
-
-    def __repr__(self) -> str:
-        return f"<SessionOccurence {self.id!r} (session id: {self.session_id!r})>"
-
-
-class CancelledSession(Base):
-    __tablename__ = "cancelled_sessions"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    session_id: Mapped[int] = mapped_column(ForeignKey("sessions.id"))
-    start_date: Mapped[datetime | None]
-    reason: Mapped[str | None] = mapped_column(String(256))
-
-    def __init__(
-        self,
-        session: Session,
-        start_date: datetime | None = None,
-        reason: str | None = None,
-    ):
-        self.session_id = session.id
-        self.start_date = start_date
-        self.reason = reason
-
-    def __repr__(self) -> str:
-        return f"<CancelledSession {self.id!r} (session id: {self.session_id!r}, start_date: {self.start_date!r})>"
 
 
 class AbsenceRequest(Base):

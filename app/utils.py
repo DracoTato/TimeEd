@@ -2,14 +2,31 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import g, redirect, url_for, abort, current_app as ca
 from wtforms import Field
 from os import getcwd, path
-from typing import Sequence, Callable
+from typing import Sequence, Callable, Type
+from datetime import datetime
+from dateutil import rrule
+from enum import Enum
 
 from .db.schema.enums import User_Type
 from app.messages import flash_message, ErrorMessages, WarningMessages
 
+# Constants
+# ---------
 WEB_PATH = path.join(getcwd(), "app/web")
 
 
+# Classes
+# ---------
+class RRULE_FREQS(Enum):
+    ONCE = -1
+    DAILY = rrule.DAILY
+    WEEKLY = rrule.WEEKLY
+    MONTHLY = rrule.MONTHLY
+    YEARLY = rrule.YEARLY
+
+
+# Functions
+# ---------
 def require_role(user_type: User_Type | list[User_Type]) -> Callable:
     def check_roles():
         allowed_roles = user_type if isinstance(user_type, list) else [user_type]
@@ -93,3 +110,29 @@ def register_filters(app):
         if value is None:
             return ""
         return value.strftime(format)
+
+
+def choices_from_enum(
+    enum: Type[Enum], startswithout: tuple[str] | str = ""
+) -> list[tuple]:
+    return [
+        (item.value, item.name.title())
+        for item in list(enum)
+        if not item.name.startswith(startswithout) or not startswithout
+    ]
+
+
+def make_rrule(
+    freq: RRULE_FREQS,
+    interval: int = 1,
+    until: datetime | None = None,
+    count: int | None = None,
+) -> str:
+    rule_parts = [f"FREQ={freq.name}", f"INTERVAL={interval}"]
+
+    if until:
+        rule_parts.append(f"UNTIL={until}")
+    elif count:
+        rule_parts.append(f"COUNT={count}")
+
+    return ";".join(rule_parts)

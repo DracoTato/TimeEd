@@ -7,6 +7,7 @@ from app.db.schema.models import Group, Session
 from app.db import db
 
 from .groups import group_bp
+from .sessions import session_bp
 
 teacher_bp = Blueprint(
     "teacher",
@@ -17,7 +18,7 @@ teacher_bp = Blueprint(
 
 teacher_bp.before_request(require_role(User_Type.TEACHER))
 
-BLUEPRINTS = [group_bp]
+BLUEPRINTS = [group_bp, session_bp]
 register_blueprints(teacher_bp, BLUEPRINTS)
 
 MODEL_MAP = {

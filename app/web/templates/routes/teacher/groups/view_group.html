@@ -34,8 +34,7 @@
 <div class="container col pad-inline">
     <div class="container justify-between divider flex-grow">
         <h2>Sessions</h2>
-        {# TODO Add link to sessions #}
-        <a href="" class="btn primary">Add</a>
+        <a href="{{ url_for('teacher.sessions.create', group_id=group.id) }}" class="btn primary">Add</a>
     </div>
     <div class="sessions-container">
         {% for session in group.sessions %}
