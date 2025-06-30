@@ -235,9 +235,7 @@
 }
 
 .property {
-    --bg: var(--color-primary-95);
-
-    background-color: var(--bg);
+    background-color: var(--color-primary-90);
     padding-block: var(--spacing-sm);
     padding-inline: var(--spacing-lg);
     border-radius: 21px;
@@ -295,4 +293,53 @@
 
 .data-table a:hover {
     text-decoration: underline;
+}
+
+.sessions-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.session-card {
+    --border-color: var(--color-gray-40);
+
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-gray-10);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.session-head,
+.session-body {
+    padding: var(--spacing-lg);
+}
+
+.session-head {
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* Fix text overflow issue, e.g. one very long word */
+.session-head {
+    max-width: 90vw;
+}
+
+/* Elipsis and x-scroll */
+.session-head h4,
+.session p {
+    text-overflow: ellipsis;
+    overflow-x: scroll;
+}
+
+.session-body .property {
+    background-color: var(--color-primary-10);
+    color: var(--color-primary-100);
+}
+
+.session-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: end;
+    flex-wrap: wrap;
 }

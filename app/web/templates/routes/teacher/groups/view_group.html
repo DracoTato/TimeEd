@@ -1,32 +1,41 @@
-{% extends "teacher_base.html" %}
-
-{% block head %}
+{% extends "teacher_base.html" %} {% block head %}
 <title>{{ title }}</title>
-{% endblock head %}
-
-{% block topbar_title %}
-{{ title }}
-{% endblock topbar_title %}
-
-{% block content %}
+{% endblock head %} {% block topbar_title %} {{ title }} {% endblock
+topbar_title %} {% block content %}
 <div class="group-view bg-primary-100 mrgn-btm-block">
-    <div class="container col auto-col pad-block-lg pad-inline gap justify-between">
+    <div
+        class="container col auto-col pad-block-lg pad-inline gap justify-between"
+    >
         <div class="info-column">
             <div class="text">
                 <h1>{{ group.title }}</h1>
                 <p>{{ group.description }}</p>
             </div>
             <div class="property-container">
-                <span class="property">{{ group.created_at.strftime("%Y-%m-%d") }}</span>
-                <span class="property">{{ group.sessions | length }} Sessions</span>
-                <span class="property">{{ group.enrolls | length }} Students</span>
+                <span class="property"
+                    >{{ group.created_at.strftime("%Y-%m-%d") }}</span
+                >
+                <span class="property"
+                    >{{ group.sessions | length }} Sessions</span
+                >
+                <span class="property"
+                    >{{ group.enrolls | length }} Students</span
+                >
             </div>
         </div>
         <div class="action-column">
             <button class="btn primary">Share</button>
             {% if is_owner %}
-            <a href="{{ url_for('teacher.groups.edit', id=group.id) }}" class="btn">Edit</a>
-            <a onclick="deleteGroup('{{ url_for('teacher.groups.delete', id=group.id)}}')" class="btn danger">Delete</a>
+            <a
+                href="{{ url_for('teacher.groups.edit', id=group.id) }}"
+                class="btn"
+                >Edit</a
+            >
+            <a
+                onclick="deleteGroup('{{ url_for('teacher.groups.delete', id=group.id)}}')"
+                class="btn danger"
+                >Delete</a
+            >
             {% endif %}
         </div>
     </div>
@@ -34,14 +43,47 @@
 <div class="container col pad-inline">
     <div class="container justify-between divider flex-grow">
         <h2>Sessions</h2>
-        <a href="{{ url_for('teacher.sessions.create', group_id=group.id) }}" class="btn primary">Add</a>
+        <a
+            href="{{ url_for('teacher.sessions.create', group_id=group.id) }}"
+            class="btn primary"
+            >Add</a
+        >
     </div>
-    <div class="sessions-container">
+    <div class="sessions-container mrgn-top-group">
         {% for session in group.sessions %}
-        <div class="session-card">
+        <div class="session-card" data-id="{{ session.id }}">
             <div class="session-head">
-                <h3>{{ session.title }}</h3>
+                <h4>{{ session.title }}</h4>
                 <p>{{ session.description }}</p>
+            </div>
+            <div class="session-body">
+                <div class="property-container">
+                    <span class="property light"
+                        >{{ session.start_time.strftime("%I:%M %p") }} - {{
+                        (session.start_time + session.duration).strftime("%I:%M
+                        %p") }}</span
+                    >
+                    <span class="property light"
+                        >{{ session.get_rule_property("FREQ") }}</span
+                    >
+                </div>
+                {% if session.get_rule_property("FREQ") %}
+                <div class="occurences mrgn-top-item">
+                    <p class="bold">Occurences</p>
+                    <p>
+                        {# TODO: implement something better than this arrow #}
+                        {% for occ in
+                        session.get_occurences(after_date="yesterday",
+                        before_date="next week", count=3) %} {{
+                        occ.strftime("%Y-%m-%d") }} -> {% endfor %}
+                    </p>
+                </div>
+                {% endif %}
+                <div class="session-actions mrgn-top-group">
+                    {# TODO: add session operations links #}
+                    <a href="" class="btn danger">Delete</a>
+                    <a href="" class="btn">Edit</a>
+                </div>
             </div>
         </div>
         {% endfor %}
