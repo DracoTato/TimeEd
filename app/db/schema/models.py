@@ -1,7 +1,10 @@
+from flask import current_app as ca
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
+from re import search as search
+from dateutil import rrule
 
 from . import enums
 from .. import Base
@@ -130,7 +133,7 @@ class Session(Base):
     title: Mapped[str] = mapped_column(String(32))
     description: Mapped[str] = mapped_column(String(64))
     start_time: Mapped[datetime]
-    end_time: Mapped[datetime]
+    duration: Mapped[timedelta]
     rule: Mapped[str | None]
     max_students: Mapped[int | None]
 
@@ -147,14 +150,14 @@ class Session(Base):
         title: str,
         description: str,
         start: datetime,
-        end: datetime,
+        duration: timedelta,
         rule: str | None = None,
         max_students: int | None = None,
     ):
         self.title = title
         self.description = description
         self.start_time = start
-        self.end_time = end
+        self.duration = duration
         self.rule = rule
         self.max_students = max_students
 
@@ -163,6 +166,47 @@ class Session(Base):
 
     def __repr__(self) -> str:
         return f"<Session {self.id!r} (title: {self.title!r}, group_id: {self.group_id!r})>"
+
+    def get_rule_property(self, property_name):
+        if not self.rule:
+            return
+
+        pattern = rf"{property_name}=(?P<value>.+);"
+        result = search(pattern, self.rule)
+
+        return result.group("value").title() if result else "N/A"
+
+    def get_occurences(self, after_date, before_date, count: int | None = None):
+        if not self.rule:  # Check it's not a one-time session
+            return
+
+        dates = {
+            "yesterday": datetime.now() - timedelta(1),
+            "next week": datetime.now() + timedelta(7),
+        }
+
+        rule = rrule.rrulestr(self.rule, dtstart=self.start_time)
+
+        if isinstance(after_date, str) and after_date in dates.keys():
+            ad = dates[after_date]
+        elif isinstance(after_date, datetime):
+            ad = after_date
+        else:
+            return
+
+        if isinstance(before_date, str) and before_date in dates.keys():
+            bd = dates[before_date]
+        elif isinstance(before_date, datetime):
+            bd = before_date
+        else:
+            return
+
+        if bd <= ad:
+            ca.logger.error("before_date must be after after_date")
+
+        result = rule.between(after=ad, before=bd)
+
+        return result[0:count] if count else result
 
 
 class AbsenceRequest(Base):

@@ -31,7 +31,7 @@ def create(group_id):
             title=form.title.data,
             description=form.description.data,
             start=form.start.data,
-            end=form.end.data,
+            duration=form.duration.data,
             rule=make_rrule(freq=form.freq.data, interval=form.interval.data)
             if form.freq.data.value >= 0
             else None,

@@ -77,6 +77,27 @@ def enum_coerce(enum: Type[Enum]):
     return _coerce
 
 
+class TimeDeltaField(StringField):
+    def process_formdata(self, valuelist):
+        if not valuelist:
+            self.data = None
+            return
+
+        value = valuelist[0].strip()
+        pattern = r"(?:(\d+)[Hh])?\s*(?:(\d+)[Mm])?"
+        match = fullmatch(pattern, value)
+
+        if match:
+            hours = int(match.group(1) or 0)
+            minutes = int(match.group(2) or 0)
+            self.data = timedelta(days=0, hours=hours, minutes=minutes)
+        else:
+            self.data = valuelist[0]
+            raise ValidationError(
+                "Invalid duration format. Try: 2h 30m (order matters)"
+            )
+
+
 class RegisterForm(FlaskForm):
     display_name = StringField(
         "Display Name",
@@ -231,9 +252,10 @@ class SessionForm(FlaskForm):
         "Start Time",
         validators=[validators.DataRequired()],
     )
-    end = DateTimeLocalField(
-        "End Time",
+    duration = TimeDeltaField(
+        "Session Duration",
         validators=[validators.DataRequired()],
+        render_kw={"placeholder": "2h 30m"},
     )
     freq = SelectField(
         "Frequency",
