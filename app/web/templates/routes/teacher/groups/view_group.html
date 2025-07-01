@@ -64,7 +64,7 @@ topbar_title %} {% block content %}
                         %p") }}</span
                     >
                     <span class="property light"
-                        >{{ session.get_rule_property("FREQ") }}</span
+                        >{{ session.get_rule_property("FREQ", default="Once") }}</span
                     >
                 </div>
                 {% if session.get_rule_property("FREQ") %}
@@ -73,8 +73,7 @@ topbar_title %} {% block content %}
                     <p>
                         {# TODO: implement something better than this arrow #}
                         {% for occ in
-                        session.get_occurences(after_date="yesterday",
-                        before_date="next week", count=3) %} {{
+                        session.get_occurences(after_date="yesterday", count=3) %} {{
                         occ.strftime("%Y-%m-%d") }} -> {% endfor %}
                     </p>
                 </div>

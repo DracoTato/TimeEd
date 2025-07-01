@@ -167,17 +167,29 @@ class Session(Base):
     def __repr__(self) -> str:
         return f"<Session {self.id!r} (title: {self.title!r}, group_id: {self.group_id!r})>"
 
-    def get_rule_property(self, property_name):
+    def get_rule_property(self, property_name, default=None):
         if not self.rule:
-            return
+            return default
 
         pattern = rf"{property_name}=(?P<value>.+);"
         result = search(pattern, self.rule)
 
-        return result.group("value").title() if result else "N/A"
+        return result.group("value").title() if result else default
 
-    def get_occurences(self, after_date, before_date, count: int | None = None):
+    def get_occurences(
+        self,
+        after_date: datetime | str,
+        before_date: datetime | str | None = None,
+        count: int | None = None,
+    ):
         if not self.rule:  # Check it's not a one-time session
+            return
+
+        # one but not the two
+        if not bool(before_date) ^ bool(count):
+            ca.logger.error(
+                f"Please pass before_date or count, but not both nor neither (b: {before_date}, c: {count})"
+            )
             return
 
         dates = {
@@ -185,28 +197,53 @@ class Session(Base):
             "next week": datetime.now() + timedelta(7),
         }
 
-        rule = rrule.rrulestr(self.rule, dtstart=self.start_time)
-
         if isinstance(after_date, str) and after_date in dates.keys():
             ad = dates[after_date]
         elif isinstance(after_date, datetime):
             ad = after_date
         else:
+            ca.logger.error(
+                "after_date isn't a datetime nor is it one of the datetime shortcuts"
+            )
             return
 
-        if isinstance(before_date, str) and before_date in dates.keys():
-            bd = dates[before_date]
-        elif isinstance(before_date, datetime):
-            bd = before_date
+        if before_date:
+            # Convert shortcut to datetime
+            if isinstance(before_date, str) and before_date in dates.keys():
+                bd = dates[before_date]
+            # Use raw before_date
+            elif isinstance(before_date, datetime):
+                bd = before_date
+            else:
+                ca.logger.error(
+                    "before_date isn't a datetime nor is it one of the datetime shortcuts"
+                )
+                return
+
+            if bd <= ad:
+                ca.logger.error("before_date must be after after_date")
         else:
-            return
+            bd = None
 
-        if bd <= ad:
-            ca.logger.error("before_date must be after after_date")
+        if bd:  # with before_date
+            rule = rrule.rrulestr(self.rule, dtstart=self.start_time)
+            result = rule.between(after=ad, before=bd)
 
-        result = rule.between(after=ad, before=bd)
+        else:  # with count
+            if not isinstance(count, int):
+                ca.logger.error("count must be an integer")
 
-        return result[0:count] if count else result
+            rule = rrule.rrulestr(self.rule, dtstart=self.start_time)
+            result = []
+
+            current_occ = rule.after(ad)
+            for _ in range(count):
+                if not current_occ:
+                    break
+                result.append(current_occ)
+                current_occ = rule.after(current_occ)
+
+        return result
 
 
 class AbsenceRequest(Base):
